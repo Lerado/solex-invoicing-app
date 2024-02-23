@@ -1,0 +1,31 @@
+{
+    "version": "0.2",
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
+    "language": "en",
+    "words": [
+        "componentless",
+        "Heroicons",
+        "Luxon",
+        "ngneat",
+        "solex",
+        "solextgv",
+        "Tauri",
+        "Transloco",
+        "twotone"
+    ],
+    "flagWords": [],
+    "ignorePaths": [
+        "package.json",
+        "yarn.lock",
+        "tsconfig.json",
+        "node_modules/**",
+        "src/@*",
+        "*.config.js",
+        "*.conf.js",
+        ".*rc*",
+        ".*ignore",
+        "angular.json",
+        "CHANGELOG.md"
+    ],
+    "useGitignore": true
+}

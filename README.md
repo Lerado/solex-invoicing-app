@@ -1,27 +1,58 @@
-# SolexInvoicingApp
+# Introduction 
+**SolexInvoicing** is a desktop and web client in charge of Solex invoicing service.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.1.
+Please, carefully read ``CONTRIBUTING.md`` before contributing to this project.
 
-## Development server
+# Getting Started
+This project is build using [Angular](https://angular.io) and [Angular Material](https://material.angular.io) as primary UI components library and [Tauri](https://tauri.app/) for Desktop cross-platform builds. We use semantic versioning but **DO NOT** follow Angular versioning system.
+## 1.	Installation process
+- Clone this repository and move to the result directory **SolexInvoicing**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Get [node v18-lts or later](https://nodejs.org/). We recommend the latest stable version.
 
-## Code scaffolding
+- Install [yarn](https://yarnpkg.com) as a global dependency
+  
+  `npm install -g yarn`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Pull dependencies
+  
+  `yarn install`
 
-## Build
+- Serve using Angular CLI and access via https://localhost:4200
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  `ng serve`
 
-## Running unit tests
+- Serve as desktop client (needs to setup tauri first as described [here](https://tauri.app/v1/guides/getting-started/prerequisites))
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  `npm run tauri dev`
+## 2.	Software dependencies
+- [Node v18 or later](https://nodejs.org/) LTS recommended
+- [Yarn](https://yarnpkg.com) (optional but highly recommended)
+- [Docker LTS](https://docker.com) (optional)
+- [Tauri v2 or later](https://tauri.app/)
+## 3.	Latest releases
+See ``CHANGELOG.md`` to consult changes history and updates.
 
-## Running end-to-end tests
+# Build and Test
+Make sure to complete the installation steps before doing this:
+## 1.	Build process
+- Build using Angular CLI
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+  `ng build`
 
-## Further help
+- Build using Tauri (Windows, Mac, Linux) [here](https://tauri.app/v1/guides/building/)
+## 2.	Testing process
+- Run unitary tests
+  
+  `ng test`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Run all test (unitary, spell, lint, e2e)
+  
+  `npm run test`
+# Contribute
+We follow [Git-flow model](https://git-flow.readthedocs.io/) for development, versioning and contributions. Please, carefully read ``CONTRIBUTING.md`` before contributing to this project.
+
+# Technical specs
+
+# API references
+- [Fuse admin template docs](https://angular-material.fusetheme.com/docs/guides/getting-started/introduction)
