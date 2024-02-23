@@ -54,7 +54,8 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/favicon.ico",
+                            "src/favicon-16x16.png",
+                            "src/favicon-32x32.png",
                             "src/assets",
                             {
                                 "glob": "_redirects",
@@ -129,7 +130,8 @@
                         "tsConfig": "tsconfig.spec.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/favicon.ico",
+                            "src/favicon-16x16.png",
+                            "src/favicon-32x32.png",
                             "src/assets"
                         ],
                         "styles": [
