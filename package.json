@@ -14,7 +14,15 @@
         "start": "ng serve",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
-        "test": "ng test"
+        "fix:lint": "ng lint --fix",
+        "test:lint": "ng lint --quiet",
+        "test:spelling": "cspell \"{{README,CONTRIBUTING}.md,src/**/*.{ts,html}}\" --no-progress",
+        "test:ci": "yarn test:lint && yarn test:spelling && ng test --no-watch --no-progress --browsers ChromiumHeadlessCI",
+        "test:app": "ng test",
+        "test": "yarn test:lint && yarn test:spelling && ng test --no-watch --no-progress",
+        "release": "standard-version && git flow release finish -n",
+        "reset-hard": "git clean -dfx && git reset --hard && yarn",
+        "prepare-release": "yarn reset-hard && yarn test"
     },
     "dependencies": {
         "@angular/animations": "^17.2.0",
