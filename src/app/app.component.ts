@@ -5,9 +5,6 @@ import { RouterOutlet } from '@angular/router';
     selector: 'sia-root',
     standalone: true,
     imports: [RouterOutlet],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+    templateUrl: './app.component.html'
 })
-export class AppComponent {
-    title = 'solex-invoicing-app';
-}
+export class AppComponent {}

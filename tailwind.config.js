@@ -42,11 +42,11 @@ const themes = {
     'brand' : {
         primary  : {
             ...customPalettes.brandPrimary,
-            DEFAULT: customPalettes.brandPrimary[600]
+            DEFAULT: customPalettes.brandPrimary[500]
         },
         accent   : {
             ...customPalettes.brandAccent,
-            DEFAULT: customPalettes.brandAccent[800]
+            DEFAULT: customPalettes.brandAccent[500]
         },
     }
 };
