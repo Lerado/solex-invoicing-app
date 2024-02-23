@@ -3,12 +3,15 @@
     "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
     "language": "en",
     "words": [
+        "componentless",
         "Heroicons",
         "Luxon",
         "ngneat",
         "solex",
         "solextgv",
-        "Transloco"
+        "Tauri",
+        "Transloco",
+        "twotone"
     ],
     "flagWords": [],
     "ignorePaths": [
