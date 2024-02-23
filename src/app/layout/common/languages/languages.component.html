@@ -1,0 +1,20 @@
+<!-- Button -->
+<button mat-button [matMenuTriggerFor]="languages">
+    <div class="flex items-center gap-x-1">
+        <mat-icon svgIcon="heroicons_solid:globe-alt"></mat-icon>
+        <span class="font-semibold text-md ml-0.5">{{ activeLangLabel() }}</span>
+    </div>
+</button>
+
+<!-- Language menu -->
+<mat-menu [xPosition]="'before'" #languages="matMenu">
+
+    @for (lang of availableLangs; track lang.id) {
+    <button mat-menu-item (click)="setActiveLang(lang.id)">
+        <span class="flex items-center">
+            {{lang.label}}
+        </span>
+    </button>
+    }
+
+</mat-menu>

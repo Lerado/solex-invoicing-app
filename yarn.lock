@@ -420,6 +420,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@angular/material-luxon-adapter@npm:17.2.1":
+  version: 17.2.1
+  resolution: "@angular/material-luxon-adapter@npm:17.2.1"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/core": ^17.0.0 || ^18.0.0
+    "@angular/material": 17.2.1
+    luxon: ^3.0.0
+  checksum: 10c0/7639388d5d9566c1fe2234b60128af3bfaef5f7e8eeb641c41829072ddee3cdc5fe8d085a53e6f03c474970169c44e38ed78db02cc6704f4dc67af210b35cdab
+  languageName: node
+  linkType: hard
+
 "@angular/material@npm:17.2.1":
   version: 17.2.1
   resolution: "@angular/material@npm:17.2.1"
@@ -3828,6 +3841,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ngneat/transloco-utils@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@ngneat/transloco-utils@npm:5.0.0"
+  dependencies:
+    cosmiconfig: "npm:^8.1.3"
+    tslib: "npm:^2.3.0"
+  checksum: 10c0/bac9fd3549e39586bca2a5bc0b239fc13f3c75b15b5911ce8068f0daf13e15d6f5706182f2c6efc996737854fb425c8a80e877baba79b443c372a7b470a32abf
+  languageName: node
+  linkType: hard
+
+"@ngneat/transloco@npm:6.0.0":
+  version: 6.0.0
+  resolution: "@ngneat/transloco@npm:6.0.0"
+  dependencies:
+    "@ngneat/transloco-utils": "npm:^5.0.0"
+    flat: "npm:6.0.0"
+    fs-extra: "npm:^11.0.0"
+    glob: "npm:^10.0.0"
+    lodash.kebabcase: "npm:^4.1.1"
+    ora: "npm:^5.4.1"
+    replace-in-file: "npm:^7.0.1"
+    tslib: "npm:^2.2.0"
+  peerDependencies:
+    "@angular/core": ">=16.0.0"
+  checksum: 10c0/0ba0f12d00fdb9dbdc03a26c323883231c426f240875f881045d7695c8f9939ccc7d9ab01a8f283dffc2fd65bee6ba3be04dd3da6b52914f97536156a6d70e2d
+  languageName: node
+  linkType: hard
+
 "@ngtools/webpack@npm:17.2.1":
   version: 17.2.1
   resolution: "@ngtools/webpack@npm:17.2.1"
@@ -4247,6 +4288,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tailwindcss/typography@npm:0.5.10":
+  version: 0.5.10
+  resolution: "@tailwindcss/typography@npm:0.5.10"
+  dependencies:
+    lodash.castarray: "npm:^4.4.0"
+    lodash.isplainobject: "npm:^4.0.6"
+    lodash.merge: "npm:^4.6.2"
+    postcss-selector-parser: "npm:6.0.10"
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 10c0/0fa9c96bf091fb79fdc39a0244027b3891e9205f714197c8196e7ba2305523ce8695d14b912366de9b77d4b1d3a742fb7f9bc9bb633fddc7c7f13374b41075d2
+  languageName: node
+  linkType: hard
+
 "@tufjs/canonical-json@npm:2.0.0":
   version: 2.0.0
   resolution: "@tufjs/canonical-json@npm:2.0.0"
@@ -4280,6 +4335,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/eebedbca185ac3c39dd5992ef18d9e2a9f99e7f3c2f52f5561f90e9ed482c5d224c7962db95362712f580ed5713264e777a98d8f0bd8747f4eadf62937baed16
+  languageName: node
+  linkType: hard
+
+"@types/chroma-js@npm:2.4.3":
+  version: 2.4.3
+  resolution: "@types/chroma-js@npm:2.4.3"
+  checksum: 10c0/b804865f9ed5cbf23039112564aae0308721a085bb9ac5c95a969eb561858f1253acaa2970ee1d359f6da995c72d7b18665fddcee0a52278104b18b62d8704f9
   languageName: node
   linkType: hard
 
@@ -4396,6 +4458,29 @@ __metadata:
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 10c0/a996a745e6c5d60292f36731dd41341339d4eeed8180bb09226e5c8d23759067692b1d88e5d91d72ee83dfc00d3aca8e7bd43ea120516c17922cbcb7c3e252db
+  languageName: node
+  linkType: hard
+
+"@types/lodash-es@npm:^4.17.12":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 10c0/5d12d2cede07f07ab067541371ed1b838a33edb3c35cb81b73284e93c6fd0c4bbeaefee984e69294bffb53f62d7272c5d679fdba8e595ff71e11d00f2601dde0
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.14.202
+  resolution: "@types/lodash@npm:4.14.202"
+  checksum: 10c0/6064d43c8f454170841bd67c8266cc9069d9e570a72ca63f06bceb484cb4a3ee60c9c1f305c1b9e3a87826049fd41124b8ef265c4dd08b00f6766609c7fe9973
+  languageName: node
+  linkType: hard
+
+"@types/luxon@npm:^3":
+  version: 3.4.2
+  resolution: "@types/luxon@npm:3.4.2"
+  checksum: 10c0/d835467de3daf7e17ba78b50bb5a14efd94272439ca067990d71332a54b311544459c69623eddd243b511b28d70194c9591a9ee8cf9c038962c965f991affd7e
   languageName: node
   linkType: hard
 
@@ -5650,7 +5735,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1":
+"chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -5697,6 +5782,13 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: 10c0/594754e1303672171cc04e50f6c398ae16128eb134a88f801bf5354fd96f205320f23536a045d9abd8b51024a149696e51231565891d4efdab8846021ecf88e6
+  languageName: node
+  linkType: hard
+
+"chroma-js@npm:2.4.2":
+  version: 2.4.2
+  resolution: "chroma-js@npm:2.4.2"
+  checksum: 10c0/5657cd10892538c4a41e8bd95524d018c3a43318b26dfb20d572b2084bc6d5af742457a6d5701ddecb4d4eceb99995873b22293c1b396ab0b35ef55a264550c8
   languageName: node
   linkType: hard
 
@@ -6358,7 +6450,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:^8.3.6":
+"cosmiconfig@npm:^8.1.3, cosmiconfig@npm:^8.3.6":
   version: 8.3.6
   resolution: "cosmiconfig@npm:8.3.6"
   dependencies:
@@ -7862,6 +7954,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flat@npm:6.0.0":
+  version: 6.0.0
+  resolution: "flat@npm:6.0.0"
+  bin:
+    flat: cli.js
+  checksum: 10c0/610e6a64027816f38763d984a2ad282825ea8275a872eab946b7a03991dd8e4b646315e1e497ca00b5b052bcac51baa8f34b262d923ebfcf4c2bd685d8929de4
+  languageName: node
+  linkType: hard
+
 "flat@npm:^5.0.2":
   version: 5.0.2
   resolution: "flat@npm:5.0.2"
@@ -7949,7 +8050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^11.1.0":
+"fs-extra@npm:^11.0.0, fs-extra@npm:^11.1.0":
   version: 11.2.0
   resolution: "fs-extra@npm:11.2.0"
   dependencies:
@@ -8197,7 +8298,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.3.7":
+"glob@npm:^10.0.0, glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.3.7":
   version: 10.3.10
   resolution: "glob@npm:10.3.10"
   dependencies:
@@ -8209,6 +8310,19 @@ __metadata:
   bin:
     glob: dist/esm/bin.mjs
   checksum: 10c0/13d8a1feb7eac7945f8c8480e11cd4a44b24d26503d99a8d8ac8d5aefbf3e9802a2b6087318a829fad04cb4e829f25c5f4f1110c68966c498720dd261c7e344d
+  languageName: node
+  linkType: hard
+
+"glob@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "glob@npm:8.1.0"
+  dependencies:
+    fs.realpath: "npm:^1.0.0"
+    inflight: "npm:^1.0.4"
+    inherits: "npm:2"
+    minimatch: "npm:^5.0.1"
+    once: "npm:^1.3.0"
+  checksum: 10c0/cb0b5cab17a59c57299376abe5646c7070f8acb89df5595b492dba3bfb43d301a46c01e5695f01154e6553168207cb60d4eaf07d3be4bc3eb9b0457c5c561d0f
   languageName: node
   linkType: hard
 
@@ -9631,10 +9745,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 10c0/fb407355f7e6cd523a9383e76e6b455321f0f153a6c9625e21a8827d10c54c2a2341bd2ae8d034358b60e07325e1330c14c224ff582d04612a46a4f0479ff2f2
+  languageName: node
+  linkType: hard
+
 "lodash.camelcase@npm:^4.3.0":
   version: 4.3.0
   resolution: "lodash.camelcase@npm:4.3.0"
   checksum: 10c0/fcba15d21a458076dd309fce6b1b4bf611d84a0ec252cb92447c948c533ac250b95d2e00955801ebc367e5af5ed288b996d75d37d2035260a937008e14eaf432
+  languageName: node
+  linkType: hard
+
+"lodash.castarray@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.castarray@npm:4.4.0"
+  checksum: 10c0/0bf523ad1596a5bf17869ba047235b4453eee927005013ae152345e2b291b81a02e7f2b7c38f876a1d16f73c34aa3c3241e965193e5b31595035bc8f330c4358
   languageName: node
   linkType: hard
 
@@ -9781,6 +9909,13 @@ __metadata:
   dependencies:
     yallist: "npm:^4.0.0"
   checksum: 10c0/cb53e582785c48187d7a188d3379c181b5ca2a9c78d2bce3e7dee36f32761d1c42983da3fe12b55cb74e1779fa94cdc2e5367c028a9b35317184ede0c07a30a9
+  languageName: node
+  linkType: hard
+
+"luxon@npm:^3.4.4":
+  version: 3.4.4
+  resolution: "luxon@npm:3.4.4"
+  checksum: 10c0/02e26a0b039c11fd5b75e1d734c8f0332c95510f6a514a9a0991023e43fb233884da02d7f966823ffb230632a733fc86d4a4b1e63c3fbe00058b8ee0f8c728af
   languageName: node
   linkType: hard
 
@@ -10285,6 +10420,18 @@ __metadata:
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: 10c0/c2f5a604a54a8ec5438a342e1f356dff4bc33ccccdb6dc668d94fe8e5eccfc9d2c2eea6064b0967a767ba63b33763f51ccf2cd2441b461a7322656c1f06b3f5d
+  languageName: node
+  linkType: hard
+
+"ngx-title-strategy@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "ngx-title-strategy@npm:0.0.2"
+  dependencies:
+    tslib: "npm:^2.3.0"
+  peerDependencies:
+    "@angular/common": ">=14.0.0"
+    "@angular/core": ">=14.0.0"
+  checksum: 10c0/45530a1c95fa8789b09fc5c4031ea8725e0c5373a577e5c183ae43bb8c428b06b17c0b832c03141b6eb51605a4345f4786dcde5ebe65ab1406173a830a8deb6a
   languageName: node
   linkType: hard
 
@@ -11023,6 +11170,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"perfect-scrollbar@npm:1.5.5":
+  version: 1.5.5
+  resolution: "perfect-scrollbar@npm:1.5.5"
+  checksum: 10c0/10f0c3a1205328b22e232be4ee9f0e832e96fb5b6c524d1d04e11f97ad910018c1c0659af145e0ae0dc2b41e67a96df12787de5366ff5ba86034339071ca722b
+  languageName: node
+  linkType: hard
+
 "picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
@@ -11207,6 +11361,16 @@ __metadata:
   peerDependencies:
     postcss: ^8.2.14
   checksum: 10c0/2a50aa36d5d103c2e471954830489f4c024deed94fa066169101db55171368d5f80b32446b584029e0471feee409293d0b6b1d8ede361f6675ba097e477b3cbd
+  languageName: node
+  linkType: hard
+
+"postcss-selector-parser@npm:6.0.10":
+  version: 6.0.10
+  resolution: "postcss-selector-parser@npm:6.0.10"
+  dependencies:
+    cssesc: "npm:^3.0.0"
+    util-deprecate: "npm:^1.0.2"
+  checksum: 10c0/a0b27c5e3f7604c8dc7cd83f145fdd7b21448e0d86072da99e0d78e536ba27aa9db2d42024c50aa530408ee517c4bdc0260529e1afb56608f9a82e839c207e82
   languageName: node
   linkType: hard
 
@@ -11604,6 +11768,19 @@ __metadata:
   version: 1.6.1
   resolution: "repeat-string@npm:1.6.1"
   checksum: 10c0/87fa21bfdb2fbdedc44b9a5b118b7c1239bdd2c2c1e42742ef9119b7d412a5137a1d23f1a83dc6bb686f4f27429ac6f542e3d923090b44181bafa41e8ac0174d
+  languageName: node
+  linkType: hard
+
+"replace-in-file@npm:^7.0.1":
+  version: 7.1.0
+  resolution: "replace-in-file@npm:7.1.0"
+  dependencies:
+    chalk: "npm:^4.1.2"
+    glob: "npm:^8.1.0"
+    yargs: "npm:^17.7.2"
+  bin:
+    replace-in-file: bin/cli.js
+  checksum: 10c0/2ea9959eaa895d59ccf0c29f7015d71af25e1aa0d8bff5602b3b4e70af6816833190fe015189130a0b753458f083b2cd548cd77912d94a21a500c629855a0eb1
   languageName: node
   linkType: hard
 
@@ -12264,16 +12441,23 @@ __metadata:
     "@angular/core": "npm:^17.2.0"
     "@angular/forms": "npm:^17.2.0"
     "@angular/material": "npm:17.2.1"
+    "@angular/material-luxon-adapter": "npm:17.2.1"
     "@angular/platform-browser": "npm:^17.2.0"
     "@angular/platform-browser-dynamic": "npm:^17.2.0"
     "@angular/router": "npm:^17.2.0"
     "@commitlint/cli": "npm:^18.6.1"
     "@commitlint/config-conventional": "npm:^18.6.2"
+    "@ngneat/transloco": "npm:6.0.0"
+    "@tailwindcss/typography": "npm:0.5.10"
+    "@types/chroma-js": "npm:2.4.3"
     "@types/eslint": "npm:^8"
     "@types/jasmine": "npm:~5.1.0"
+    "@types/lodash-es": "npm:^4.17.12"
+    "@types/luxon": "npm:^3"
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"
     "@typescript-eslint/parser": "npm:^7.0.2"
     autoprefixer: "npm:^10.4.17"
+    chroma-js: "npm:2.4.2"
     cspell: "npm:^8.4.1"
     cz-conventional-changelog: "npm:^3.3.0"
     eslint: "npm:^8.56.0"
@@ -12284,6 +12468,10 @@ __metadata:
     karma-coverage: "npm:~2.2.0"
     karma-jasmine: "npm:~5.1.0"
     karma-jasmine-html-reporter: "npm:~2.1.0"
+    lodash-es: "npm:^4.17.21"
+    luxon: "npm:^3.4.4"
+    ngx-title-strategy: "npm:^0.0.2"
+    perfect-scrollbar: "npm:1.5.5"
     postcss: "npm:^8.4.35"
     rxjs: "npm:~7.8.0"
     standard-version: "npm:^9.5.0"
@@ -12953,7 +13141,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.6.2, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
+"tslib@npm:2.6.2, tslib@npm:^2.1.0, tslib@npm:^2.2.0, tslib@npm:^2.3.0, tslib@npm:^2.4.0":
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
@@ -13707,7 +13895,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:17.7.2, yargs@npm:^17.0.0, yargs@npm:^17.2.1, yargs@npm:^17.6.2":
+"yargs@npm:17.7.2, yargs@npm:^17.0.0, yargs@npm:^17.2.1, yargs@npm:^17.6.2, yargs@npm:^17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:

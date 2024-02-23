@@ -54,7 +54,8 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/favicon.ico",
+                            "src/favicon-16x16.png",
+                            "src/favicon-32x32.png",
                             "src/assets",
                             {
                                 "glob": "_redirects",
@@ -62,8 +63,18 @@
                                 "output": "/"
                             }
                         ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "src/@fuse/styles"
+                            ]
+                        },
                         "styles": [
-                            "src/styles.scss"
+                            "src/@fuse/styles/tailwind.scss",
+                            "src/@fuse/styles/themes.scss",
+                            "src/styles/vendors.scss",
+                            "src/@fuse/styles/main.scss",
+                            "src/styles/styles.scss",
+                            "src/styles/tailwind.scss"
                         ],
                         "scripts": []
                     },
@@ -72,13 +83,13 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumWarning": "3mb",
+                                    "maximumError": "5mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
+                                    "maximumWarning": "75kb",
+                                    "maximumError": "90kb"
                                 }
                             ],
                             "outputHashing": "all"
@@ -86,7 +97,8 @@
                         "development": {
                             "optimization": false,
                             "extractLicenses": false,
-                            "sourceMap": true
+                            "sourceMap": true,
+                            "namedChunks": true
                         }
                     },
                     "defaultConfiguration": "production"
@@ -119,11 +131,12 @@
                         "tsConfig": "tsconfig.spec.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/favicon.ico",
+                            "src/favicon-16x16.png",
+                            "src/favicon-32x32.png",
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.scss"
+                            "src/styles/styles.scss"
                         ],
                         "scripts": []
                     }
