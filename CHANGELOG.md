@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.2...v0.0.3) (2024-02-25)
+
+
+### Features
+
+* **shipments:** preview shipments table list with search, sorting and pagination ([1bd3af0](https://github.com/Lerado/solex-invoicing-app/commit/1bd3af0ed6ec7f01e4c5dc2266d8af3e25302c22))
+
 ### [0.0.2](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.1...v0.0.2) (2024-02-23)
 
 
