@@ -1,0 +1,99 @@
+<table class="w-full responsive-table bg-inherit" mat-table [dataSource]="dataSource" cdkDropList
+    cdkDropListOrientation="horizontal" (cdkDropListDropped)="moveColumn($event)">
+
+    <ng-content></ng-content>
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header></th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="''">
+        </td>
+    </ng-container>
+
+    <!-- Created at -->
+    <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Date</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Date'">
+            {{ shipment.createdAt * 1000 | date:'shortDate' }}
+        </td>
+    </ng-container>
+
+    <!-- Numero -->
+    <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>&numero; BE</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'BE'">
+            {{ shipment.number }}
+        </td>
+    </ng-container>
+
+     <!-- From -->
+     <ng-container matColumnDef="from.city.name">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Prov.</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Prov.'">
+            {{ shipment.from.city.name }}
+        </td>
+    </ng-container>
+
+    <!-- To -->
+    <ng-container matColumnDef="to.city.name">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Dest.</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Dest.'">
+            {{ shipment.to.city.name }}
+        </td>
+    </ng-container>
+
+    <!-- Designation -->
+    <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Designation</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Designation'">
+            {{ shipment.designation }}
+        </td>
+    </ng-container>
+
+    <!-- Quantity -->
+    <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Qté</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Qté'" class="text-right">
+            {{ shipment.quantity | number }}
+        </td>
+    </ng-container>
+
+    <!-- Weight -->
+    <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Pds(kg)</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Pds(kg)'" class="text-right">
+            {{ shipment.weight | number }}
+        </td>
+    </ng-container>
+
+    <!-- Price -->
+    <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>P.U.</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'P.U.'" class="text-right">
+            {{ shipment.price | currency }}
+        </td>
+    </ng-container>
+
+    <!-- Total price -->
+    <ng-container matColumnDef="totalPrice">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Montant HT</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Montant HT'" class="text-right">
+            {{ shipment.totalPrice | currency }}
+        </td>
+    </ng-container>
+
+    <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
+    <tr class="mat-row" *matNoDataRow>
+        <td class="p-4 text-center mat-cell" [attr.colspan]="columns.length">
+            @if (loading) {
+            @defer (when loading) {
+            <mat-progress-spinner [diameter]="40" [mode]="'indeterminate'" class="mx-auto"></mat-progress-spinner>
+            }
+            }
+            @else {
+            Empty list
+            }
+        </td>
+    </tr>
+
+</table>
