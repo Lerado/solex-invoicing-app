@@ -1,4 +1,4 @@
-import { ApplicationConfig, LOCALE_ID } from '@angular/core';
+import { ApplicationConfig, DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import { PreloadAllModules, provideRouter, withComponentInputBinding, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
 
 import { appRoutes } from './app.routes';
@@ -55,6 +55,10 @@ export const appConfig: ApplicationConfig = {
         {
             provide: LOCALE_ID,
             useValue: 'fr-FR'
+        },
+        {
+            provide: DEFAULT_CURRENCY_CODE,
+            useValue: 'XAF'
         },
 
         // Material Date Adapter
