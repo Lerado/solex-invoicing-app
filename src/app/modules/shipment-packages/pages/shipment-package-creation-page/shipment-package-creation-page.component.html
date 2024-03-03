@@ -1,0 +1,85 @@
+<section class="flex flex-col flex-auto max-w-screen-xl min-w-0 px-6 mx-auto md:px-8 dark:bg-transparent">
+
+    <h1 class="py-8 text-4xl font-extrabold tracking-tight">
+        <!-- cspell:disable-next-line -->
+        Ajouter un colis
+    </h1>
+
+    <div class="flex flex-col w-full gap-6 md:flex-row">
+
+        <!-- Select shipment -->
+        <div class="flex flex-col self-start w-full p-4 rounded md:max-w-1/3 bg-card gap-y-4">
+            <mat-form-field subscriptSizing="dynamic">
+                <mat-label>Expédition</mat-label>
+                <input #search matInput [formControl]="shipmentControl"
+                    (input)="shipmentSearchControl.setValue(search.value.toLowerCase())"
+                    (focus)="shipmentSearchControl.setValue(search.value.toLowerCase())" [matAutocomplete]="auto"
+                    placeholder="Rechercher une expédition">
+                <mat-autocomplete (optionSelected)="shipmentControl.setValue($event.option.value)"
+                    #auto="matAutocomplete" [displayWith]="displayShipmentNumber" requireSelection>
+                    @for (shipment of filteredShipments(); track shipment.id) {
+                    <mat-option [value]="shipment">
+                        {{ shipment.number }}
+                    </mat-option>
+                    }
+                </mat-autocomplete>
+                <mat-icon matIconPrefix svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
+            </mat-form-field>
+            <!-- Selected shipment information -->
+            <dl class="grid w-full grid-cols-12 gap-2 min-h-40">
+                @if (selectedShipment()) {
+                <dt class="col-span-3 text-secondary">&numero; BE:</dt>
+                <dd class="col-span-9 font-semibold text-right">
+                    {{ selectedShipment().number }}
+                </dd>
+                <dt class="col-span-3 text-secondary">Date:</dt>
+                <dd class="col-span-9 font-semibold text-right">
+                    {{ selectedShipment().pickupDate | date }}
+                </dd>
+                <dt class="col-span-3 text-secondary">Heure:</dt>
+                <dd class="col-span-9 font-semibold text-right">
+                    {{ selectedShipment().pickupTime }}
+                </dd>
+                <dt class="col-span-3 text-secondary">Provenance:</dt>
+                <dd class="col-span-9 font-semibold text-right">
+                    {{ selectedShipment().from.city.name }}
+                </dd>
+                <dt class="col-span-3 text-secondary">Destination:</dt>
+                <dd class="col-span-9 font-semibold text-right">
+                    {{ selectedShipment().to.city.name }}
+                </dd>
+                <dt class="col-span-6 text-secondary">Nombre de colis:</dt>
+                <dd class="col-span-6 font-semibold text-right">
+                    {{ selectedShipment().packagesCount | number }}
+                </dd>
+                <dt class="col-span-4 text-secondary">Prix total:</dt>
+                <dd class="col-span-8 font-semibold text-right">
+                    {{ selectedShipment().totalPrice | currency }}
+                </dd>
+                }
+            </dl>
+        </div>
+
+        <!-- Creation form -->
+        <div class="w-full p-4 mb-8 rounded min-w-2/3 bg-card">
+            <sia-shipment-package-form [formControl]="shipmentPackageForm"></sia-shipment-package-form>
+            <!-- Submit, Submit and continue, Cancel -->
+            <div class="flex flex-row justify-around mt-8 md:justify-start gap-x-4">
+                <!-- Cancel -->
+                <button [routerLink]="['..']" mat-button color="warn">
+                    Annuler
+                </button>
+                <!-- Submit -->
+                <button (click)="createShipmentPackage()" [disabled]="shipmentPackageForm.disabled || shipmentPackageForm.invalid" mat-stroked-button color="primary">
+                    Ajouter et quitter
+                </button>
+                <!-- Submit and continue -->
+                <button (click)="createShipmentPackage(true)" [disabled]="shipmentPackageForm.disabled || shipmentPackageForm.invalid" mat-flat-button color="primary">
+                    Ajouter et continuer
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+</section>
