@@ -9,16 +9,17 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { PaginatedDataSource } from 'app/shared/utils/pagination.types';
-import { Shipment } from 'app/core/shipment/shipment.types';
-import { ShipmentsQueryService } from '../../services/queried-shipments.service';
+import { ShipmentsQueryService } from '../../services/shipments-query.service';
 import { fromEvent, debounceTime, distinctUntilChanged, tap, merge } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { TableListActionsComponent } from 'app/shared/components/table-list-actions/table-list-actions.component';
+import { RouterLink } from '@angular/router';
+import { Shipment } from 'app/core/shipment/shipment.types';
 
 @Component({
     selector: 'sia-shipments-list-page',
     standalone: true,
-    imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentsTableListComponent, TableListActionsComponent],
+    imports: [RouterLink, MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentsTableListComponent, TableListActionsComponent],
     providers: [ShipmentsQueryService],
     templateUrl: './shipments-list-page.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,11 +35,11 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     shipmentsLoading = toSignal(this.shipmentsSource.loading$);
     shipmentsCount = toSignal(this.shipmentsSource.totalCount$);
 
-    shipmentsColumns: string[] = ['id', 'createdAt', 'number', 'from.city.name', 'to.city.name', 'designation', 'quantity', 'weight', 'price', 'totalPrice', 'actions'];
+    shipmentsColumns: string[] = ['createdAt', 'number', 'from.city.name', 'to.city.name', 'packagesCount', 'totalPrice', 'actions'];
     shipmentsActions: TableListAction[] = [
         {
             key: 'details',
-            label: 'Show details',
+            label: 'Détails',
             icon: 'heroicons_outline:eye',
             styles: {
                 icon: 'text-primary',
@@ -47,7 +48,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
         },
         {
             key: 'edit',
-            label: 'Edit',
+            label: 'Modifier',
             icon: 'heroicons_outline:pencil',
             styles: {
                 icon: 'text-success',
@@ -56,7 +57,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
         },
         {
             key: 'delete',
-            label: 'Delete',
+            label: 'Supprimer',
             icon: 'heroicons_outline:trash',
             styles: {
                 icon: 'text-warn',
@@ -117,7 +118,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Load shipments
+     * Load
      */
     private _loadShipmentsPage(): void {
 

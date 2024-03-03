@@ -1,0 +1,54 @@
+<form [formGroup]="shipmentAddressForm" class="flex flex-col w-full gap-y-4">
+
+    <!-- First name -->
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Nom(s)</mat-label>
+        <input formControlName="firstName" matInput type="text" placeholder="Renseignez le(s) nom(s)">
+    </mat-form-field>
+
+    <!-- Last name -->
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Prénoms(s)</mat-label>
+        <input formControlName="lastName" matInput type="text" placeholder="Renseignez le(s) prénom(s)">
+    </mat-form-field>
+
+    <!-- Country -->
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Pays</mat-label>
+        <mat-select formControlName="country">
+            @for (country of countries(); track country.iso) {
+            <mat-option [value]="country.iso" [disabled]="country.iso !== 'CM'">
+                {{ country.name | titlecase }}
+            </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <!-- City -->
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Ville</mat-label>
+        <mat-select formControlName="cityId">
+            @for (city of cities(); track city.id) {
+            <mat-option [value]="city.id">
+                {{ city.name | titlecase }}
+            </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <!-- Phone number -->
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Contact</mat-label>
+        <ngx-mat-intl-tel-input formControlName="contact" type="tel" class="w-full" id="phone"
+            [preferredCountries]="phoneInputCountryCode()" [enableSearch]="true" [enablePlaceholder]="true"
+            [format]="'national'" placeholder="Numéro de téléphone (indicatif de pays inclus)">
+        </ngx-mat-intl-tel-input>
+    </mat-form-field>
+
+    <!-- Address -->
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Adresse</mat-label>
+        <input formControlName="address" matInput type="text" placeholder="Adresse postale, rue, etc.">
+    </mat-form-field>
+
+</form>

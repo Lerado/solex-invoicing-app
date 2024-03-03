@@ -1,22 +1,27 @@
+import { ShipmentPackage } from 'app/core/shipment-package/shipment-package.types';
+
 interface Shipment {
 
     readonly id: number;
-
     readonly number: string;
-    readonly designation: string;
-    readonly quantity: number;
-    readonly weight: number;
-    readonly price: number;
-    readonly totalPrice: number;
+
+    pickupDate: number;
+    pickupTime: string;
+
+    packages?: ShipmentPackage[];
+    packagesCount?: number;
 
     from: Recipient;
     to: Recipient;
+
+    totalPrice: number;
 
     readonly createdAt: number;
 }
 
 interface Shipper {
-    city: City
+    readonly cityId: number
+    city?: City
 }
 
 type Recipient = Shipper;

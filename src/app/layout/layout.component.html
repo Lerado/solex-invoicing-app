@@ -11,10 +11,11 @@
 <!-- ----------------------------------------------------------------------------------------------------- -->
 <!-- Layouts with horizontal navigation -->
 <!-- ----------------------------------------------------------------------------------------------------- -->
-<!-- Enterprise -->
-@case ('enterprise') {
-@defer (when layout === 'enterprise') {
-<enterprise-layout></enterprise-layout>
+
+<!-- Modern -->
+@case ('modern') {
+@defer (when layout === 'modern') {
+<modern-layout></modern-layout>
 }
 }
 }

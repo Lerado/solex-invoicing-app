@@ -7,8 +7,8 @@ import { FusePlatformService } from '@fuse/services/platform';
 import { FUSE_VERSION } from '@fuse/version';
 import { combineLatest, filter, map } from 'rxjs';
 import { EmptyLayoutComponent } from './layouts/empty/empty.component';
-import { EnterpriseLayoutComponent } from './layouts/horizontal/enterprise/enterprise.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ModernLayoutComponent } from './layouts/horizontal/modern/modern.component';
 
 @Component({
     selector: 'layout',
@@ -16,7 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [EmptyLayoutComponent, EnterpriseLayoutComponent]
+    imports: [EmptyLayoutComponent, ModernLayoutComponent]
 })
 export class LayoutComponent implements OnInit {
 

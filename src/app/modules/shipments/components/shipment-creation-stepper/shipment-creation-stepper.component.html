@@ -1,0 +1,39 @@
+<mat-vertical-stepper linear>
+    <form [formGroup]="shipmentCreationForm">
+
+        <!-- Info -->
+        <mat-step label="Expédition" [stepControl]="shipmentCreationForm.controls.info">
+            <sia-shipment-info-form formControlName="info" class="mt-4"></sia-shipment-info-form>
+            <div class="flex mt-4 gap-x-4">
+                <button
+                    [disabled]="shipmentCreationForm.controls.info.disabled || shipmentCreationForm.controls.info.invalid"
+                    mat-button matStepperNext color="primary">Suivant</button>
+            </div>
+        </mat-step>
+
+        <!-- Shipper address -->
+        <mat-step label="Expéditeur" [stepControl]="shipmentCreationForm.controls.from">
+            <sia-shipment-address-form formControlName="from" [countries]="countries()" [cities]="cities()"
+                class="mt-4"></sia-shipment-address-form>
+            <div class="flex mt-4 gap-x-4">
+                <button mat-button matStepperPrevious>Retour</button>
+                <button
+                    [disabled]="shipmentCreationForm.controls.from.disabled || shipmentCreationForm.controls.from.invalid"
+                    mat-button matStepperNext color="primary">Suivant</button>
+            </div>
+        </mat-step>
+
+        <!-- Recipient address -->
+        <mat-step label="Destinataire" [stepControl]="shipmentCreationForm.controls.to">
+            <sia-shipment-address-form formControlName="to" [countries]="countries()" [cities]="cities()"
+                class="mt-4"></sia-shipment-address-form>
+            <div class="flex mt-4 gap-x-4">
+                <button mat-button matStepperPrevious>Retour</button>
+                <button (click)="submit()" [disabled]="shipmentCreationForm.disabled || shipmentCreationForm.invalid" mat-flat-button
+                    matStepperNext color="primary">Terminer</button>
+            </div>
+        </mat-step>
+
+    </form>
+
+</mat-vertical-stepper>
