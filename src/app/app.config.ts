@@ -10,6 +10,7 @@ import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
+import { mockApiServices } from 'app/mock-api';
 
 registerLocaleData(localeFr);
 
@@ -32,6 +33,9 @@ export const appConfig: ApplicationConfig = {
 
         // Fuse
         provideFuse({
+            mockApi: {
+                services: [...mockApiServices]
+            },
             fuse: {
                 layout: 'modern',
                 scheme: 'light',
@@ -48,7 +52,7 @@ export const appConfig: ApplicationConfig = {
                         name: 'Brand',
                     }
                 ],
-            },
+            }
         }),
 
         // Locale
