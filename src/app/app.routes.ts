@@ -12,6 +12,7 @@ export const appRoutes: Routes = [
         component: LayoutComponent,
         children: [
             { path: 'shipments', loadChildren: () => import('app/modules/shipments/shipments.routes') },
+            { path: 'packages', loadChildren: () => import('app/modules/shipment-packages/shipment-packages.routes') },
         ]
     }
 ];

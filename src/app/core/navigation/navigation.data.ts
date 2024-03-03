@@ -8,6 +8,13 @@ const navigationItems: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_outline:truck',
         link: '/shipments'
+    },
+    {
+        id: 'packages',
+        title: 'Colis', // cspell:disable-line
+        type: 'basic',
+        icon: 'heroicons_outline:cube',
+        link: '/packages'
     }
 ];
 
