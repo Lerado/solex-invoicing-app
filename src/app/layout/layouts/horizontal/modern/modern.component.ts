@@ -11,13 +11,13 @@ import { NavigationService } from 'app/core/navigation/navigation.service';
 import { LanguagesComponent } from 'app/layout/common/languages/languages.component';
 
 @Component({
-    selector: 'enterprise-layout',
-    templateUrl: './enterprise.component.html',
+    selector: 'modern-layout',
+    templateUrl: './modern.component.html',
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [FuseLoadingBarComponent, FuseVerticalNavigationComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, FuseHorizontalNavigationComponent, RouterOutlet],
+    imports: [FuseLoadingBarComponent, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, RouterOutlet],
 })
-export class EnterpriseLayoutComponent {
+export class ModernLayoutComponent {
 
     mediaChanges = toSignal(this._fuseMediaWatcherService.onMediaChange$);
     navigation = toSignal(this._navigationService.navigation$);
@@ -32,8 +32,7 @@ export class EnterpriseLayoutComponent {
         private readonly _navigationService: NavigationService,
         private readonly _fuseMediaWatcherService: FuseMediaWatcherService,
         private readonly _fuseNavigationService: FuseNavigationService,
-    ) {
-    }
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

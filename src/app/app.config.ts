@@ -33,7 +33,7 @@ export const appConfig: ApplicationConfig = {
         // Fuse
         provideFuse({
             fuse: {
-                layout: 'enterprise',
+                layout: 'modern',
                 scheme: 'light',
                 screens: {
                     sm: '600px',
