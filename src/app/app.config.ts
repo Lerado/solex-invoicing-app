@@ -1,6 +1,5 @@
 import { ApplicationConfig, DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import { PreloadAllModules, provideRouter, withComponentInputBinding, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
-
 import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideCore } from './core/core.provider';
@@ -11,6 +10,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { mockApiServices } from 'app/mock-api';
+import { MAT_PAGINATOR_DEFAULT_OPTIONS } from '@angular/material/paginator';
 
 registerLocaleData(localeFr);
 
@@ -83,6 +83,15 @@ export const appConfig: ApplicationConfig = {
                     monthYearA11yLabel: 'LLLL yyyy',
                 },
             },
+        },
+
+        // Material paginator defaults
+        {
+            provide: MAT_PAGINATOR_DEFAULT_OPTIONS,
+            useValue: {
+                showFirstLastButtons: true,
+                pageSizeOptions: [10, 15, 20, 25]
+            }
         },
     ]
 };
