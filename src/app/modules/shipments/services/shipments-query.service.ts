@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ShipmentService } from 'app/core/shipment/shipment.service';
 import { Shipment } from 'app/core/shipment/shipment.types';
+import { ShipmentService } from 'app/core/shipment/shipment.service';
 import { DataProvider, PaginationDto, SortingDto, Pagination } from 'app/shared/utils/pagination.types';
 import { Observable } from 'rxjs';
 
