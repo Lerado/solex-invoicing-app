@@ -32,9 +32,10 @@
         matSort #sort="matSort" class="m-6">
 
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef cdkDrag>Actions</th>
+            <th mat-header-cell *matHeaderCellDef cdkDrag class="text-right">Actions</th>
             <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Actions'">
-                <table-list-actions [subject]="shipment" [actions]="shipmentsActions"></table-list-actions>
+                <table-list-actions [subject]="shipment" [actions]="shipmentsActions"
+                    class="flex justify-end"></table-list-actions>
             </td>
         </ng-container>
 
