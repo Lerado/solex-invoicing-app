@@ -38,4 +38,13 @@ export class ShipmentPackageService {
 
         return this._httpClient.get<Pagination<ShipmentPackage>>('api/shipment-packages', { params });
     }
+
+    /**
+     * Create a new shipment package
+     *
+     * @param payload
+     */
+    create(payload: CreateShipmentPackageDto): Observable<ShipmentPackage> {
+        return this._httpClient.post<ShipmentPackage>('api/shipment-package', payload);
+    }
 }

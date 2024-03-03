@@ -1,0 +1,43 @@
+<form [formGroup]="shipmentPackageForm" class="flex flex-col w-full gap-y-4">
+
+    <!-- Designation -->
+    <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Désignation</mat-label>
+        <textarea formControlName="designation" matInput rows="5" placeholder="Une description concise du colis"></textarea>
+    </mat-form-field>
+
+    <div class="flex gap-x-4">
+
+        <!-- Weight -->
+        <mat-form-field subscriptSizing="dynamic" class="w-1/2">
+            <mat-label>Poids(kg)</mat-label>
+            <input formControlName="weight" matInput type="number" placeholder="Poids du colis en kg">
+        </mat-form-field>
+
+        <!-- Quantity -->
+        <mat-form-field subscriptSizing="dynamic" class="w-1/2">
+            <mat-label>Quantité</mat-label>
+            <input formControlName="quantity" matInput type="number" placeholder="Nombre de pièces">
+        </mat-form-field>
+
+    </div>
+
+    <div class="flex flex-col gap-4 sm:flex-row">
+
+        <!-- Price -->
+        <mat-form-field subscriptSizing="dynamic" class="w-full sm:w-1/2">
+            <mat-label>Prix unitaire</mat-label>
+            <input formControlName="price" matInput type="number">
+            <mat-icon svgIcon="heroicons_outline:currency-dollar" class="icon-size-5"></mat-icon>
+        </mat-form-field>
+
+        <dl class="flex items-center w-full text-xl sm:w-1/2 sm:mt-auto gap-x-3">
+            <dt class="text-secondary">Total:</dt>
+            <dd class="text-2xl font-bold">
+                {{ totalPrice() | currency }}
+            </dd>
+        </dl>
+
+    </div>
+
+</form>

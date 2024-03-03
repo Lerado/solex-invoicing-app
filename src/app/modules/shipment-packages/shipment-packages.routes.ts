@@ -9,4 +9,9 @@ export default [
         title: 'Colis', // cspell:disable-line
         component: ShipmentPackagesListPageComponent
     },
+    {
+        path: 'create',
+        title: 'Ajouter un colis', // cspell:disable-line
+        component: ShipmentPackageCreationPageComponent
+    }
 ] as Routes;

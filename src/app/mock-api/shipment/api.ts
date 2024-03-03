@@ -34,6 +34,13 @@ export class ShipmentMockApi {
         // @ GET
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
+            .onGet('api/shipment')
+            .reply(({ request }) => {
+                const shipment = this.shipments.find(shipment => shipment.id === +request.params.get('shipmentId'));
+                return [200, shipment];
+            });
+
+        this._fuseMockApiService
             .onGet('api/shipments')
             .reply(({ request }) => {
                 // Get available queries
@@ -138,6 +145,34 @@ export class ShipmentMockApi {
                 newShipment.to.city = this._cities.find(city => city.id === newShipment.to.cityId);
                 this.shipments.unshift(newShipment);
                 return [200, newShipment];
+            });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ PATCH
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPatch('api/shipment')
+            .reply(({ request }) => {
+                // Get the id and item
+                const id = +request.body.id;
+                const shipment = cloneDeep(request.body.shipment);
+
+                // Prepare the updated shipment
+                let updatedShipment = null;
+
+                // Find the shipment and update it
+                this.shipments.forEach((item, index, shipments) => {
+                    if (item.id === id) {
+                        // Update the shipment
+                        shipments[index] = assign({}, shipments[index], shipment);
+
+                        // Store the updated shipment
+                        updatedShipment = shipments[index];
+                    }
+                });
+
+                // Return the response
+                return [200, updatedShipment];
             });
     }
 }

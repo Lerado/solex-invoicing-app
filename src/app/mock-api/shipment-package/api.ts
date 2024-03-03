@@ -107,6 +107,47 @@ export class ShipmentPackageMockApi {
                     pagination,
                 ];
             });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ POST
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPost('api/shipment-package')
+            .reply(({ request }) => {
+                // Get the id and item
+                const id = +request.body.shipmentId;
+                const payload = cloneDeep(request.body);
+
+                // Prepare the updated shipment
+                let updatedShipment = null;
+
+                // Find the shipment and update it
+                this._shipmentMockApi.shipments.forEach((item, index, shipments) => {
+                    if (item.id === id) {
+                        // Update the shipment
+                        shipments[index] = assign({}, shipments[index], {
+                            packagesCount: item.packagesCount + 1,
+                            totalPrice: item.totalPrice + (payload.price * payload.quantity)
+                        });
+
+                        // Store the updated shipment
+                        updatedShipment = shipments[index];
+                    }
+                });
+
+                // Create the package
+                const newPackage = {
+                    ...payload,
+                    id: shipmentPackages.length + 1,
+                    shipment: updatedShipment,
+                    createdAt: Date.now(),
+                    totalPrice: payload.price * payload.quantity
+                };
+                this.shipmentPackages.unshift(newPackage);
+
+                // Return the response
+                return [200, newPackage];
+            });
     }
 }
 

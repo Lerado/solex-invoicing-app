@@ -39,6 +39,15 @@ export class ShipmentService {
     }
 
     /**
+     * Get shipment by id
+     *
+     * @param shipmentId
+     */
+    get(shipmentId: number): Observable<Shipment> {
+        return this._httpClient.get<Shipment>('api/shipment', { params: { shipmentId } });
+    }
+
+    /**
      * Create a new shipment
      *
      * @param payload
