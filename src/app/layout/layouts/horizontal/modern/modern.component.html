@@ -1,0 +1,75 @@
+<!-- Loading bar -->
+@defer {
+<fuse-loading-bar></fuse-loading-bar>
+}
+<!-- Navigation -->
+@if (isScreenSmall()) {
+<fuse-vertical-navigation class="bg-primary dark print:hidden" [mode]="'over'" [name]="'mainNavigation'"
+    [navigation]="navigation().default" [opened]="false">
+    <!-- Navigation header hook -->
+    <ng-container fuseVerticalNavigationContentHeader>
+        <!-- Logo -->
+        <div class="flex items-center h-20 px-8 pt-6">
+            <img class="w-24" src="assets/images/logo/logo-text-on-dark.svg" alt="Logo image">
+        </div>
+    </ng-container>
+</fuse-vertical-navigation>
+}
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full min-w-0 min-h-screen">
+
+    <!-- Header -->
+    <div
+        class="relative flex items-center w-full h-16 px-4 shadow flex-0 sm:h-20 md:px-6 z-49 dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+        @if (!isScreenSmall()) {
+        <!-- Logo -->
+        <div class="flex items-center mx-2 lg:mr-8">
+            <div class="hidden lg:flex">
+                <img class="w-24 dark:hidden" src="assets/images/logo/logo-text.svg">
+                <img class="hidden w-24 dark:flex" src="assets/images/logo/logo-text-on-dark.svg">
+            </div>
+            <img class="flex w-24 lg:hidden" src="assets/images/logo/logo.svg">
+        </div>
+        <!-- Horizontal navigation -->
+        <fuse-horizontal-navigation class="mr-2" [name]="'mainNavigation'"
+            [navigation]="navigation().horizontal"></fuse-horizontal-navigation>
+        }
+        @else {
+        <!-- Navigation toggle button -->
+
+        <button mat-icon-button (click)="toggleNavigation('mainNavigation')">
+            <mat-icon [svgIcon]="'heroicons_outline:bars-3'"></mat-icon>
+        </button>
+        }
+        <!-- Components -->
+        <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+            <languages></languages>
+            <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative flex flex-col flex-auto w-full">
+        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+        <main class="absolute inset-0 flex flex-col flex-auto w-full overflow-x-hidden overflow-y-auto">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <div
+        class="relative flex items-center justify-center w-full px-4 mt-auto border-t flex-0 h-14 sm:h-20 md:px-6 z-49 bg-card dark:bg-transparent print:hidden">
+        <p class="text-sm font-medium text-center prose-a:text-primary text-secondary">
+            <!-- cspell:disable -->
+            Solex &copy;{{currentYear}}. Créé par <a class="pro" href="http://mohlahsolutions.com" target="_blank"
+                rel="noopener noreferrer">Mohlah Software Solutions</a>. Tous droits reservés
+            <!-- cspell:enable -->
+        </p>
+    </div>
+
+</div>
+
+<!-- Quick chat -->
+<!-- <quick-chat #quickChat="quickChat"></quick-chat> -->

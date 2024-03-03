@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { ShipmentService } from 'app/core/shipment/shipment.service';
-import { Shipment } from 'app/core/shipment/shipment.types';
+import { ShipmentPackageService } from 'app/core/shipment-package/shipment-package.service';
+import { ShipmentPackage } from 'app/core/shipment-package/shipment-package.types';
 import { DataProvider, PaginationDto, SortingDto, Pagination } from 'app/shared/utils/pagination.types';
 import { Observable } from 'rxjs';
 
 
 @Injectable()
-export class ShipmentsQueryService implements DataProvider<Pagination<Shipment>> {
+export class ShipmentPackagesQueryService implements DataProvider<Pagination<ShipmentPackage>> {
 
     /**
      * Constructor
      */
     constructor(
-        private readonly _shipmentService: ShipmentService
+        private readonly _shipmentPackageService: ShipmentPackageService
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ export class ShipmentsQueryService implements DataProvider<Pagination<Shipment>>
         paginationParams?: PaginationDto,
         sortingParams?: SortingDto,
         query: string = '',
-    ): Observable<Pagination<Shipment>> {
-        return this._shipmentService.getAll(paginationParams, sortingParams, query);
+    ): Observable<Pagination<ShipmentPackage>> {
+        return this._shipmentPackageService.getAll(paginationParams, sortingParams, query);
     }
 }

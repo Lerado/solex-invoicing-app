@@ -1,12 +1,12 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Shipment } from './shipment.types';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginationDto, SortingDto, Pagination, computeQueryParams } from 'app/shared/utils/pagination.types';
 import { Observable } from 'rxjs';
-import { CreateShipmentDto } from './shipment.dto';
+import { ShipmentPackage } from './shipment-package.types';
+import { CreateShipmentPackageDto } from './shipment-package.dto';
 
 @Injectable({ providedIn: 'root' })
-export class ShipmentService {
+export class ShipmentPackageService {
 
     /**
      * Constructor
@@ -20,39 +20,31 @@ export class ShipmentService {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Get shipments
-     *
-     * @param paginationParams
-     * @param sortingParams
-     * @param query
-     */
+    * Get shipments
+    *
+    * @param paginationParams
+    * @param sortingParams
+    * @param query
+    */
     getAll(
         paginationParams?: PaginationDto,
         sortingParams?: SortingDto,
-        query = ''): Observable<Pagination<Shipment>> {
+        query = ''): Observable<Pagination<ShipmentPackage>> {
         const params: HttpParams = new HttpParams({
             fromObject: {
                 ...computeQueryParams(paginationParams, sortingParams, query)
             }
         });
-        return this._httpClient.get<Pagination<Shipment>>('api/shipments', { params });
+
+        return this._httpClient.get<Pagination<ShipmentPackage>>('api/shipment-packages', { params });
     }
 
     /**
-     * Get shipment by id
-     *
-     * @param shipmentId
-     */
-    get(shipmentId: number): Observable<Shipment> {
-        return this._httpClient.get<Shipment>('api/shipment', { params: { shipmentId } });
-    }
-
-    /**
-     * Create a new shipment
+     * Create a new shipment package
      *
      * @param payload
      */
-    create(payload: CreateShipmentDto): Observable<Shipment> {
-        return this._httpClient.post<Shipment>('api/shipment', payload);
+    create(payload: CreateShipmentPackageDto): Observable<ShipmentPackage> {
+        return this._httpClient.post<ShipmentPackage>('api/shipment-package', payload);
     }
 }

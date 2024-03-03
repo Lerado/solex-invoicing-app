@@ -1,0 +1,12 @@
+<section class="flex flex-col flex-auto max-w-screen-xl min-w-0 px-6 mx-auto md:px-8 dark:bg-transparent">
+
+    <h1 class="px-6 py-8 text-4xl font-extrabold tracking-tight md:px-8">
+        <!-- cspell:disable-next-line -->
+        Nouvelle expédition
+    </h1>
+
+    <!-- Creation form -->
+    <sia-shipment-creation-stepper (submitChanges)="createShipment($event)" [countries]="countries()"
+        [cities]="cities()" [disabled]="formDisabled()" class="mt-5 mb-8"></sia-shipment-creation-stepper>
+
+</section>

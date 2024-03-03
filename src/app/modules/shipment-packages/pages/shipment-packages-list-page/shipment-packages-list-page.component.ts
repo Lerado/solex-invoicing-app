@@ -3,40 +3,40 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ShipmentsTableListComponent } from '../../components/shipments-table-list/shipments-table-list.component';
+import { ShipmentPackagesTableListComponent } from '../../components/shipment-packages-table-list/shipment-packages-table-list.component';
 import { TableListAction } from 'app/shared/components/table-list-actions/table-list-actions.types';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { PaginatedDataSource } from 'app/shared/utils/pagination.types';
-import { ShipmentsQueryService } from '../../services/shipments-query.service';
+import { ShipmentPackagesQueryService } from '../../services/shipment-packages-query.service';
 import { fromEvent, debounceTime, distinctUntilChanged, tap, merge } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { TableListActionsComponent } from 'app/shared/components/table-list-actions/table-list-actions.component';
 import { RouterLink } from '@angular/router';
-import { Shipment } from 'app/core/shipment/shipment.types';
+import { ShipmentPackage } from 'app/core/shipment-package/shipment-package.types';
 
 @Component({
-    selector: 'sia-shipments-list-page',
+    selector: 'sia-shipment-packages-list-page',
     standalone: true,
-    imports: [RouterLink, MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentsTableListComponent, TableListActionsComponent],
-    providers: [ShipmentsQueryService],
-    templateUrl: './shipments-list-page.component.html',
+    imports: [RouterLink, MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentPackagesTableListComponent, TableListActionsComponent],
+    providers: [ShipmentPackagesQueryService],
+    templateUrl: './shipment-packages-list-page.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
+export class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit {
 
     @ViewChild(MatPaginator) private readonly _paginator: MatPaginator;
     @ViewChild(MatSort) private readonly _sort: MatSort;
     @ViewChild('searchInput') private readonly _search: ElementRef;
 
-    shipmentsSource = new PaginatedDataSource<Shipment>(this._shipmentsQueryService);
+    shipmentPackagesSource = new PaginatedDataSource<ShipmentPackage>(this._shipmentPackagesQueryService);
 
-    shipmentsLoading = toSignal(this.shipmentsSource.loading$);
-    shipmentsCount = toSignal(this.shipmentsSource.totalCount$);
+    shipmentPackagesLoading = toSignal(this.shipmentPackagesSource.loading$);
+    shipmentPackagesCount = toSignal(this.shipmentPackagesSource.totalCount$);
 
-    shipmentsColumns: string[] = ['createdAt', 'number', 'from.city.name', 'to.city.name', 'packagesCount', 'totalPrice', 'actions'];
-    shipmentsActions: TableListAction[] = [
+    shipmentPackagesColumns: string[] = ['createdAt', 'number', 'from.city.name', 'to.city.name', 'designation', 'quantity', 'weight', 'price', 'totalPrice', 'actions'];
+    shipmentPackagesActions: TableListAction[] = [
         {
             key: 'details',
             label: 'Détails',
@@ -70,7 +70,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
      * Constructor
      */
     constructor(
-        private readonly _shipmentsQueryService: ShipmentsQueryService,
+        private readonly _shipmentPackagesQueryService: ShipmentPackagesQueryService,
         private readonly _destroyRef: DestroyRef
     ) { }
 
@@ -84,7 +84,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
 
         // Load data source
-        this.shipmentsSource.load();
+        this.shipmentPackagesSource.load();
     }
 
     /**
@@ -99,7 +99,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
             distinctUntilChanged(),
             tap(() => {
                 this._paginator.pageIndex = 0;
-                this._loadShipmentsPage();
+                this._loadShipmentPackagesPage();
             })
         ).subscribe();
 
@@ -109,7 +109,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
 
         merge(this._sort.sortChange, this._paginator.page).pipe(
             takeUntilDestroyed(this._destroyRef),
-            tap(() => this._loadShipmentsPage())
+            tap(() => this._loadShipmentPackagesPage())
         ).subscribe();
     }
 
@@ -120,12 +120,12 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     /**
      * Load
      */
-    private _loadShipmentsPage(): void {
+    private _loadShipmentPackagesPage(): void {
 
         const { pageIndex, pageSize } = this._paginator;
         const { active, direction } = this._sort;
 
-        this.shipmentsSource.load(
+        this.shipmentPackagesSource.load(
             { page: pageIndex + 1, limit: pageSize },
             { sortKey: active, sort: direction },
             this._search.nativeElement.value
