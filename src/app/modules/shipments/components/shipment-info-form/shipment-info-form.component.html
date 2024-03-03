@@ -1,0 +1,28 @@
+<form [formGroup]="shipmentInfoForm" class="flex flex-col w-full gap-y-4">
+
+    <!-- Shipment UUID -->
+    <mat-form-field subscriptSizing="dynamic" class="w-full">
+        <mat-label>&numero; bon d'envoi</mat-label>
+        <input formControlName="number" matInput type="text" placeholder="1111AAA">
+        <mat-hint>Ce numéro doit être unique</mat-hint>
+    </mat-form-field>
+
+    <div class="flex flex-col gap-4 sm:flex-row">
+
+        <!-- Pickup date -->
+        <mat-form-field subscriptSizing="dynamic" class="w-full sm:w-1/2">
+            <mat-label>Date d'enlèvement</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="pickupDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Pickup time -->
+        <mat-form-field subscriptSizing="dynamic" class="w-full sm:w-1/2">
+            <mat-label>Heure d'enlèvement</mat-label>
+            <input formControlName="pickupTime" matInput type="time"  placeholder="HH:MM" />
+            <mat-icon svgIcon="heroicons_outline:clock" class="icon-size-5"></mat-icon>
+        </mat-form-field>
+    </div>
+
+</form>

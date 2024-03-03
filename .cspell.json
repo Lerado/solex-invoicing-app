@@ -25,7 +25,7 @@
         "*.conf.js",
         ".*rc*",
         ".*ignore",
-        "angular.json",
+        "*.json",
         "CHANGELOG.md"
     ],
     "useGitignore": true

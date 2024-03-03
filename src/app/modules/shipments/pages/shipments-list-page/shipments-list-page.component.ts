@@ -13,12 +13,13 @@ import { ShipmentsQueryService } from '../../services/shipments-query.service';
 import { fromEvent, debounceTime, distinctUntilChanged, tap, merge } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { TableListActionsComponent } from 'app/shared/components/table-list-actions/table-list-actions.component';
+import { RouterLink } from '@angular/router';
 import { Shipment } from 'app/core/shipment/shipment.types';
 
 @Component({
     selector: 'sia-shipments-list-page',
     standalone: true,
-    imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentsTableListComponent, TableListActionsComponent],
+    imports: [RouterLink, MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentsTableListComponent, TableListActionsComponent],
     providers: [ShipmentsQueryService],
     templateUrl: './shipments-list-page.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,

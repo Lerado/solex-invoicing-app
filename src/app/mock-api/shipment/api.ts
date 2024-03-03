@@ -122,6 +122,23 @@ export class ShipmentMockApi {
                     pagination,
                 ];
             });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ POST
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPost('api/shipment')
+            .reply(({ request }) => {
+                const newShipment = Object.assign(cloneDeep(request.body), {
+                    id: this.shipments.length + 1,
+                    totalPrice: 0,
+                    createdAt: Date.now()
+                });
+                newShipment.from.city = this._cities.find(city => city.id === newShipment.from.cityId);
+                newShipment.to.city = this._cities.find(city => city.id === newShipment.to.cityId);
+                this.shipments.unshift(newShipment);
+                return [200, newShipment];
+            });
     }
 }
 
