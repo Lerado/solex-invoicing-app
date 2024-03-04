@@ -78,6 +78,18 @@
                 "maximized": true,
                 "visible": false
             },
+            {
+                "title": "Solex Invoicing",
+                "width": 800,
+                "height": 600,
+                "decorations": false,
+                "center": true,
+                "focus": true,
+                "alwaysOnTop": true,
+                "transparent": false,
+                "url": "assets/html/splashscreen.html",
+                "label": "splashscreen"
+            }
         ]
     }
 }
