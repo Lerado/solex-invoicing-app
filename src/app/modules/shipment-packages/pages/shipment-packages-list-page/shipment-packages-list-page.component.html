@@ -29,7 +29,7 @@
 
     <!-- Shipment packages list -->
     <sia-shipment-packages-table-list [dataSource]="shipmentPackagesSource" [columns]="shipmentPackagesColumns"
-        [loading]="shipmentPackagesLoading()" matSort #sort="matSort" class="my-6 responsive-table-lg">
+        [loading]="shipmentPackagesLoading()" matSort #sort="matSort" class="my-6 max-[1160px]:responsive-table">
 
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef cdkDrag class="text-right">Actions</th>
