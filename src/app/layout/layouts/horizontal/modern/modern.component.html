@@ -20,8 +20,8 @@
 <div class="flex flex-col flex-auto w-full min-w-0 min-h-screen">
 
     <!-- Header -->
-    <div
-        class="relative flex items-center w-full h-16 px-4 shadow flex-0 sm:h-20 md:px-6 z-49 dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+    <header data-tauri-drag-region [ngClass]="{ 'px-4 md:px-6': platform() === 'browser' }"
+        class="relative flex items-center w-full pl-4 shadow h-14 flex-0 md:pl-6 z-49 dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
         @if (!isScreenSmall()) {
         <!-- Logo -->
         <div class="flex items-center mx-2 lg:mr-8">
@@ -45,9 +45,13 @@
         <!-- Components -->
         <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
             <languages></languages>
-            <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
+            @if (platform() !== 'browser') {
+            @defer (when platform() !== 'browser') {
+            <sia-window-commands class="flex flex-1 *:rounded-none *:h-full"></sia-window-commands>
+            }
+            }
         </div>
-    </div>
+    </header>
 
     <!-- Content -->
     <div class="relative flex flex-col flex-auto w-full">
