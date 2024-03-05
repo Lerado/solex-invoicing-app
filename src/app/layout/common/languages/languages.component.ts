@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LangDefinition, TranslocoService } from '@ngneat/transloco';
 
 @Component({
-    selector: 'languages',
+    selector: 'sia-languages',
     templateUrl: './languages.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'languages',

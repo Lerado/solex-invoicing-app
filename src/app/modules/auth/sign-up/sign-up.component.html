@@ -1,0 +1,127 @@
+<div class="flex flex-col items-center flex-auto min-w-0 sm:justify-center">
+    <div class="w-full px-4 py-8 bg-opacity-60 sm:w-auto sm:p-12 backdrop-blur-lg sm:rounded-2xl sm:shadow sm:bg-card">
+        <div class="w-full mx-auto max-w-100 sm:w-100 sm:mx-0">
+            <!-- Logo -->
+            <picture class="relative block w-24 h-10">
+                <img ngSrc="assets/images/logo/logo.svg" fill>
+            </picture>
+
+            <!-- Title -->
+            <div class="mt-8 text-4xl font-extrabold leading-tight tracking-tight">Informations de la caisse</div>
+
+            <!-- Alert -->
+            @if (showAlert()) {
+            @defer(when showAlert()) {
+            <fuse-alert class="mt-8" [appearance]="'outline'" [showIcon]="false" [type]="alert().type"
+                [@shake]="alert().type === 'error'">
+                {{alert().message}}
+            </fuse-alert>
+            }
+            }
+
+            <!-- Sign Up form -->
+            <form class="flex flex-col mt-8 gap-y-4" [formGroup]="signUpForm">
+
+                <!-- Reference field -->
+                <mat-form-field subscriptSizing="dynamic" class="w-full">
+                    <mat-label>ID caisse</mat-label>
+                    <input id="cashierReference" matInput [formControlName]="'cashierReference'">
+                    @if (signUpForm.get('cashierReference').hasError('required')) {
+                    <mat-error>
+                        L'identifiant de la caisse est requis
+                    </mat-error>
+                    }
+                    <mat-hint>L'identifiant de la caisse</mat-hint>
+                </mat-form-field>
+
+                <!-- Name field -->
+                <mat-form-field subscriptSizing="dynamic" class="w-full">
+                    <mat-label>Responsable (nom complet)</mat-label>
+                    <input id="cashierName" matInput [formControlName]="'cashierName'">
+                    @if (signUpForm.get('cashierName').hasError('required')) {
+                    <mat-error>
+                        Le(a) responsable de la caisse est requis(e)
+                    </mat-error>
+                    }
+                    <mat-hint>Cette personne est en charge de ce poste caisse.</mat-hint>
+                </mat-form-field>
+
+                <!-- Root password field -->
+                <mat-form-field subscriptSizing="dynamic" class="w-full">
+                    <mat-label>Mot de passe root</mat-label>
+                    <input id="rootPassword" matInput type="password" [formControlName]="'rootPassword'" #passwordField>
+                    <button mat-icon-button type="button"
+                        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                        matSuffix>
+                        @if (passwordField.type === 'password') {
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                        }
+                        @else if (passwordField.type === 'text') {
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                        }
+                    </button>
+                    @if (signUpForm.get('rootPassword').hasError('required')) {
+                    <mat-error>
+                        Le mot de passe root est obligatoire
+                    </mat-error>
+                    }
+                    @else if (signUpForm.get('rootPassword').hasError('pattern')) {
+                    <mat-error>
+                        Le mot de passe root doit contenir au minimum huit (8) caractères dont une majuscule, une
+                        minuscule,
+                        un chiffre et un caractère spécial.
+                    </mat-error>
+                    }
+                    <mat-hint>Ce mot de passe vous sera demandé avant chaque opération critique. Il ne peut pas être
+                        changé sans réinitialiser la caisse.</mat-hint>
+                </mat-form-field>
+
+                <!-- Root password confirmation field -->
+                <mat-form-field subscriptSizing="dynamic" class="w-full">
+                    <mat-label>Root password confirmation</mat-label>
+                    <input id="rootPasswordConfirmation" matInput type="password"
+                        [formControlName]="'rootPasswordConfirmation'" #rootPasswordConfirmationField>
+                    <button mat-icon-button type="button"
+                        (click)="rootPasswordConfirmationField.type === 'password' ? rootPasswordConfirmationField.type = 'text' : rootPasswordConfirmationField.type = 'password'"
+                        matSuffix>
+                        @if (rootPasswordConfirmationField.type === 'password') {
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                        }
+                        @else if (rootPasswordConfirmationField.type === 'text') {
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+                        }
+                    </button>
+                    @if (signUpForm.get('rootPasswordConfirmation').hasError('required')) {
+                    <mat-error>
+                        Vous devez confirmer votre mot de passe root
+                    </mat-error>
+                    }
+                    @else if (signUpForm.get('rootPasswordConfirmation').hasError('pattern')) {
+                    <mat-error>
+                        Le mot de passe root doit contenir au minimum huit (08) caractères dont une majuscule, une
+                        minuscule,
+                        un chiffre et un caractère spécial.
+                    </mat-error>
+                    }
+                    @else if (signUpForm.get('rootPasswordConfirmation').hasError('mustMatch')) {
+                    <mat-error>
+                        Les entrées ne correspondent pas
+                    </mat-error>
+                    }
+                </mat-form-field>
+
+                <!-- Submit button -->
+                <button class="w-full mt-6 fuse-mat-button-large" mat-flat-button [color]="'primary'"
+                    [disabled]="signUpForm.disabled" (click)="signUp()">
+                    @if (signUpForm.enabled) { Enregistrer }
+                    @else {
+                    @defer(when signUpForm.disabled) {
+                    <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+                    }
+                    }
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>

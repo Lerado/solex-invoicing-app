@@ -10,6 +10,7 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { platform } from '@tauri-apps/api/os';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { LanguagesComponent } from 'app/layout/common/languages/languages.component';
+import { UserComponent } from 'app/layout/common/user/user.component';
 import { WindowCommandsComponent } from 'app/layout/common/window-commands/window-commands.component';
 import { from } from 'rxjs';
 
@@ -18,7 +19,7 @@ import { from } from 'rxjs';
     templateUrl: './modern.component.html',
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgClass, FuseLoadingBarComponent, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, LanguagesComponent, RouterOutlet, WindowCommandsComponent, NgOptimizedImage],
+    imports: [NgClass, FuseLoadingBarComponent, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, UserComponent, LanguagesComponent, WindowCommandsComponent, RouterOutlet, NgOptimizedImage],
 })
 export class ModernLayoutComponent {
 

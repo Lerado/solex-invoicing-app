@@ -48,7 +48,8 @@
         }
         <!-- Components -->
         <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
-            <languages></languages>
+            <sia-languages></sia-languages>
+            <sia-user></sia-user>
             @if (platform() !== 'browser') {
             @defer (when platform() !== 'browser') {
             <sia-window-commands class="flex flex-1 *:rounded-none *:h-full"></sia-window-commands>
