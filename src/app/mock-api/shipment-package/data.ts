@@ -7,7 +7,7 @@ export const shipmentPackages = [
             createdAt: 1708875696,
             pickupDate: 1708875696,
             pickupTime: '12:00',
-            number: '5765LSW',
+            number: '0005765LSW',
             from: {
                 cityId: 29,
                 city: {
@@ -41,7 +41,7 @@ export const shipmentPackages = [
             createdAt: 1708875696,
             pickupDate: 1708875696,
             pickupTime: '12:00',
-            number: '5765LSW',
+            number: '0005765LSW',
             from: {
                 cityId: 29,
                 city: {
@@ -76,7 +76,7 @@ export const shipmentPackages = [
             createdAt: 1708875696,
             pickupDate: 1708875696,
             pickupTime: '12:00',
-            number: '1712ONW',
+            number: '0001712ONW',
             from: {
                 cityId: 29,
                 city: {

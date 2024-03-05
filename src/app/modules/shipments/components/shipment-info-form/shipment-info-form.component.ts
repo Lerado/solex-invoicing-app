@@ -30,9 +30,9 @@ import { DateTime } from 'luxon';
 export class ShipmentInfoFormComponent implements ControlValueAccessor, Validator {
 
     shipmentInfoForm = this._formBuilder.group({
-        number: ['', [Validators.required, Validators.pattern('^[0-9]{4}[A-Z]{3}')]],
+        number: ['', [Validators.required, Validators.pattern('^[0-9]{7}[A-Z]{3}')]],
         pickupDate: new FormControl<DateTime<true>>(DateTime.now(), Validators.required),
-        pickupTime: ['', Validators.required],
+        pickupTime: [`${new Date().getHours()}:${new Date().getMinutes()}`, Validators.required],
     });
 
     /**
