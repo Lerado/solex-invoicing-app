@@ -2,8 +2,13 @@ import { EnvironmentProviders, Provider } from '@angular/core';
 import { provideNavigation } from './navigation/navigation.provider';
 import { provideTransloco } from './transloco/transloco.provider';
 import { provideIcons } from './icons/icons.provider';
+import { provideSplashScreen } from './splash-screen/splash-screen.provider';
+import { provideAuth } from './auth/auth.provider';
 
 export const provideCore = (): Array<EnvironmentProviders | Provider> => [
+
+    // Auth
+    provideAuth(),
 
     // Navigation
     provideNavigation(),
@@ -12,6 +17,9 @@ export const provideCore = (): Array<EnvironmentProviders | Provider> => [
     provideTransloco(),
 
     // Icon registries
-    provideIcons()
+    provideIcons(),
+
+    // Splash screen
+    provideSplashScreen()
 
 ];

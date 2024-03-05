@@ -1,21 +1,25 @@
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, ViewEncapsulation, computed } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
-import { FuseFullscreenComponent } from '@fuse/components/fullscreen';
 import { FuseLoadingBarComponent } from '@fuse/components/loading-bar';
 import { FuseHorizontalNavigationComponent, FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { platform } from '@tauri-apps/api/os';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { LanguagesComponent } from 'app/layout/common/languages/languages.component';
+import { UserComponent } from 'app/layout/common/user/user.component';
+import { WindowCommandsComponent } from 'app/layout/common/window-commands/window-commands.component';
+import { from } from 'rxjs';
 
 @Component({
     selector: 'modern-layout',
     templateUrl: './modern.component.html',
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [FuseLoadingBarComponent, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, RouterOutlet],
+    imports: [NgClass, FuseLoadingBarComponent, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, UserComponent, LanguagesComponent, WindowCommandsComponent, RouterOutlet, NgOptimizedImage],
 })
 export class ModernLayoutComponent {
 
@@ -24,6 +28,13 @@ export class ModernLayoutComponent {
     currentYear = new Date().getFullYear();
 
     isScreenSmall = computed(() => !this.mediaChanges().matchingAliases.includes('md'));
+
+    platform = toSignal(
+        from(
+            platform()
+                .catch(() => 'browser')
+        )
+    );
 
     /**
      * Constructor

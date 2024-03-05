@@ -18,94 +18,6 @@ ngx-mat-intl-tel-input {
     }
 }
 
-/* ----------------------------------------------------------------------------------------------------- */
-/* Responsive material table styles
-/* ----------------------------------------------------------------------------------------------------- */
-.responsive-table {
-    mat-mdc-header-row,
-    tr {
-        &.mat-mdc-header-row {
-            display: none;
-        }
-    }
-
-    // mat-mdc-header-cell.mat-mdc-header-cell:last-child {
-    //   display: none !important;
-    // }
-
-    tr,
-    mat-mdc-row {
-        &.mat-mdc-row {
-            display: flex !important;
-            flex-direction: column;
-            height: auto;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-bottom-width: 1px;
-        }
-    }
-
-    td,
-    mat-mdc-cell {
-        &.mat-mdc-cell {
-            width: 100%;
-            padding: 5px !important;
-            text-align: right !important;
-            display: flex;
-            border-bottom-width: 0px !important;
-            justify-content: space-between;
-            align-items: center;
-            padding-right: 1rem !important;
-            padding-left: 1rem !important;
-
-            &:nth-child(1) {
-                padding-left: 1rem !important;
-            }
-
-            > * {
-                justify-content: end !important;
-                text-align: right !important;
-                padding: 0 !important;
-            }
-        }
-    }
-
-    &.mat-mdc-table,
-    &.table {
-        display: flex !important;
-        flex-direction: column;
-
-        &.mat-mdc-table {
-            tbody {
-                display: flex;
-                flex-direction: column;
-                height: auto !important;
-
-                tr {
-                    height: auto !important;
-                }
-            }
-
-            tr,
-            mat-mdc-row {
-                &:not(.expandable-row) {
-                    mat-mdc-cell,
-                    td {
-                        &.mat-mdc-cell:before {
-                            content: attr(data-label);
-                            text-transform: uppercase;
-                            font-weight: bold;
-                            text-align: left;
-                            white-space: nowrap;
-                            font-size: 0.9em;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 .mat-sort-header.mat-sort-header-right
     > .mat-sort-header-container {
     justify-content: end;
@@ -114,23 +26,4 @@ ngx-mat-intl-tel-input {
 .mat-sort-header.mat-sort-header-center
     > .mat-sort-header-container {
     justify-content: center;
-}
-
-.responsive-table-sm, .responsive-table-sm > * {
-    --responsive-table-breakpoint: 600px !important;
-    @media screen and (max-width: 600px) {
-        @apply responsive-table;
-    }
-}
-.responsive-table-md, .responsive-table-md > * {
-    --responsive-table-breakpoint: 768px !important;
-    @media screen and (max-width: 768px) {
-        @apply responsive-table;
-    }
-}
-.responsive-table-lg, .responsive-table-lg > * {
-    --responsive-table-breakpoint: 1280px !important;
-    @media screen and (max-width: 1280px) {
-        @apply responsive-table;
-    }
 }
