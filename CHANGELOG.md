@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.5...v0.0.6) (2024-03-05)
+
+
+### Bug Fixes
+
+* **shipments:** correct shipment number format to 1234567AAA ([7ac5ec5](https://github.com/Lerado/solex-invoicing-app/commit/7ac5ec567844402b13285cb024f852093f246fa7))
+
 ### [0.0.5](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.4...v0.0.5) (2024-03-05)
 
 
