@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.4...v0.0.5) (2024-03-05)
+
+
+### Features
+
+* **auth:** register cashier account during application first bootstrap ([ecbaab5](https://github.com/Lerado/solex-invoicing-app/commit/ecbaab56a5fe08b63a273ffa557480568795e6ed))
+* **desktop:** add custom window maximize, minimize and close commands ([addfd42](https://github.com/Lerado/solex-invoicing-app/commit/addfd423a2f5b789cbdab498a33891a48dff22ff))
+* **layout:** add active account menu to modern layout ([976bb5b](https://github.com/Lerado/solex-invoicing-app/commit/976bb5b184548b9b1e4b60238416b787e7752748))
+* **splashscreen:** add splashscreen to desktop app ([60352f7](https://github.com/Lerado/solex-invoicing-app/commit/60352f7f726b5e9f4002310cdddcee7332ea4461))
+
+
+### Bug Fixes
+
+* **layout:** window commands missing in empty layout ([f9139ed](https://github.com/Lerado/solex-invoicing-app/commit/f9139edd01a3df682dc80d73d01c6d7de6424155))
+
 ### [0.0.4](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.3...v0.0.4) (2024-03-03)
 
 
