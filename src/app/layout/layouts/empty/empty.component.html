@@ -1,16 +1,23 @@
 <!-- Loading bar -->
 <fuse-loading-bar></fuse-loading-bar>
 
+<!-- Window commands -->
+@if (platform() !== 'browser') {
+@defer (when platform() !== 'browser') {
+<sia-window-commands class="flex flex-1 *:rounded-none *:h-full absolute right-0 top-0"></sia-window-commands>
+}
+}
+
 <!-- Wrapper -->
 <div class="flex flex-col flex-auto w-full">
 
-  <!-- Content -->
-  <div class="flex flex-col flex-auto">
-    <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+    <!-- Content -->
+    <div class="flex flex-col flex-auto">
+        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
     Otherwise, layout changes won't be registered and the view won't be updated! -->
-    @if (true) {
-      <router-outlet></router-outlet>
-    }
-  </div>
+        @if (true) {
+        <router-outlet></router-outlet>
+        }
+    </div>
 
 </div>
