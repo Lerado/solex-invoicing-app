@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal, WritableSignal, input, signal, viewChild } from '@angular/core';
 import { ShipmentPackageService } from 'app/core/shipment-package/shipment-package.service';
 import { Router, RouterLink } from '@angular/router';
 import { ShipmentPackageFormComponent } from 'app/modules/shipment-packages/components/shipment-package-form/shipment-package-form.component';
@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Shipment } from 'app/core/shipment/shipment.types';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap } from 'rxjs';
 import { ShipmentService } from 'app/core/shipment/shipment.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +26,8 @@ import { MatButtonModule } from '@angular/material/button';
 export class ShipmentPackageCreationPageComponent {
 
     shipmentPackageFormEl = viewChild.required(ShipmentPackageFormComponent);
+
+    shipmentNumber = input<string>(); // Route query param
 
     shipmentPackageForm = new FormControl<Partial<CreateShipmentPackageDto> | CreateShipmentPackageDto>(null, Validators.required);
     shipmentSearchControl = new FormControl<string>('', Validators.required);
@@ -50,9 +52,19 @@ export class ShipmentPackageCreationPageComponent {
         private readonly _shipmentService: ShipmentService,
         private readonly _router: Router
     ) {
+        // Report selected shipment change to form control
         this.shipmentControl.valueChanges.pipe(takeUntilDestroyed())
             .subscribe({
                 next: ({ id: shipmentId }) => this.shipmentPackageForm.patchValue({ shipmentId })
+            });
+        // Report route query param to selected shipment
+        toObservable(this.shipmentNumber).pipe(
+            takeUntilDestroyed(),
+            filter(value => !!value),
+            switchMap(shipmentNumber => this._shipmentService.getByNumber(shipmentNumber))
+        )
+            .subscribe({
+                next: queriedShipment => this.shipmentControl.setValue(queriedShipment)
             });
     }
 
