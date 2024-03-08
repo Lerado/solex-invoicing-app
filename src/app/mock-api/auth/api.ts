@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { cloneDeep } from 'lodash-es';
-import { hashSync }  from 'bcryptjs';
-import { UserMockApi } from '../user/api';
+import { UserApiStore } from '../user/store';
+import { catchError, map, of, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthMockApi {
@@ -12,7 +12,7 @@ export class AuthMockApi {
      */
     constructor(
         private readonly _fuseMockApiService: FuseMockApiService,
-        private readonly _userMockApi: UserMockApi
+        private readonly _userApiStore: UserApiStore
     ) {
         // Register Mock API handlers
         this.registerHandlers();
@@ -32,23 +32,24 @@ export class AuthMockApi {
         this._fuseMockApiService
             .onPost('api/auth/sign-in', 500)
             .reply(() => {
-                // Sign in successful
-                if (this._userMockApi.user) {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { rootPassword, ...user } = cloneDeep(this._userMockApi.user) ?? {};
-                    return [
-                        200,
-                        {
-                            user: { ...user, status: 'online' }
-                        },
-                    ];
-                }
-
-                // Invalid credentials
-                return [
-                    404,
-                    false,
-                ];
+                return this._userApiStore.get()
+                    .pipe(
+                        map((result) => {
+                            // Sign in successful
+                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                            const { rootPassword, ...user } = cloneDeep(result) ?? {};
+                            return [
+                                200,
+                                {
+                                    user: { ...user, status: 'online' }
+                                },
+                            ];
+                        }),
+                        catchError(() => [
+                            404,
+                            false,
+                        ])
+                    );
             });
 
         // -----------------------------------------------------------------------------------------------------
@@ -61,17 +62,26 @@ export class AuthMockApi {
                 if (rootPassword !== rootPasswordConfirmation) {
                     return [400, false];
                 }
-                // Write
-                const newUser = {
-                    id: 1,
-                    cashierName,
-                    cashierReference,
-                    rootPassword: hashSync(rootPassword, 10),
-                    createdAt: Date.now()
-                };
-                this._userMockApi.user = newUser;
-                // Simply return true
-                return [200, true];
+                return this._userApiStore.count()
+                    .pipe(
+                        map(result => result > 0),
+                        switchMap((accountAlreadyExists) => {
+                            if (accountAlreadyExists) {
+                                return of([400, false]);
+                            }
+                            // Write
+                            const newUser = {
+                                cashierName,
+                                cashierReference,
+                                rootPassword
+                            };
+                            return this._userApiStore.create(newUser)
+                                .pipe(
+                                    map(created => [created ? 201 : 500, created])
+                                );
+                        })
+                    );
+
             });
     }
 }

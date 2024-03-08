@@ -4311,7 +4311,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tauri-apps/api@npm:^1.5.3":
+"@tauri-apps/api@npm:1.5.3, @tauri-apps/api@npm:^1.5.3":
   version: 1.5.3
   resolution: "@tauri-apps/api@npm:1.5.3"
   checksum: 10c0/7709c368603881d1f615eb334261339b55f479e44af112702ce42e65a7bf1cfd48e95a7ad3efec9d275d78c09af43fe0b7c3acffc7cef6a14a470a457b807272
@@ -12713,8 +12713,10 @@ __metadata:
     perfect-scrollbar: "npm:1.5.5"
     postcss: "npm:^8.4.35"
     rxjs: "npm:~7.8.0"
+    squel: "npm:^5.13.0"
     standard-version: "npm:^9.5.0"
     tailwindcss: "npm:^3.4.1"
+    tauri-plugin-sql: "https://github.com/tauri-apps/tauri-plugin-sql#v1"
     tslib: "npm:^2.3.0"
     typescript: "npm:~5.3.2"
     zone.js: "npm:~0.14.3"
@@ -12861,6 +12863,13 @@ __metadata:
   version: 1.0.3
   resolution: "sprintf-js@npm:1.0.3"
   checksum: 10c0/ecadcfe4c771890140da5023d43e190b7566d9cf8b2d238600f31bec0fc653f328da4450eb04bd59a431771a8e9cc0e118f0aa3974b683a4981b4e07abc2a5bb
+  languageName: node
+  linkType: hard
+
+"squel@npm:^5.13.0":
+  version: 5.13.0
+  resolution: "squel@npm:5.13.0"
+  checksum: 10c0/86287c77c582aefde781a2a6a5edfbd863498ec50c53feb8114a736f21a366a22e1e5eb455b7d7c9b8ae41e7a42167234a6f6ab8a88679fe84e43d4c43723f30
   languageName: node
   linkType: hard
 
@@ -13160,6 +13169,15 @@ __metadata:
     mkdirp: "npm:^1.0.3"
     yallist: "npm:^4.0.0"
   checksum: 10c0/02ca064a1a6b4521fef88c07d389ac0936730091f8c02d30ea60d472e0378768e870769ab9e986d87807bfee5654359cf29ff4372746cc65e30cbddc352660d8
+  languageName: node
+  linkType: hard
+
+"tauri-plugin-sql@https://github.com/tauri-apps/tauri-plugin-sql#v1":
+  version: 0.0.0
+  resolution: "tauri-plugin-sql@https://github.com/tauri-apps/tauri-plugin-sql.git#commit=a31253b6a3da1f97a8a815747761f7ab6c21420a"
+  dependencies:
+    "@tauri-apps/api": "npm:1.5.3"
+  checksum: 10c0/5fb79202afe99f490513f2bc6be6de15ca2bc75013f16ec99daf098dcd6df0f6eeac0c23a0f8b9d5a6af73d92e3f329d39f4876eded1c136565e5417a87b0300
   languageName: node
   linkType: hard
 
