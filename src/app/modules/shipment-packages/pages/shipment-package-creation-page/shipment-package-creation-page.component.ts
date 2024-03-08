@@ -14,11 +14,12 @@ import { ShipmentService } from 'app/core/shipment/shipment.service';
 import { MatIconModule } from '@angular/material/icon';
 import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 
 @Component({
     selector: 'sia-shipment-creation-page',
     standalone: true,
-    imports: [RouterLink, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatIconModule, MatButtonModule, ShipmentPackageFormComponent, DatePipe, CurrencyPipe, DecimalPipe],
+    imports: [RouterLink, ReactiveFormsModule, FuseAlertComponent, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatIconModule, MatButtonModule, ShipmentPackageFormComponent, DatePipe, CurrencyPipe, DecimalPipe],
     templateUrl: './shipment-package-creation-page.component.html',
     styles: ':host { display: block;}',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,6 +44,13 @@ export class ShipmentPackageCreationPageComponent {
     ), { initialValue: [] });
 
     selectedShipment = toSignal(this.shipmentControl.valueChanges);
+
+    alert: WritableSignal<{ type: FuseAlertType; message: string }> = signal({
+        type: 'success',
+        message: '',
+    });
+
+    showAlert = signal(false);
 
     /**
      * Constructor
@@ -86,7 +94,7 @@ export class ShipmentPackageCreationPageComponent {
 
         this._shipmentPackageService.create(this.shipmentPackageForm.getRawValue() as CreateShipmentPackageDto)
             .pipe(
-                switchMap(shipmentPackage => this._shipmentService.get(shipmentPackage.shipmentId)),
+                switchMap(() => this._shipmentService.get(this.selectedShipment().id)),
             )
             .subscribe({
                 next: (updatedShipment) => {
@@ -97,10 +105,22 @@ export class ShipmentPackageCreationPageComponent {
                     this.shipmentPackageFormEl().reset();
                     // Set new value
                     this.shipmentControl.setValue(updatedShipment);
-                },
-                complete: () => {
+
                     this.shipmentPackageForm.enable();
                     this.shipmentSearchControl.enable();
+                },
+                error: (message) => {
+                    this.shipmentPackageForm.enable();
+                    this.shipmentSearchControl.enable();
+
+                    // Set the alert
+                    this.alert.set({
+                        type: 'error',
+                        message
+                    });
+
+                    // Show the alert
+                    this.showAlert.set(true);
                 }
             });
     }

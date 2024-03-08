@@ -60,9 +60,21 @@
             </dl>
         </div>
 
-        <!-- Creation form -->
         <div class="w-full p-4 mb-8 rounded min-w-2/3 bg-card">
+
+            <!-- Alert -->
+            @if (showAlert()) {
+            @defer(when showAlert()) {
+            <fuse-alert class="mb-4" [appearance]="'outline'" [showIcon]="false" [type]="alert().type"
+                [@shake]="alert().type === 'error'">
+                {{alert().message}}
+            </fuse-alert>
+            }
+            }
+
+            <!-- Creation form -->
             <sia-shipment-package-form [formControl]="shipmentPackageForm"></sia-shipment-package-form>
+
             <!-- Submit, Submit and continue, Cancel -->
             <div class="flex flex-row justify-around mt-8 md:justify-start gap-x-4">
                 <!-- Cancel -->
@@ -70,11 +82,15 @@
                     Annuler
                 </button>
                 <!-- Submit -->
-                <button (click)="createShipmentPackage()" [disabled]="shipmentPackageForm.disabled || shipmentPackageForm.invalid" mat-stroked-button color="primary">
+                <button (click)="createShipmentPackage()"
+                    [disabled]="shipmentPackageForm.disabled || shipmentPackageForm.invalid" mat-stroked-button
+                    color="primary">
                     Ajouter et quitter
                 </button>
                 <!-- Submit and continue -->
-                <button (click)="createShipmentPackage(true)" [disabled]="shipmentPackageForm.disabled || shipmentPackageForm.invalid" mat-flat-button color="primary">
+                <button (click)="createShipmentPackage(true)"
+                    [disabled]="shipmentPackageForm.disabled || shipmentPackageForm.invalid" mat-flat-button
+                    color="primary">
                     Ajouter et continuer
                 </button>
             </div>
