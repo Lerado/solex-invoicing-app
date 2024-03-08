@@ -14,7 +14,7 @@
     <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Date</th>
         <td mat-cell *matCellDef="let package" [attr.data-label]="'Date'">
-            {{ package.createdAt * 1000 | date:'shortDate' }}
+            {{ package.createdAt | date:'shortDate' }}
         </td>
     </ng-container>
 
@@ -91,7 +91,7 @@
             }
             }
             @else {
-            Empty list
+            Liste vide
             }
         </td>
     </tr>

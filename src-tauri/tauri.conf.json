@@ -23,6 +23,9 @@
                 "unmaximize": true,
                 "unminimize": true,
                 "startDragging": true
+            },
+            "os": {
+                "all": true
             }
         },
         "bundle": {
@@ -66,15 +69,15 @@
         },
         "windows": [
             {
-                "fullscreen": false,
-                "height": 768,
+                "fullscreen": true,
+                "height": 600,
                 "resizable": true,
                 "title": "Solex Invoicing",
-                "width": 1366,
+                "width": 900,
                 "center": false,
                 "decorations": false,
                 "focus": true,
-                "contentProtected": true,
+                "contentProtected": false,
                 "maximized": true,
                 "visible": false
             },

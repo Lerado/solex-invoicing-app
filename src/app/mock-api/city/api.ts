@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { cities } from './data';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
+import { CityApiStore } from './store';
+import { map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CityMockApi {
-
-    private _cities = cities;
 
     /**
      * Constructor
      */
     constructor(
-        private readonly _fuseMockApiService: FuseMockApiService
+        private readonly _fuseMockApiService: FuseMockApiService,
+        private readonly _cityApiStore: CityApiStore
     ) {
         // Register Mock API handlers
         this.registerHandlers();
@@ -30,6 +30,11 @@ export class CityMockApi {
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
             .onGet('api/cities')
-            .reply(() => [200, this._cities]);
+            .reply(() => {
+                return this._cityApiStore.getAll()
+                    .pipe(
+                        map(cities => [200, cities])
+                    );
+            });
     }
 }

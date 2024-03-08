@@ -4,4 +4,5 @@ export interface User {
     cashierName: string;
     status?: string;
     avatar?: string;
+    readonly createdAt: number;
 }

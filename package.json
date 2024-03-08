@@ -48,6 +48,8 @@
         "ngx-title-strategy": "^0.0.2",
         "perfect-scrollbar": "1.5.5",
         "rxjs": "~7.8.0",
+        "squel": "^5.13.0",
+        "tauri-plugin-sql": "https://github.com/tauri-apps/tauri-plugin-sql#v1",
         "tslib": "^2.3.0",
         "zone.js": "~0.14.3"
     },
@@ -94,5 +96,5 @@
             "path": "cz-conventional-changelog"
         }
     },
-    "packageManager": "yarn@4.1.0"
+    "packageManager": "yarn@4.1.1"
 }

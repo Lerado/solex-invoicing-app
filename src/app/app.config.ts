@@ -9,8 +9,9 @@ import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
-import { mockApiServices } from 'app/mock-api';
+import { mockApiServices, mockApiStores } from 'app/mock-api';
 import { MAT_PAGINATOR_DEFAULT_OPTIONS } from '@angular/material/paginator';
+import { providePersistence } from './persistence/persistence.provider';
 
 registerLocaleData(localeFr);
 
@@ -27,6 +28,9 @@ export const appConfig: ApplicationConfig = {
 
         // Core modules
         provideCore(),
+
+        // Persistence
+        providePersistence([...mockApiStores]),
 
         // Title strategy
         provideTitleStrategy('{{ title }} | Solex Invoicing'),
