@@ -29,10 +29,12 @@ export class ShipmentPackageService {
     getAll(
         paginationParams?: PaginationDto,
         sortingParams?: SortingDto,
-        query = ''): Observable<Pagination<ShipmentPackage>> {
+        query = '',
+        filters: { shipmentId?: number } = {}): Observable<Pagination<ShipmentPackage>> {
         const params: HttpParams = new HttpParams({
             fromObject: {
-                ...computeQueryParams(paginationParams, sortingParams, query)
+                ...computeQueryParams(paginationParams, sortingParams, query),
+                ...filters
             }
         });
 

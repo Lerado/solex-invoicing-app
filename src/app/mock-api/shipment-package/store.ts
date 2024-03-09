@@ -87,9 +87,16 @@ export class ShipmentPackageApiStore extends Store {
     /**
      * Get all shipment packages
      */
-    getAll(): Observable<ShipmentPackageModel[]> {
+    getAll(filters: Partial<{ shipmentId: number }> = {}): Observable<ShipmentPackageModel[]> {
+        const { shipmentId } = filters;
+        let query = this.ROOT_MODEL_QUERY;
+        if (shipmentId) {
+            query += `
+                WHERE ${this.TABLE_NAME}.shipmentId = ${shipmentId}
+                `;
+        }
         // Execute query
-        return this._persistence.executeSelect<Array<{ data: string }>>(this.ROOT_MODEL_QUERY)
+        return this._persistence.executeSelect<Array<{ data: string }>>(query)
             .pipe(
                 map(result => JSON.parse(result.at(0).data) as ShipmentPackageModel[])
             );
@@ -104,7 +111,7 @@ export class ShipmentPackageApiStore extends Store {
         // Build query
         const createShipmentPackageQuery: string = this._persistence
             .queryBuilder
-            .insert({replaceSingleQuotes: true})
+            .insert({ replaceSingleQuotes: true })
             .into(this.TABLE_NAME)
             .setFields({
                 ...payload,

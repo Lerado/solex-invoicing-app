@@ -34,12 +34,14 @@ export class ShipmentPackageMockApi {
         this._fuseMockApiService
             .onGet('api/shipment-packages')
             .reply(({ request }) => {
-                return this._shipmentPackageApiStore.getAll()
+                const shipmentId = parseInt(request.params.get('shipmentId') ?? '0', 10);
+                return this._shipmentPackageApiStore.getAll({ shipmentId })
                     .pipe(
                         map((shipmentPackages) => {
                             // Get available queries
                             const search = request.params.get('query');
                             const sort = request.params.get('sortKey') || 'id';
+                            const paginate = request.params.get('paginate') === 'false' ? false : true;
                             const order = request.params.get('sort') || 'desc';
                             const page = parseInt(request.params.get('page') ?? '1', 10);
                             const size = parseInt(request.params.get('limit') ?? '10', 10);
@@ -72,6 +74,20 @@ export class ShipmentPackageMockApi {
 
                             // Prepare the pagination object
                             let pagination = {};
+
+                            // Return all items at once if no pagination needed
+                            if (!paginate) {
+                                pagination = {
+                                    totalItems: shipmentPackagesLength,
+                                    pageSize: shipmentPackagesLength,
+                                    currentPage: 1,
+                                    totalPages: 1,
+                                    items: shipmentPackages,
+                                    prev: false,
+                                    next: false
+                                };
+                                return [200, pagination];
+                            }
 
                             // If the requested page number is bigger than
                             // the last possible page number, return null for

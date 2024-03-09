@@ -37,33 +37,33 @@ export class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit 
 
     shipmentPackagesColumns: string[] = ['createdAt', 'number', 'from.city.name', 'to.city.name', 'designation', 'quantity', 'weight', 'price', 'totalPrice', 'actions'];
     shipmentPackagesActions: TableListAction[] = [
-        {
-            key: 'details',
-            label: 'Détails',
-            icon: 'heroicons_outline:eye',
-            styles: {
-                icon: 'text-primary',
-                button: 'bg-[#4A70FF24]'
-            }
-        },
-        {
-            key: 'edit',
-            label: 'Modifier',
-            icon: 'heroicons_outline:pencil',
-            styles: {
-                icon: 'text-success',
-                button: 'bg-[#1BB27424]'
-            }
-        },
-        {
-            key: 'delete',
-            label: 'Supprimer',
-            icon: 'heroicons_outline:trash',
-            styles: {
-                icon: 'text-warn',
-                button: 'bg-[#FE4B6E24]'
-            }
-        }
+        // {
+        //     key: 'details',
+        //     label: 'Détails',
+        //     icon: 'heroicons_outline:eye',
+        //     styles: {
+        //         icon: 'text-primary',
+        //         button: 'bg-[#4A70FF24]'
+        //     }
+        // },
+        // {
+        //     key: 'edit',
+        //     label: 'Modifier',
+        //     icon: 'heroicons_outline:pencil',
+        //     styles: {
+        //         icon: 'text-success',
+        //         button: 'bg-[#1BB27424]'
+        //     }
+        // },
+        // {
+        //     key: 'delete',
+        //     label: 'Supprimer',
+        //     icon: 'heroicons_outline:trash',
+        //     styles: {
+        //         icon: 'text-warn',
+        //         button: 'bg-[#FE4B6E24]'
+        //     }
+        // }
     ];
 
     /**

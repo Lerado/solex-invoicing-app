@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CreateShipmentInfoDto } from 'app/core/shipment/shipment.dto';
 import { DateTime } from 'luxon';
+import { formatDate } from '@angular/common';
 
 @Component({
     selector: 'sia-shipment-info-form',
@@ -32,7 +33,7 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
     shipmentInfoForm = this._formBuilder.group({
         number: ['', [Validators.required, Validators.pattern('^[0-9]{7}[A-Z]{3}')]],
         pickupDate: new FormControl<DateTime<true>>(DateTime.now(), Validators.required),
-        pickupTime: [`${new Date().getHours()}:${new Date().getMinutes()}`, Validators.required],
+        pickupTime: [formatDate(new Date(), 'hh:mm', 'fr'), Validators.required],
     });
 
     /**
