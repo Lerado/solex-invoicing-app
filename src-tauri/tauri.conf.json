@@ -4,10 +4,10 @@
         "beforeBuildCommand": "npm run build",
         "beforeDevCommand": "npm run start",
         "devPath": "http://localhost:4200",
-        "distDir": "../dist/solex-invoicing-app"
+        "distDir": "../dist/solex-invoicing-app/browser"
     },
     "package": {
-        "productName": "solex-invoicing-app",
+        "productName": "SOLEX Invoicing App",
         "version": "0.1.0"
     },
     "tauri": {
@@ -23,12 +23,15 @@
                 "unmaximize": true,
                 "unminimize": true,
                 "startDragging": true
+            },
+            "os": {
+                "all": true
             }
         },
         "bundle": {
             "active": true,
-            "category": "DeveloperTool",
-            "copyright": "",
+            "category": "Business",
+            "copyright": "Mohlah Software Solutions @2024, All rights reserved",
             "deb": {
                 "depends": []
             },
@@ -40,8 +43,8 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "com.tauri.dev",
-            "longDescription": "",
+            "identifier": "cm.solex.invoicing",
+            "longDescription": "A desktop client in charge of SOLEX invoicing service",
             "macOS": {
                 "entitlements": null,
                 "exceptionDomain": "",
@@ -50,7 +53,7 @@
                 "signingIdentity": null
             },
             "resources": [],
-            "shortDescription": "",
+            "shortDescription": "A desktop client in charge of SOLEX invoicing service",
             "targets": "all",
             "windows": {
                 "certificateThumbprint": null,
@@ -67,19 +70,19 @@
         "windows": [
             {
                 "fullscreen": false,
-                "height": 768,
+                "height": 600,
                 "resizable": true,
-                "title": "Solex Invoicing",
-                "width": 1366,
+                "title": "SOLEX Invoicing App",
+                "width": 900,
                 "center": false,
                 "decorations": false,
                 "focus": true,
-                "contentProtected": true,
+                "contentProtected": false,
                 "maximized": true,
                 "visible": false
             },
             {
-                "title": "Solex Invoicing",
+                "title": "SOLEX Invoicing App",
                 "width": 800,
                 "height": 600,
                 "decorations": false,

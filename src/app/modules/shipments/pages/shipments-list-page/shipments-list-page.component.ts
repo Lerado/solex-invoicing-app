@@ -13,7 +13,7 @@ import { ShipmentsQueryService } from '../../services/shipments-query.service';
 import { fromEvent, debounceTime, distinctUntilChanged, tap, merge } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { TableListActionsComponent } from 'app/shared/components/table-list-actions/table-list-actions.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Shipment } from 'app/core/shipment/shipment.types';
 
 @Component({
@@ -22,6 +22,7 @@ import { Shipment } from 'app/core/shipment/shipment.types';
     imports: [RouterLink, MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentsTableListComponent, TableListActionsComponent],
     providers: [ShipmentsQueryService],
     templateUrl: './shipments-list-page.component.html',
+    styles: ':host { display: block;}',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
@@ -38,32 +39,41 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     shipmentsColumns: string[] = ['createdAt', 'number', 'from.city.name', 'to.city.name', 'packagesCount', 'totalPrice', 'actions'];
     shipmentsActions: TableListAction[] = [
         {
-            key: 'details',
-            label: 'Détails',
-            icon: 'heroicons_outline:eye',
+            key: 'print',
+            label: 'Imprimer',
+            icon: 'heroicons_outline:printer',
             styles: {
                 icon: 'text-primary',
                 button: 'bg-[#4A70FF24]'
             }
         },
-        {
-            key: 'edit',
-            label: 'Modifier',
-            icon: 'heroicons_outline:pencil',
-            styles: {
-                icon: 'text-success',
-                button: 'bg-[#1BB27424]'
-            }
-        },
-        {
-            key: 'delete',
-            label: 'Supprimer',
-            icon: 'heroicons_outline:trash',
-            styles: {
-                icon: 'text-warn',
-                button: 'bg-[#FE4B6E24]'
-            }
-        }
+        // {
+        //     key: 'details',
+        //     label: 'Détails',
+        //     icon: 'heroicons_outline:eye',
+        //     styles: {
+        //         icon: 'text-primary',
+        //         button: 'bg-[#4A70FF24]'
+        //     }
+        // },
+        // {
+        //     key: 'edit',
+        //     label: 'Modifier',
+        //     icon: 'heroicons_outline:pencil',
+        //     styles: {
+        //         icon: 'text-success',
+        //         button: 'bg-[#1BB27424]'
+        //     }
+        // },
+        // {
+        //     key: 'delete',
+        //     label: 'Supprimer',
+        //     icon: 'heroicons_outline:trash',
+        //     styles: {
+        //         icon: 'text-warn',
+        //         button: 'bg-[#FE4B6E24]'
+        //     }
+        // }
     ];
 
     /**
@@ -71,6 +81,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
      */
     constructor(
         private readonly _shipmentsQueryService: ShipmentsQueryService,
+        private readonly _router: Router,
         private readonly _destroyRef: DestroyRef
     ) { }
 
@@ -82,7 +93,6 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
      * On init
      */
     ngOnInit(): void {
-
         // Load data source
         this.shipmentsSource.load();
     }
@@ -111,6 +121,26 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
             takeUntilDestroyed(this._destroyRef),
             tap(() => this._loadShipmentsPage())
         ).subscribe();
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Handle triggered table actions
+     *
+     * @param actionType
+     * @param subject
+     */
+    handleAction(actionType: string, subject: Shipment): void {
+        switch (actionType) {
+            case 'print':
+                this._router.navigate(['/shipments', subject.id, 'print']);
+                break;
+            default:
+                break;
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------

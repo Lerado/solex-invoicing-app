@@ -34,8 +34,8 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef cdkDrag class="text-right">Actions</th>
             <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Actions'">
-                <table-list-actions [subject]="shipment" [actions]="shipmentsActions"
-                    class="flex justify-end"></table-list-actions>
+                <table-list-actions (trigger)="handleAction($event, shipment)" [subject]="shipment"
+                    [actions]="shipmentsActions" class="flex justify-end"></table-list-actions>
             </td>
         </ng-container>
 
@@ -43,7 +43,7 @@
         <tr mat-header-row *matHeaderRowDef="shipmentsColumns"
             class="bg-primary text-white first:*:rounded-l-lg last:*:rounded-r-lg"></tr>
         <tr mat-row *matRowDef="let shipment; columns: shipmentsColumns;"
-            class="first:*:rounded-l-lg last:*:rounded-r-lg *:border-b-0 bg-card rounded-r-lg rounded-l-lg">
+            class="cursor-pointer transition-colors first:*:rounded-l-lg last:*:rounded-r-lg *:border-b-0 bg-card rounded-r-lg rounded-l-lg">
         </tr>
 
     </sia-shipments-table-list>

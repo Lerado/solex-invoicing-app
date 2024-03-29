@@ -1,23 +1,25 @@
 <!-- Loading bar -->
 <fuse-loading-bar></fuse-loading-bar>
 
-<!-- Window commands -->
-@if (platform() !== 'browser') {
-@defer (when platform() !== 'browser') {
-<sia-window-commands class="flex flex-1 *:rounded-none *:h-full absolute right-0 top-0"></sia-window-commands>
-}
-}
-
 <!-- Wrapper -->
-<div class="flex flex-col flex-auto w-full">
+<div class="flex flex-col flex-auto w-full min-w-0 min-h-screen">
+
+    <!-- Window commands -->
+    @if (platform() !== 'browser') {
+    @defer (when platform() !== 'browser') {
+    <header data-tauri-drag-region class="sticky top-0 flex justify-end w-full h-12 bg-default z-99">
+        <sia-window-commands class="flex flex-0 *:rounded-none *:h-full ml-auto"></sia-window-commands>
+    </header>
+    }
+    }
 
     <!-- Content -->
-    <div class="flex flex-col flex-auto">
+    <main class="flex flex-col flex-auto">
         <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
     Otherwise, layout changes won't be registered and the view won't be updated! -->
         @if (true) {
         <router-outlet></router-outlet>
         }
-    </div>
+    </main>
 
 </div>

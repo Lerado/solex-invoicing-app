@@ -17,11 +17,28 @@ interface Shipment {
     totalPrice: number;
 
     readonly createdAt: number;
+    readonly updatedAt: number;
+    readonly deletedAt: number;
 }
 
 interface Shipper {
+
+    readonly id: number;
+
+    readonly shipmentId: number;
+
     readonly cityId: number
-    city?: City
+    city?: City,
+
+    firstName: string;
+    lastName: string;
+    country: string;
+    contact: string;
+    address: string;
+
+    readonly createdAt: number;
+    readonly updatedAt: number;
+    readonly deletedAt: number;
 }
 
 type Recipient = Shipper;

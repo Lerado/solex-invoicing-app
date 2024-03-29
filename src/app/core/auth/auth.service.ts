@@ -35,7 +35,6 @@ export class AuthService {
 
         return this._httpClient.post<SignInResponse>('api/auth/sign-in', {}).pipe(
             switchMap((response: SignInResponse) => {
-                console.log(response);
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
