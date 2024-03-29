@@ -31,7 +31,7 @@
                                 BORDEREAU D'EXPEDITION
                                 <span class="text-warn">
                                     &numero;
-                                    {{ shipment().number.substring(0, 7) }}
+                                    {{ shipment().number }}
                                 </span>
                             </p>
                             <div class="flex w-full gap-x-1">
@@ -186,7 +186,6 @@
                     <div class="flex flex-col w-full px-2 py-1 mt-1 bg-white border-2 border-black rounded-lg h-3/5">
                         <p class="mx-auto text-lg font-bold">
                             <span class="underline text-primary">EXPEDITEUR</span>
-                            {{ shipment().number.substring(7) }}
                         </p>
                         <dl class="grid grid-cols-12 mt-2 gap-x-1">
                             <dt class="col-span-2 font-semibold">Nom:</dt>
@@ -276,7 +275,7 @@
             <!-- Footer -->
             <div
                 class="bg-[#fff200] line-clamp-1 rounded-xl p-0.5 w-full leading-3 font-semibold text-center mb-1 text-[0.625rem]">
-                Sarl. au capital de F.cfa: 100 000 000 - RCCM:RC/YAO/2011/M/54 - N° Contr.: M110600021527L -B.P 11988
+                Sarl. au capital de F.cfa: 100 000 000 - RCCM:RC/YAO/2006/B/1857 - N° Contr.: M110600021527L -B.P 11988
                 Yaoundé-Cameroun - Tél.:+237 670 43 20 73 / 677 08 79 03
             </div>
 
