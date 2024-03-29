@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.6...v0.1.0) (2024-03-29)
+
+
+### Features
+
+* **desktop:** data persistence in filesystem using sqlite ([1f1e318](https://github.com/Lerado/solex-invoicing-app/commit/1f1e3187009f14b4f168ebb3fd9d9cfe65c46444))
+* **shipment:** let the user decide to add packages directly after shipment created successfully ([19ce791](https://github.com/Lerado/solex-invoicing-app/commit/19ce791b8656f873dbaa8ae088566a04fd9c791d))
+* **shipments:** print shipment receipt ([c26923e](https://github.com/Lerado/solex-invoicing-app/commit/c26923ebf0c900d2ebefec21f72602e6bb166812))
+
+
+### Bug Fixes
+
+* **packages:** handle and show errors occuring during package creation ([db3af01](https://github.com/Lerado/solex-invoicing-app/commit/db3af01ef627385db563faa6c6e18ef58ce9c070))
+* permission missing to access current platform name ([c4036df](https://github.com/Lerado/solex-invoicing-app/commit/c4036dfae5c03ef5b2e39beb84984779bc36f649))
+* **shipments:** wrong shipment ticket layout and footer info ([3a8cd27](https://github.com/Lerado/solex-invoicing-app/commit/3a8cd27261db2926727c4e75b6ba7848edbbf827))
+* **window:** unable to drag window in empty layout ([7ef65e2](https://github.com/Lerado/solex-invoicing-app/commit/7ef65e2aabb64b9a90340dfad0c42c892a614f01))
+* wrong creation dates in tables because we multiply timestamps in ms by 1000 ([02d23a1](https://github.com/Lerado/solex-invoicing-app/commit/02d23a1e9b244578eb44353dad0c40311dce8a6c))
+
 ### [0.0.6](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.5...v0.0.6) (2024-03-05)
 
 
