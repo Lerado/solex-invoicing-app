@@ -1,19 +1,18 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TableListAction } from './table-list-actions.types';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'table-list-actions',
-    standalone: true,
     imports: [MatIconModule, MatTooltipModule],
     templateUrl: './table-list-actions.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableListActionsComponent {
 
-    @Input({ required: true }) readonly subject: unknown;
-    @Input({ required: true }) actions: TableListAction[];
+    readonly subject = input.required<unknown>();
+    readonly actions = input.required<TableListAction[]>();
 
-    @Output() trigger: EventEmitter<string> = new EventEmitter<string>();
+    readonly trigger = output<string>();
 }

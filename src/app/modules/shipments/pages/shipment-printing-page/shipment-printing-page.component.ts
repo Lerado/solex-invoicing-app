@@ -1,6 +1,6 @@
 import { CdkScrollableModule } from '@angular/cdk/scrolling';
 import { CurrencyPipe, DatePipe, DecimalPipe, NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, inject } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,13 +12,16 @@ import { filter, map, switchMap } from 'rxjs';
 
 @Component({
     selector: 'sia-shipment-printing-page',
-    standalone: true,
     imports: [MatButtonModule, MatIconModule, CdkScrollableModule, NgOptimizedImage, PhoneNumberPipe, DatePipe, DecimalPipe, CurrencyPipe],
     templateUrl: './shipment-printing-page.component.html',
     styles: ':host { display: block;}',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentPrintingPageComponent {
+    private readonly _shipmentService = inject(ShipmentService);
+    private readonly _shipmentPackageService = inject(ShipmentPackageService);
+    private readonly _userService = inject(UserService);
+
 
     // Route param
     shipmentId = input.required<string>();
@@ -46,14 +49,13 @@ export class ShipmentPrintingPageComponent {
     ));
     shipmentPackagesEmptySeats = computed(() => new Array(this.shipmentPackages().length > 10 ? 0 : 10 - this.shipmentPackages().length));
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _shipmentService: ShipmentService,
-        private readonly _shipmentPackageService: ShipmentPackageService,
-        private readonly _userService: UserService
-    ) { }
+    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

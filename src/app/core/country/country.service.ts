@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import countries from 'i18n-iso-countries';
 import localeEn from 'i18n-iso-countries/langs/en.json';
@@ -10,6 +10,8 @@ countries.registerLocale(localeFr);
 
 @Injectable({ providedIn: 'root' })
 export class CountryService {
+    private readonly _translocoService = inject(TranslocoService);
+
 
     countries$ = this._translocoService.langChanges$.pipe(
         startWith(this._translocoService.getActiveLang()),
@@ -21,10 +23,11 @@ export class CountryService {
         shareReplay()
     );
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _translocoService: TranslocoService
-    ) { }
+    constructor() { }
 }

@@ -1,31 +1,35 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { NgIf } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation, inject, input } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FuseLoadingService } from '@fuse/services/loading';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector     : 'fuse-loading-bar',
-    templateUrl  : './loading-bar.component.html',
-    styleUrls    : ['./loading-bar.component.scss'],
+    selector: 'fuse-loading-bar',
+    templateUrl: './loading-bar.component.html',
+    styleUrls: ['./loading-bar.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    exportAs     : 'fuseLoadingBar',
-    standalone   : true,
-    imports      : [NgIf, MatProgressBarModule],
+    exportAs: 'fuseLoadingBar',
+    imports: [MatProgressBarModule]
 })
 export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy
 {
-    @Input() autoMode: boolean = true;
+    private _fuseLoadingService = inject(FuseLoadingService);
+
+    readonly autoMode = input<boolean>(true);
     mode: 'determinate' | 'indeterminate';
     progress: number = 0;
     show: boolean = false;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(private _fuseLoadingService: FuseLoadingService)
+    constructor()
     {
     }
 

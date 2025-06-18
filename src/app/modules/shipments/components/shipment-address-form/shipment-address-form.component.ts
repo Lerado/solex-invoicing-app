@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,13 +8,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { City } from 'app/core/city/city.types';
 import { Country } from 'app/core/country/country.types';
 import { CreateShipmentAddressDto } from 'app/core/shipment/shipment.dto';
-import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { map } from 'rxjs';
 
 @Component({
     selector: 'sia-shipment-address-form',
-    standalone: true,
-    imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, NgxMatIntlTelInputComponent, TitleCasePipe],
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, TitleCasePipe],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -29,9 +27,11 @@ import { map } from 'rxjs';
     ],
     templateUrl: './shipment-address-form.component.html',
     styles: ':host { display: block;}',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentAddressFormComponent implements ControlValueAccessor, Validator {
+
+    private readonly _formBuilder = inject(NonNullableFormBuilder);
 
     countries = input.required<Country[]>();
     cities = input.required<City[]>();
@@ -49,12 +49,13 @@ export class ShipmentAddressFormComponent implements ControlValueAccessor, Valid
 
     onTouched: CallableFunction = (): void => { };
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _formBuilder: NonNullableFormBuilder
-    ) { }
+    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, TemplateRef, ViewEncapsulation, inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 
@@ -14,15 +14,20 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 })
 export class FuseMasonryComponent implements OnChanges, AfterViewInit
 {
+    private _fuseMediaWatcherService = inject(FuseMediaWatcherService);
+
     @Input() columnsTemplate: TemplateRef<any>;
     @Input() columns: number;
     @Input() items: any[] = [];
     distributedColumns: any[] = [];
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(private _fuseMediaWatcherService: FuseMediaWatcherService)
+    constructor()
     {
     }
 

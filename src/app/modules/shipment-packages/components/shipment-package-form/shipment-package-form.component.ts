@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, inject } from '@angular/core';
 import { toSignal, takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, NG_VALUE_ACCESSOR, NG_VALIDATORS, NonNullableFormBuilder, ValidationErrors, Validators, FormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +11,6 @@ import { filter } from 'rxjs';
 
 @Component({
     selector: 'sia-shipment-package-form',
-    standalone: true,
     imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, CurrencyPipe],
     providers: [
         {
@@ -27,9 +26,11 @@ import { filter } from 'rxjs';
     ],
     templateUrl: './shipment-package-form.component.html',
     styles: ':host { display: block;}',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentPackageFormComponent {
+    private readonly _formBuilder = inject(NonNullableFormBuilder);
+
 
     shipment = input<Shipment>();
 
@@ -46,12 +47,13 @@ export class ShipmentPackageFormComponent {
 
     totalPrice = computed(() => this._unitaryPrice() * this._quantity());
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _formBuilder: NonNullableFormBuilder
-    ) {
+    constructor() {
         // Fill form with shipment input
         toObservable(this.shipment)
             .pipe(

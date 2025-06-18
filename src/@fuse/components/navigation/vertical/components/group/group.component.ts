@@ -1,6 +1,6 @@
 import { BooleanInput } from '@angular/cdk/coercion';
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, OnDestroy, OnInit, inject, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
@@ -12,32 +12,34 @@ import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/ver
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector       : 'fuse-vertical-navigation-group-item',
-    templateUrl    : './group.component.html',
+    selector: 'fuse-vertical-navigation-group-item',
+    templateUrl: './group.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone     : true,
-    imports        : [NgClass, NgIf, MatIconModule, NgFor, FuseVerticalNavigationBasicItemComponent, FuseVerticalNavigationCollapsableItemComponent, FuseVerticalNavigationDividerItemComponent, forwardRef(() => FuseVerticalNavigationGroupItemComponent), FuseVerticalNavigationSpacerItemComponent],
+    imports: [NgClass, MatIconModule, FuseVerticalNavigationBasicItemComponent, FuseVerticalNavigationCollapsableItemComponent, FuseVerticalNavigationDividerItemComponent, forwardRef(() => FuseVerticalNavigationGroupItemComponent), FuseVerticalNavigationSpacerItemComponent]
 })
 export class FuseVerticalNavigationGroupItemComponent implements OnInit, OnDestroy
 {
+    private _changeDetectorRef = inject(ChangeDetectorRef);
+    private _fuseNavigationService = inject(FuseNavigationService);
+
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_autoCollapse: BooleanInput;
     /* eslint-enable @typescript-eslint/naming-convention */
 
-    @Input() autoCollapse: boolean;
-    @Input() item: FuseNavigationItem;
-    @Input() name: string;
+    readonly autoCollapse = input<boolean>(undefined);
+    readonly item = input<FuseNavigationItem>(undefined);
+    readonly name = input<string>(undefined);
 
     private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseNavigationService: FuseNavigationService,
-    )
+    constructor()
     {
     }
 
@@ -51,7 +53,7 @@ export class FuseVerticalNavigationGroupItemComponent implements OnInit, OnDestr
     ngOnInit(): void
     {
         // Get the parent navigation component
-        this._fuseVerticalNavigationComponent = this._fuseNavigationService.getComponent(this.name);
+        this._fuseVerticalNavigationComponent = this._fuseNavigationService.getComponent(this.name());
 
         // Subscribe to onRefreshed on the navigation component
         this._fuseVerticalNavigationComponent.onRefreshed.pipe(

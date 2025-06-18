@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, WritableSignal, signal, } from '@angular/core';
+import { Component, WritableSignal, signal, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { FuseValidators } from '@fuse/validators';
@@ -18,10 +18,13 @@ import { AuthService } from 'app/core/auth/auth.service';
     selector: 'sia-auth-sign-up',
     templateUrl: './sign-up.component.html',
     animations: fuseAnimations,
-    standalone: true,
-    imports: [RouterLink, FuseAlertComponent, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule, NgOptimizedImage],
+    imports: [FuseAlertComponent, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule, NgOptimizedImage]
 })
 export class AuthSignUpComponent {
+    private readonly _authService = inject(AuthService);
+    private readonly _formBuilder = inject(NonNullableFormBuilder);
+    private readonly _router = inject(Router);
+
 
     alert: WritableSignal<{ type: FuseAlertType; message: string }> = signal({
         type: 'success',
@@ -39,14 +42,13 @@ export class AuthSignUpComponent {
 
     showAlert = signal(false);
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _authService: AuthService,
-        private readonly _formBuilder: NonNullableFormBuilder,
-        private readonly _router: Router
-    ) {
+    constructor() {
     }
 
     // -----------------------------------------------------------------------------------------------------

@@ -9,10 +9,9 @@ import { TableListBaseComponent } from 'app/shared/components/table-list-base/ta
 
 @Component({
     selector: 'sia-shipment-packages-table-list',
-    standalone: true,
     imports: [MatTableModule, MatSortModule, DragDropModule, MatProgressSpinnerModule, DatePipe, DecimalPipe, CurrencyPipe],
     templateUrl: './shipment-packages-table-list.component.html',
     styles: ':host { display: block; }',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentPackagesTableListComponent extends TableListBaseComponent<ShipmentPackage> { }

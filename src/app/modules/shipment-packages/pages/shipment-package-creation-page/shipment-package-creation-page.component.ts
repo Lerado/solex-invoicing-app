@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Signal, WritableSignal, input, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal, WritableSignal, input, signal, viewChild, inject } from '@angular/core';
 import { ShipmentPackageService } from 'app/core/shipment-package/shipment-package.service';
 import { Router, RouterLink } from '@angular/router';
 import { ShipmentPackageFormComponent } from 'app/modules/shipment-packages/components/shipment-package-form/shipment-package-form.component';
@@ -18,13 +18,16 @@ import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 
 @Component({
     selector: 'sia-shipment-creation-page',
-    standalone: true,
     imports: [RouterLink, ReactiveFormsModule, FuseAlertComponent, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatIconModule, MatButtonModule, ShipmentPackageFormComponent, DatePipe, CurrencyPipe, DecimalPipe],
     templateUrl: './shipment-package-creation-page.component.html',
     styles: ':host { display: block;}',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentPackageCreationPageComponent {
+    private readonly _shipmentPackageService = inject(ShipmentPackageService);
+    private readonly _shipmentService = inject(ShipmentService);
+    private readonly _router = inject(Router);
+
 
     shipmentPackageFormEl = viewChild.required(ShipmentPackageFormComponent);
 
@@ -52,14 +55,13 @@ export class ShipmentPackageCreationPageComponent {
 
     showAlert = signal(false);
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _shipmentPackageService: ShipmentPackageService,
-        private readonly _shipmentService: ShipmentService,
-        private readonly _router: Router
-    ) {
+    constructor() {
         // Report selected shipment change to form control
         this.shipmentControl.valueChanges.pipe(takeUntilDestroyed())
             .subscribe({

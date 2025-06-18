@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { UserService } from 'app/core/user/user.service';
 import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { SignUpDto } from './auth.dto';
@@ -7,16 +7,19 @@ import { SignInResponse } from './auth.types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+    private readonly _httpClient = inject(HttpClient);
+    private readonly _userService = inject(UserService);
+
 
     private _authenticated: boolean = false;
+
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
 
     /**
      * Constructor
      */
-    constructor(
-        private readonly _httpClient: HttpClient,
-        private readonly _userService: UserService
-    ) { }
+    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

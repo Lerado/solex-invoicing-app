@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,6 @@ import { formatDate } from '@angular/common';
 
 @Component({
     selector: 'sia-shipment-info-form',
-    standalone: true,
     imports: [ReactiveFormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatIconModule],
     providers: [
         {
@@ -26,9 +25,11 @@ import { formatDate } from '@angular/common';
     ],
     templateUrl: './shipment-info-form.component.html',
     styles: ':host { display: block;}',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentInfoFormComponent implements ControlValueAccessor, Validator {
+    private readonly _formBuilder = inject(NonNullableFormBuilder);
+
 
     shipmentInfoForm = this._formBuilder.group({
         number: ['', [Validators.required, Validators.pattern('^[0-9]{7}[A-Z]{3}')]],
@@ -36,12 +37,13 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
         pickupTime: [formatDate(new Date(), 'hh:mm', 'fr'), Validators.required],
     });
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _formBuilder: NonNullableFormBuilder
-    ) { }
+    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

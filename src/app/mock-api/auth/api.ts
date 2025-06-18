@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { cloneDeep } from 'lodash-es';
 import { UserApiStore } from '../user/store';
@@ -6,14 +6,17 @@ import { catchError, map, of, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthMockApi {
+    private readonly _fuseMockApiService = inject(FuseMockApiService);
+    private readonly _userApiStore = inject(UserApiStore);
+
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
 
     /**
      * Constructor
      */
-    constructor(
-        private readonly _fuseMockApiService: FuseMockApiService,
-        private readonly _userApiStore: UserApiStore
-    ) {
+    constructor() {
         // Register Mock API handlers
         this.registerHandlers();
     }

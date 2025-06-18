@@ -1,14 +1,14 @@
-import { NgClass, NgIf } from '@angular/common';
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { FuseConfirmationConfig } from '@fuse/services/confirmation/confirmation.types';
 
 @Component({
-    selector     : 'fuse-confirmation-dialog',
-    templateUrl  : './dialog.component.html',
-    styles       : [
+    selector: 'fuse-confirmation-dialog',
+    templateUrl: './dialog.component.html',
+    styles: [
         `
             .fuse-confirmation-dialog-panel {
 
@@ -26,15 +26,19 @@ import { FuseConfirmationConfig } from '@fuse/services/confirmation/confirmation
         `,
     ],
     encapsulation: ViewEncapsulation.None,
-    standalone   : true,
-    imports      : [NgIf, MatButtonModule, MatDialogModule, MatIconModule, NgClass],
+    imports: [MatButtonModule, MatDialogModule, MatIconModule, NgClass]
 })
 export class FuseConfirmationDialogComponent
 {
+    data = inject<FuseConfirmationConfig>(MAT_DIALOG_DATA);
+
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(@Inject(MAT_DIALOG_DATA) public data: FuseConfirmationConfig)
+    constructor()
     {
     }
 

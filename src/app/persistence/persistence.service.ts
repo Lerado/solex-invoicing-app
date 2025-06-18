@@ -1,9 +1,11 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, from, of, shareReplay, switchAll, switchMap } from 'rxjs';
 import squel from 'squel';
-import Database, { QueryResult } from 'tauri-plugin-sql';
+import Database, { QueryResult } from '@tauri-apps/plugin-sql';
 import { Migrations } from './persistence.types';
+import { Injectable } from '@angular/core';
 
+@Injectable({ providedIn: 'root' })
 export class PersistenceService {
 
     private readonly _dbConnection = 'sqlite:solex-invoicing.db';

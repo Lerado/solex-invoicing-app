@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Shipment } from './shipment.types';
 import { PaginationDto, SortingDto, Pagination, computeQueryParams } from 'app/shared/utils/pagination.types';
 import { Observable } from 'rxjs';
@@ -7,13 +7,16 @@ import { CreateShipmentDto } from './shipment.dto';
 
 @Injectable({ providedIn: 'root' })
 export class ShipmentService {
+    private readonly _httpClient = inject(HttpClient);
+
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
 
     /**
      * Constructor
      */
-    constructor(
-        private readonly _httpClient: HttpClient
-    ) { }
+    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

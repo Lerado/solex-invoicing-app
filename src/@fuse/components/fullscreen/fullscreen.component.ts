@@ -1,5 +1,5 @@
 import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef, ViewEncapsulation, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -16,17 +16,24 @@ import { FSDocument, FSDocumentElement } from '@fuse/components/fullscreen/fulls
 })
 export class FuseFullscreenComponent implements OnInit
 {
+    private _document = inject<Document>(DOCUMENT);
+
     @Input() iconTpl: TemplateRef<any>;
     @Input() tooltip: string;
     private _fsDoc: FSDocument;
     private _fsDocEl: FSDocumentElement;
     private _isFullscreen: boolean = false;
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(@Inject(DOCUMENT) private _document: Document)
+    constructor()
     {
+        const _document = this._document;
+
         this._fsDoc = _document as FSDocument;
     }
 

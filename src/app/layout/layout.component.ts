@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, DestroyRef, Inject, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+
+import { Component, DestroyRef, OnInit, Renderer2, ViewEncapsulation, DOCUMENT, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FuseConfig, FuseConfigService } from '@fuse/services/config';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
@@ -15,29 +15,31 @@ import { ModernLayoutComponent } from './layouts/horizontal/modern/modern.compon
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [EmptyLayoutComponent, ModernLayoutComponent]
 })
 export class LayoutComponent implements OnInit {
+    private readonly _activatedRoute = inject(ActivatedRoute);
+    private readonly _document = inject<Document>(DOCUMENT);
+    private readonly _renderer2 = inject(Renderer2);
+    private readonly _router = inject(Router);
+    private readonly _fuseConfigService = inject(FuseConfigService);
+    private readonly _fuseMediaWatcherService = inject(FuseMediaWatcherService);
+    private readonly _fusePlatformService = inject(FusePlatformService);
+    private readonly _destroyRef = inject(DestroyRef);
+
 
     config: FuseConfig;
     layout: string;
     scheme: 'dark' | 'light';
     theme: string;
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _activatedRoute: ActivatedRoute,
-        @Inject(DOCUMENT) private readonly _document: Document,
-        private readonly _renderer2: Renderer2,
-        private readonly _router: Router,
-        private readonly _fuseConfigService: FuseConfigService,
-        private readonly _fuseMediaWatcherService: FuseMediaWatcherService,
-        private readonly _fusePlatformService: FusePlatformService,
-        private readonly _destroyRef: DestroyRef
-    ) {
+    constructor() {
     }
 
     // -----------------------------------------------------------------------------------------------------

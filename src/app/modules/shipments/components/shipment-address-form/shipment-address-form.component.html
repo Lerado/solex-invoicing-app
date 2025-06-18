@@ -39,10 +39,12 @@
     <!-- Phone number -->
     <mat-form-field subscriptSizing="dynamic">
         <mat-label>Contact</mat-label>
-        <ngx-mat-intl-tel-input formControlName="contact" type="tel" class="w-full" id="phone"
+        <!-- <ngx-mat-intl-tel-input formControlName="contact" type="tel" class="w-full" id="phone"
             [preferredCountries]="phoneInputCountryCode()" [enableSearch]="true" [enablePlaceholder]="true"
             [format]="'national'" placeholder="Numéro de téléphone (indicatif de pays inclus)">
-        </ngx-mat-intl-tel-input>
+        </ngx-mat-intl-tel-input> -->
+        <input matInput formControlName="contact" type="tel"
+            placeholder="Numéro de téléphone (indicatif de pays inclus)">
     </mat-form-field>
 
     <!-- Address -->

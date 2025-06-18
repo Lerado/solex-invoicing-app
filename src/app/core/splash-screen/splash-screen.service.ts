@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+
+import { Injectable, DOCUMENT, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { FuseSplashScreenService } from '@fuse/services/splash-screen';
 import { delay, filter, take } from 'rxjs';
@@ -7,15 +7,19 @@ import { TauriService } from '../tauri/tauri.service';
 
 @Injectable({ providedIn: 'root' })
 export class ExtendedSplashScreenService extends FuseSplashScreenService {
+    private readonly _tauriService = inject(TauriService);
+
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
 
     /**
      * Constructor
      */
-    constructor(
-        @Inject(DOCUMENT) _document: Document,
-        _router: Router,
-        private readonly _tauriService: TauriService
-    ) {
+    constructor() {
+        const _document = inject<Document>(DOCUMENT);
+        const _router = inject(Router);
+
         super(_document, _router);
 
         // Extend web app splashscreen with Desktop splashscreen
@@ -28,6 +32,6 @@ export class ExtendedSplashScreenService extends FuseSplashScreenService {
                 take(1),
                 delay(1000)
             )
-            .subscribe(() => this._tauriService.invoke('close_splashscreen').subscribe());
+            .subscribe(() => this._tauriService.invoke('close_splashscreen').subscribe({next: v => console.log(v)}));
     }
 }

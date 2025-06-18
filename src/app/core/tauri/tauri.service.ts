@@ -1,5 +1,5 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { invoke } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api/core';
 import { from, Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

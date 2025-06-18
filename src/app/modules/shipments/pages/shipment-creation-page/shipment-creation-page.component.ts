@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, WritableSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, WritableSignal, signal, inject } from '@angular/core';
 import { ShipmentCreationStepperComponent } from '../../components/shipment-creation-stepper/shipment-creation-stepper.component';
 import { CountryService } from 'app/core/country/country.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -12,13 +12,18 @@ import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 
 @Component({
     selector: 'sia-shipment-creation-page',
-    standalone: true,
     imports: [ShipmentCreationStepperComponent, FuseAlertComponent],
     templateUrl: './shipment-creation-page.component.html',
     styles: ':host { display: block;}',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentCreationPageComponent {
+    private readonly _shipmentService = inject(ShipmentService);
+    private readonly _countryService = inject(CountryService);
+    private readonly _cityService = inject(CityService);
+    private readonly _fuseConfirmationService = inject(FuseConfirmationService);
+    private readonly _router = inject(Router);
+
 
     countries = toSignal(this._countryService.countries$, { initialValue: [] });
     cities = toSignal(this._cityService.cities$, { initialValue: [] });
@@ -32,16 +37,13 @@ export class ShipmentCreationPageComponent {
 
     showAlert = signal(false);
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _shipmentService: ShipmentService,
-        private readonly _countryService: CountryService,
-        private readonly _cityService: CityService,
-        private readonly _fuseConfirmationService: FuseConfirmationService,
-        private readonly _router: Router
-    ) { }
+    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
