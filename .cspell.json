@@ -1,18 +1,25 @@
 {
     "version": "0.2",
     "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
-    "language": "en",
+    "import": [
+        "@cspell/dict-fr-fr/cspell-ext.json"
+    ],
+    "language": "en,fr,fr_FR",
     "words": [
         "componentless",
-        "Heroicons",
+        "FCFA",
+        "heroicons",
         "lerado",
+        "luxon",
         "Luxon",
         "ngneat",
+        "RCCM",
         "solex",
         "solextgv",
         "squel",
-        "Tauri",
-        "Transloco",
+        "tauri",
+        "titlecase",
+        "transloco",
         "twotone"
     ],
     "flagWords": [],
@@ -22,6 +29,7 @@
         "tsconfig.json",
         "node_modules/**",
         "src/@*",
+        "src/app/mock-api/**",
         "*.config.js",
         "*.conf.js",
         ".*rc*",
