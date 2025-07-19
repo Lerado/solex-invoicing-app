@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Store } from '../store';
 import { CityModel } from './types';
 import { Injectable } from '@angular/core';
-import { HasMigrations, Migrations } from 'app/persistence/persistence.types';
+import { HasMigrations, Migrations } from 'app/core/persistence/persistence.types';
 import { cities } from './data';
 
 @Injectable({ providedIn: 'root' })

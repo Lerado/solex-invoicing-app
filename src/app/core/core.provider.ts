@@ -4,6 +4,8 @@ import { provideTransloco } from './transloco/transloco.provider';
 import { provideIcons } from './icons/icons.provider';
 import { provideSplashScreen } from './splash-screen/splash-screen.provider';
 import { provideAuth } from './auth/auth.provider';
+import { providePersistence } from './persistence/persistence.provider';
+import { mockApiStores } from 'app/mock-api';
 
 export const provideCore = (): Array<EnvironmentProviders | Provider> => [
 
@@ -20,6 +22,9 @@ export const provideCore = (): Array<EnvironmentProviders | Provider> => [
     provideIcons(),
 
     // Splash screen
-    provideSplashScreen()
+    provideSplashScreen(),
+
+    // Persistence
+    providePersistence([...mockApiStores]),
 
 ];
