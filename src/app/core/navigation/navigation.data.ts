@@ -3,19 +3,26 @@ import { Navigation } from './navigation.types';
 
 const navigationItems: FuseNavigationItem[] = [
     {
+        id: 'clients',
+        title: 'Clients',
+        type: 'basic',
+        icon: 'heroicons_outline:users',
+        link: '/clients'
+    },
+    {
         id: 'shipments',
-        title: 'Expéditions', // cspell:disable-line
+        title: 'Expéditions',
         type: 'basic',
         icon: 'heroicons_outline:truck',
         link: '/shipments'
     },
-    {
-        id: 'packages',
-        title: 'Colis', // cspell:disable-line
-        type: 'basic',
-        icon: 'heroicons_outline:cube',
-        link: '/packages'
-    }
+    // {
+    //     id: 'packages',
+    //     title: 'Colis',
+    //     type: 'basic',
+    //     icon: 'heroicons_outline:cube',
+    //     link: '/packages'
+    // }
 ];
 
 export default {

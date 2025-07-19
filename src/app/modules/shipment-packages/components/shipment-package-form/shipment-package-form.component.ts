@@ -9,6 +9,9 @@ import { CreateShipmentPackageDto } from 'app/core/shipment-package/shipment-pac
 import { Shipment } from 'app/core/shipment/shipment.types';
 import { filter } from 'rxjs';
 
+/**
+ * @deprecated
+ */
 @Component({
     selector: 'sia-shipment-package-form',
     imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, CurrencyPipe],
@@ -46,9 +49,6 @@ export class ShipmentPackageFormComponent {
     private readonly _quantity = toSignal(this.shipmentPackageForm.controls.quantity.valueChanges, { initialValue: 0 });
 
     totalPrice = computed(() => this._unitaryPrice() * this._quantity());
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
 
     /**
      * Constructor

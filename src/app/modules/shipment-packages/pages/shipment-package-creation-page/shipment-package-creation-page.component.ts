@@ -16,6 +16,9 @@ import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 
+/**
+ * @deprecated
+ */
 @Component({
     selector: 'sia-shipment-creation-page',
     imports: [RouterLink, ReactiveFormsModule, FuseAlertComponent, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatIconModule, MatButtonModule, ShipmentPackageFormComponent, DatePipe, CurrencyPipe, DecimalPipe],
@@ -23,7 +26,7 @@ import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
     styles: ':host { display: block;}',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShipmentPackageCreationPageComponent {
+export default class ShipmentPackageCreationPageComponent {
     private readonly _shipmentPackageService = inject(ShipmentPackageService);
     private readonly _shipmentService = inject(ShipmentService);
     private readonly _router = inject(Router);
@@ -54,9 +57,6 @@ export class ShipmentPackageCreationPageComponent {
     });
 
     showAlert = signal(false);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
 
     /**
      * Constructor

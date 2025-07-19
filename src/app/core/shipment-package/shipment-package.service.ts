@@ -5,18 +5,13 @@ import { Observable } from 'rxjs';
 import { ShipmentPackage } from './shipment-package.types';
 import { CreateShipmentPackageDto } from './shipment-package.dto';
 
+/**
+ * @deprecated
+ */
 @Injectable({ providedIn: 'root' })
 export class ShipmentPackageService {
+
     private readonly _httpClient = inject(HttpClient);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
-
-    /**
-     * Constructor
-     */
-    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

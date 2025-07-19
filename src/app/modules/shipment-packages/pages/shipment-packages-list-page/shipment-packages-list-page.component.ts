@@ -16,6 +16,9 @@ import { TableListActionsComponent } from 'app/shared/components/table-list-acti
 import { RouterLink } from '@angular/router';
 import { ShipmentPackage } from 'app/core/shipment-package/shipment-package.types';
 
+/**
+ * @deprecated
+ */
 @Component({
     selector: 'sia-shipment-packages-list-page',
     imports: [RouterLink, MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentPackagesTableListComponent, TableListActionsComponent],
@@ -23,7 +26,7 @@ import { ShipmentPackage } from 'app/core/shipment-package/shipment-package.type
     templateUrl: './shipment-packages-list-page.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit {
+export default class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit {
     private readonly _shipmentPackagesQueryService = inject(ShipmentPackagesQueryService);
     private readonly _destroyRef = inject(DestroyRef);
 
@@ -67,14 +70,6 @@ export class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit 
         //     }
         // }
     ];
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
-    /**
-     * Constructor
-     */
-    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
