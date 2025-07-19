@@ -1,17 +1,15 @@
 import { Routes } from '@angular/router';
-import { ShipmentPackagesListPageComponent } from './pages/shipment-packages-list-page/shipment-packages-list-page.component';
-import { ShipmentPackageCreationPageComponent } from './pages/shipment-package-creation-page/shipment-package-creation-page.component';
 
 export default [
     {
         path: '',
         pathMatch: 'full',
-        title: 'Colis', // cspell:disable-line
-        component: ShipmentPackagesListPageComponent
+        title: 'Colis',
+        loadComponent: () => import('./pages/shipment-packages-list-page/shipment-packages-list-page.component')
     },
     {
         path: 'create',
-        title: 'Ajouter un colis', // cspell:disable-line
-        component: ShipmentPackageCreationPageComponent
+        title: 'Ajouter un colis',
+        loadComponent: () => import('./pages/shipment-package-creation-page/shipment-package-creation-page.component')
     }
 ] as Routes;

@@ -1,23 +1,20 @@
 import { Routes } from '@angular/router';
-import { ShipmentsListPageComponent } from './pages/shipments-list-page/shipments-list-page.component';
-import { ShipmentCreationPageComponent } from './pages/shipment-creation-page/shipment-creation-page.component';
-import { ShipmentPrintingPageComponent } from './pages/shipment-printing-page/shipment-printing-page.component';
 
 export default [
     {
         path: '',
         pathMatch: 'full',
-        title: 'Expéditions', // cspell:disable-line
-        component: ShipmentsListPageComponent
+        title: 'Expéditions',
+        loadComponent: () => import('./pages/shipments-list-page/shipments-list-page.component')
     },
     {
         path: 'create',
-        title: 'Ajouter une expédition', // cspell:disable-line
-        component: ShipmentCreationPageComponent
+        title: 'Ajouter une expédition',
+        loadComponent: () => import('./pages/shipment-creation-page/shipment-creation-page.component')
     },
     {
-        path: ':shipmentId/print',
+        path: ':shipmentNumber/print',
         title: 'Imprimer le bordereau',
-        component: ShipmentPrintingPageComponent
+        loadComponent: () => import('./pages/shipment-printing-page/shipment-printing-page.component')
     }
 ] as Routes;
