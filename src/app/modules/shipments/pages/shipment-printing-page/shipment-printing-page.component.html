@@ -1,285 +1,30 @@
 <section cdkScrollable
     class="relative flex flex-col flex-auto max-w-screen-xl min-w-0 px-6 mx-auto print:p-0 print:overflow-visible md:px-8 dark:bg-transparent">
 
-    <!-- Print button -->
-    <button (click)="print()" class="fixed top-20 right-10 print:hidden" mat-flat-button color="primary">
-        <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
-    </button>
+    <div class="fixed flex justify-end top-20 right-10 gap-x-4 print:hidden">
+        <!-- Switch -->
+        <mat-button-toggle-group [(value)]="printableType" name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle [value]="printableTypes.Slip">Bordereau d'expédition</mat-button-toggle>
+            <mat-button-toggle [value]="printableTypes.Receipt">Ticket de caisse</mat-button-toggle>
+        </mat-button-toggle-group>
+        <!-- Print button -->
+        <button (click)="print()" mat-flat-button color="primary">
+            <mat-icon svgIcon="heroicons_outline:printer"></mat-icon>
+        </button>
+    </div>
+
     <!-- Main -->
-    <div class="inline-block p-6 text-left sm:p-10 print:p-0">
+    <div class="inline-block px-6 py-20 text-left sm:px-10 print:p-0">
 
-        <!-- Invoice -->
-        @if (shipment()) {
-        @defer (when shipment()) {
-        <div
-            class="shadow text-black bg-[#d5e4f1] w-240 min-w-240 max-h-240 border-primary border-double border-8 print:w-auto print:max-h-none print:p-0 print:rounded-none print:shadow-none print:bg-[#d5e4f1]">
-
-            <!-- Two  columns layout -->
-            <div class="flex h-full gap-x-2">
-
-                <div class="flex flex-col mb-1 w-2/3 gap-y-0.5">
-                    <!-- Header -->
-                    <div class="flex self-start w-full">
-
-                        <!-- Logo -->
-                        <picture class="relative flex-0 block w-[170px] h-[100px] mr-2">
-                            <img ngSrc="assets/images/logo/logo-invoice.png" alt="Logo image invoice" priority fill>
-                        </picture>
-
-                        <div class="flex flex-col justify-between w-full gap-y-2">
-                            <p class="p-1 mt-1 text-xl font-bold bg-white border-2 border-black rounded-lg">
-                                BORDEREAU D'EXPEDITION
-                                <span class="text-warn">
-                                    &numero;
-                                    {{ shipment().number }}
-                                </span>
-                            </p>
-                            <div class="flex w-full gap-x-1">
-                                <!-- Shipper town -->
-                                <div class="w-1/2">
-                                    <span class="font-semibold">Ville de provenance</span>
-                                    <div class="flex items-center h-8 px-4 bg-white rounded-xl">
-                                        {{ shipment().from.city.name }}
-                                    </div>
-                                </div>
-                                <!-- Recipient town -->
-                                <div class="w-1/2">
-                                    <span class="font-semibold">Ville de destination</span>
-                                    <div class="flex items-center h-8 px-4 bg-white rounded-xl">
-                                        {{ shipment().to.city.name }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- Packages -->
-                    <div class="mt-1 ml-1 bg-white border-2 border-black rounded-xl">
-
-                        <div class="flex items-center">
-                            <div class="py-1  px-1.5 text-lg font-semibold rounded-xl bg-[#fff200] text-primary">
-                                DESCRIPTION DE L'ENVOI
-                            </div>
-                            <div class="flex gap-x-2 ml-auto justify-between mr-1.5">
-                                <span class="mr-1 font-semibold">
-                                    ENLEVEMENT:
-                                </span>
-                                <div>
-                                    <span class="font-semibold">Date:</span>
-                                    {{ shipment().pickupDate | date:'shortDate' }}
-                                </div>
-                                <div>
-                                    <span class="font-semibold">Heure:</span>
-                                    {{ shipment().pickupTime }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Items -->
-                        <div class="grid grid-cols-12 *:border-1 *:min-h-[24px] *:border-black">
-
-                            <!-- Headers -->
-                            <div
-                                class="flex items-center justify-center col-span-2 p-1 font-semibold text-center border-t border-r">
-                                Qté</div>
-                            <div
-                                class="flex items-center justify-center col-span-8 p-1 font-semibold text-center border-t border-r">
-                                Désignation</div>
-                            <div
-                                class="flex items-center justify-center col-span-2 p-1 font-semibold text-center border-t">
-                                Poids</div>
-
-                            <!-- Rows -->
-                            @for (package of shipmentPackages(); track package.id) {
-                            <div class="flex items-center justify-center col-span-2 p-1 text-center border-t border-r">
-                                {{ package.quantity | number }}
-                            </div>
-                            <div class="flex items-center justify-center col-span-8 p-1 text-center border-t border-r">
-                                {{ package.designation }}
-                            </div>
-                            <div class="flex items-center justify-center col-span-2 p-1 text-center border-t">
-                                {{ package.weight | number }} kg
-                            </div>
-                            }
-
-                            @for (emptyRow of shipmentPackagesEmptySeats(); track $index) {
-                            <div class="flex items-center justify-center col-span-2 p-1 text-center border-t border-r">
-                            </div>
-                            <div class="flex items-center justify-center col-span-8 p-1 text-center border-t border-r">
-                            </div>
-                            <div class="flex items-center justify-center col-span-2 p-1 text-center border-t">
-                            </div>
-                            }
-
-                            <div class="flex items-center justify-center col-span-2 p-1 text-center border-t border-r">
-                            </div>
-                            <div class="flex items-center justify-between col-span-8 p-1 text-center border-t border-r">
-                                <div>
-                                    <span class="font-semibold">Total plis et colis:</span>
-                                    {{ shipmentPackagesCount() | number }}
-                                </div>
-                                <div class="font-semibold">Poids total:</div>
-                            </div>
-                            <div class="flex items-center justify-center col-span-2 p-1 text-center border-t">
-                                {{ shipmentPackagesWeightTotal() | number }} kg
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- Payment, signatures -->
-                    <div class="flex mt-1 ml-1 gap-x-2">
-                        <div class="w-1/3 border-2 border-black rounded-xl">
-                            <div
-                                class="px-2 h-12 bg-[#fff200] rounded-t-xl flex flex-col text-center justify-between items-center font-semibold text-primary">
-                                <span class="m-auto">Paiement</span>
-                            </div>
-                            <dl class="grid grid-cols-12 p-2 bg-white gap-y-1">
-                                <dt class="col-span-3 font-semibold">PHT</dt>
-                                <dd class="col-span-9">
-                                    {{ shipment().totalPrice | currency }}
-                                </dd>
-                                <dt class="col-span-3 font-semibold">TVA</dt>
-                                <dd class="col-span-9">
-                                    {{ 0 | currency }}
-                                </dd>
-                                <dt class="col-span-3 font-semibold">PTTC</dt>
-                                <dd class="col-span-9">
-                                    {{ shipment().totalPrice | currency }}
-                                </dd>
-                            </dl>
-                        </div>
-                        <div class="w-1/3 border-2 border-black rounded-xl">
-                            <div
-                                class="px-2 h-12 bg-[#fff200] rounded-t-xl text-center flex flex-col font-semibold text-primary">
-                                Signature expéditeur
-                                <span class="text-[0.5rem] italic leading-3">Cette signature vaut acceptation des
-                                    clauses contractuelles au verso</span>
-                            </div>
-                            <div></div>
-                        </div>
-                        <div class="w-1/3 border-2 border-black rounded-xl">
-                            <div
-                                class="px-2 h-12 bg-[#fff200] flex flex-col rounded-t-xl text-center justify-center font-semibold text-primary">
-                                Nom et signature
-                                <span class="text-[0.5rem] italic leading-3">Opérateur SOLEX</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Amount in letters -->
-                    <div class="flex mt-1 ml-1 gap-x-2">
-                        <div class="w-9/12 p-2 bg-white border-2 border-black h-18 rounded-xl">
-                            <span class="text-xs italic font-semibold">
-                                Montant en toutes lettres à confirmer par l'expéditeur:
-                            </span>
-                        </div>
-                        <div class="w-3/12 p-1 bg-white border-2 border-black rounded-xl">
-                            <p class="text-[0.5rem] italic font-semibold text-center">
-                                SIGNATURE EXPEDITEUR POUR CONFIRMATION
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col flex-auto w-1/3 mb-1 gap-y-2">
-                    <!-- Shipper and recipient -->
-                    <div class="flex flex-col w-full px-2 py-1 mt-1 bg-white border-2 border-black rounded-lg h-3/5">
-                        <p class="mx-auto text-lg font-bold">
-                            <span class="underline text-primary">EXPEDITEUR</span>
-                        </p>
-                        <dl class="grid grid-cols-12 mt-2 gap-x-1">
-                            <dt class="col-span-2 font-semibold">Nom:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().from.firstName }} {{ shipment().from.lastName }}
-                            </dd>
-                            <dt class="col-span-2 font-semibold">Tél:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().from.contact | phone }}
-                            </dd>
-                            <dt class="col-span-2 font-semibold">Rue:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().from.address }}
-                            </dd>
-                            <dt class="col-span-2 font-semibold">Ville:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().from.city.name }}
-                            </dd>
-                            <dt class="col-span-2 font-semibold">Pays:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().from.country }}
-                            </dd>
-                        </dl>
-                        <p class="mx-auto mt-3 text-lg font-bold underline text-primary">
-                            DESTINATAIRE
-                        </p>
-                        <dl class="grid grid-cols-12 mt-2 gap-x-1">
-                            <dt class="col-span-2 font-semibold">Nom:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().to.firstName }} {{ shipment().to.lastName }}
-                            </dd>
-                            <dt class="col-span-2 font-semibold">Tél:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().to.contact | phone }}
-                            </dd>
-                            <dt class="col-span-2 font-semibold">Rue:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().to.address }}
-                            </dd>
-                            <dt class="col-span-2 font-semibold">Ville:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().to.city.name }}
-                            </dd>
-                            <dt class="col-span-2 font-semibold">Pays:</dt>
-                            <dd class="col-span-10 text-md">
-                                {{ shipment().to.country }}
-                            </dd>
-                        </dl>
-                    </div>
-                    <!-- Deliver -->
-                    <div class="flex flex-col border-2 border-black rounded-xl h-2/5">
-                        <div
-                            class="flex items-center justify-center h-6 p-1 mt-2 text-lg font-semibold text-center text-primary">
-                            LIVRAISON
-                        </div>
-                        <div class="flex flex-auto border-black border-y-2">
-                            <div class="flex flex-col w-1/2 border-r-2 border-black">
-                                <div class="border-b-2 border-black h-1/2">
-                                    <p class="p-0.5 font-semibold leading-3 text-md">
-                                        Réceptioniste (Nom et signature)
-                                    </p>
-                                </div>
-                                <div class="h-1/2">
-                                    <p class="p-0.5 font-semibold leading-3 text-md">
-                                        Opérateur SOLEX (Nom et signature)
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="flex flex-col w-1/2">
-                                <p class="p-0.5 w-full font-semibold text-center leading-3 text-md">
-                                    Observations
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-center h-6 p-1 px-2 mt-auto text-center gap-x-1">
-                            <div class="w-1/2">
-                                Date:
-                            </div>
-                            <div class="w-1/2">
-                                Heure:
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div
-                class="bg-[#fff200] line-clamp-1 rounded-xl p-0.5 w-full leading-3 font-semibold text-center mb-1 text-[0.625rem]">
-                Sarl. au capital de F.cfa: 100 000 000 - RCCM:RC/YAO/2006/B/1857 - N° Contr.: M110600021527L -B.P 11988
-                Yaoundé-Cameroun - Tél.:+237 670 43 20 73 / 677 08 79 03
-            </div>
-
-        </div>
+        <!-- Shipping slip -->
+        @if (printableType === printableTypes.Slip) {
+        @defer (when shipment() && printableType === printableTypes.Slip) {
+        <sia-shipping-slip [shipment]="shipment()!" />
+        }
+        }
+        @else if (printableType === printableTypes.Receipt) {
+        @defer (when shipment() && printableType === printableTypes.Receipt) {
+        <sia-shipping-receipt [shipment]="shipment()" />
         }
         }
 

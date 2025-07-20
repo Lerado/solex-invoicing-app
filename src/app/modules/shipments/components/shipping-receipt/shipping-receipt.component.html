@@ -1,0 +1,125 @@
+<div class="w-[280px] bg-white p-2 mx-auto font-mono text-xs print:p-0 print:m-0 print:w-[80mm]">
+    <!-- En-tête -->
+    <div class="mb-4 text-center">
+        <h2 class="mb-1 text-base font-bold">SOLEX</h2>
+        <p class="text-xs">B.P 11988 Yaoundé, Cameroun </p>
+        <p class="text-xs">Tél: (237) 670432073/677087903</p>
+        <div class="my-2 tracking-tighter">================================</div>
+    </div>
+
+    <!-- Informations du reçu -->
+    <div class="mb-4">
+        <div class="flex justify-between my-1">
+            <span>Reçu N°:</span>
+            <span>{{ shipment().number }}</span>
+        </div>
+        <div class="flex justify-between my-1">
+            <span>Date:</span>
+            <span>{{ shipment().pickupDate | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="flex justify-between my-1">
+            <span>Heure:</span>
+            <span>{{ shipment().pickupTime }}</span>
+        </div>
+        <div class="flex justify-between my-1">
+            <span>Caissier:</span>
+            <span>{{ cashierName() || 'Personnel' }}</span>
+        </div>
+        <div class="my-2 tracking-tighter">--------------------------------</div>
+    </div>
+
+    <!-- Informations Expéditeur/Destinataire -->
+    <div class="mb-4">
+        @if (shipment().from) {
+        <div class="mb-3">
+            <p class="mb-1 font-bold">EXPÉDITEUR:</p>
+            <p class="text-[11px]">{{ shipment().from.firstName }} {{ shipment().from.lastName }}</p>
+            <p class="text-[11px]">Tél: {{ shipment().from.contact }}</p>
+            @if (shipment().from.address) {
+            <p class="text-[11px]">{{ shipment().from.address }}</p>
+            }
+        </div>
+        }
+
+        @if (shipment().to) {
+        <div class="mb-3">
+            <p class="mb-1 font-bold">DESTINATAIRE:</p>
+            <p class="text-[11px]">{{ shipment().to.firstName }} {{ shipment().to.lastName }}</p>
+            <p class="text-[11px]">Tél: {{ shipment().to.contact }}</p>
+            @if (shipment().to.address) {
+            <p class="text-[11px]">{{ shipment().to.address }}</p>
+            }
+        </div>
+        }
+
+        @if (shipment().deliveryAddress || shipment().deliveryCity) {
+        <div class="mb-3">
+            <p class="mb-1 font-bold">LIVRAISON:</p>
+            @if (shipment().deliveryAddress) {
+            <p class="text-[11px]">{{ shipment().deliveryAddress }}</p>
+            }
+            @if (shipment().deliveryCity?.name) {
+            <p class="text-[11px]">{{ shipment().deliveryCity.name }}</p>
+            }
+            @if (shipment().deliveryCity?.countryCode) {
+            <p class="text-[11px]">{{ shipment().deliveryCity.countryCode }}</p>
+            }
+        </div>
+        }
+        <div class="my-2 tracking-tighter">--------------------------------</div>
+    </div>
+
+    <!-- Articles -->
+    @if (shipment().items && shipment().items.length > 0) {
+    <div class="mb-4">
+        <p class="mb-2 font-bold">ARTICLES:</p>
+        @for (item of shipment().items; track item.id) {
+        <div class="flex gap-2 my-1 text-[11px]">
+            <span class="min-w-[30px]">{{ item.quantity }}x</span>
+            <span class="flex-1">{{ item.designation }}</span>
+        </div>
+        }
+        <div class="my-2 tracking-tighter">--------------------------------</div>
+    </div>
+    }
+
+    <!-- Informations de poids -->
+    <div class="mb-4">
+        <div class="flex justify-between my-1">
+            <span>Poids Réel:</span>
+            <span>{{ shipment().totalWeight | number }} kg</span>
+        </div>
+        <div class="flex justify-between my-1">
+            <!-- cspell:disable-next-line -->
+            <span>Poids Volum.:</span>
+            <span>{{ shipment().volumetricWeight | number }} kg</span>
+        </div>
+        <div class="flex justify-between my-1">
+            <span>Dimensions:</span>
+            <span>{{ dimensions() }}</span>
+        </div>
+        <div class="flex justify-between my-1 font-bold">
+            <span>Poids Final:</span>
+            <span>{{ shipment().finalWeight | number }} kg</span>
+        </div>
+        <div class="my-2 tracking-tighter">================================</div>
+    </div>
+
+    <!-- Total -->
+    <div class="mb-4">
+        <div class="flex justify-between my-2 text-base font-bold">
+            <span>TOTAL:</span>
+            <span>{{ shipment().totalPrice | currency }}</span>
+        </div>
+        <div class="my-2 tracking-tighter">================================</div>
+    </div>
+
+    <!-- Pied de page -->
+    <div class="mt-4 text-center">
+        <p class="text-[11px] my-1">Merci de nous faire confiance!</p>
+        <p class="text-[11px] my-1">{{ currentDateTime() }}</p>
+        <!-- Barcode canvas -->
+        <canvas [barcode]="shipment().number" [barcodeHeight]="25" class="mx-auto my-3"></canvas>
+        <p class="text-[10px]">{{ shipment().number }}</p>
+    </div>
+</div>
