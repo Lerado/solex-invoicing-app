@@ -2,33 +2,34 @@ import { Observable, map, switchMap } from 'rxjs';
 import { Store } from '../store';
 import { CreateShipmentPackageModelDto, ShipmentPackageModel } from './types';
 import { Injectable } from '@angular/core';
+import { ShipmentApiStore } from '../shipment/store';
 
 @Injectable({ providedIn: 'root' })
 export class ShipmentPackageApiStore extends Store {
 
-    readonly TABLE_NAME = 'shipments_packages';
+    static readonly TABLE_NAME = 'shipment_items';
 
     private readonly ROOT_MODEL_QUERY = `
     SELECT
         json_group_array(
             json_object(
-                'id', shipments_packages.id,
-                'totalPrice', shipments_packages.totalPrice,
-                'price', shipments_packages.price,
-                'quantity', shipments_packages.quantity,
-                'weight', shipments_packages.weight,
-                'designation', shipments_packages.designation,
-                'shipmentId', shipments_packages.shipmentId,
-                'createdAt', shipments_packages.createdAt,
-                'updatedAt', shipments_packages.updatedAt,
+                'id', ${ShipmentPackageApiStore.TABLE_NAME}.id,
+                'totalPrice', ${ShipmentPackageApiStore.TABLE_NAME}.totalPrice,
+                'price', ${ShipmentPackageApiStore.TABLE_NAME}.price,
+                'quantity', ${ShipmentPackageApiStore.TABLE_NAME}.quantity,
+                'weight', ${ShipmentPackageApiStore.TABLE_NAME}.weight,
+                'designation', ${ShipmentPackageApiStore.TABLE_NAME}.designation,
+                'shipmentId', ${ShipmentPackageApiStore.TABLE_NAME}.shipmentId,
+                'createdAt', ${ShipmentPackageApiStore.TABLE_NAME}.createdAt,
+                'updatedAt', ${ShipmentPackageApiStore.TABLE_NAME}.updatedAt,
                 'shipment', json_object(
-                    'id', shipments.id,
-                    'totalPrice', shipments.totalPrice,
-                    'number', shipments.number,
-                    'pickupTime', shipments.pickupTime,
-                    'pickupDate', shipments.pickupDate,
-                    'createdAt', shipments.createdAt,
-                    'updatedAt', shipments.updatedAt,
+                    'id', ${ShipmentApiStore.TABLE_NAME}.id,
+                    'totalPrice', ${ShipmentApiStore.TABLE_NAME}.totalPrice,
+                    'number', ${ShipmentApiStore.TABLE_NAME}.number,
+                    'pickupTime', ${ShipmentApiStore.TABLE_NAME}.pickupTime,
+                    'pickupDate', ${ShipmentApiStore.TABLE_NAME}.pickupDate,
+                    'createdAt', ${ShipmentApiStore.TABLE_NAME}.createdAt,
+                    'updatedAt', ${ShipmentApiStore.TABLE_NAME}.updatedAt,
                     'from', json_object(
                         'id', shipments_from.id,
                         'firstName', shipments_from.firstName,
@@ -67,15 +68,15 @@ export class ShipmentPackageApiStore extends Store {
             )
         ) AS data
     FROM
-        shipments_packages
+        ${ShipmentPackageApiStore.TABLE_NAME}
     JOIN
-        shipments ON shipments.id = shipments_packages.shipmentId
+        ${ShipmentApiStore.TABLE_NAME} ON ${ShipmentApiStore.TABLE_NAME}.id = ${ShipmentPackageApiStore.TABLE_NAME}.shipmentId
     JOIN
-        shipments_from ON shipments.id = shipments_from.shipmentId
+        shipments_from ON ${ShipmentApiStore.TABLE_NAME}.id = shipments_from.shipmentId
     JOIN
         cities AS shipper_city ON shipments_from.cityId = shipper_city.id
     JOIN
-        shipments_to ON shipments.id = shipments_to.shipmentId
+        shipments_to ON ${ShipmentApiStore.TABLE_NAME}.id = shipments_to.shipmentId
     JOIN
         cities AS recipient_city ON shipments_to.cityId = recipient_city.id
     `;
@@ -92,7 +93,7 @@ export class ShipmentPackageApiStore extends Store {
         let query = this.ROOT_MODEL_QUERY;
         if (shipmentId) {
             query += `
-                WHERE ${this.TABLE_NAME}.shipmentId = ${shipmentId}
+                WHERE ${ShipmentPackageApiStore.TABLE_NAME}.shipmentId = ${shipmentId}
                 `;
         }
         // Execute query
@@ -112,7 +113,7 @@ export class ShipmentPackageApiStore extends Store {
         const createShipmentPackageQuery: string = this._persistence
             .queryBuilder
             .insert({ replaceSingleQuotes: true })
-            .into(this.TABLE_NAME)
+            .into(ShipmentPackageApiStore.TABLE_NAME)
             .setFields({
                 ...payload,
                 createdAt: Date.now(),
@@ -127,7 +128,7 @@ export class ShipmentPackageApiStore extends Store {
                     const updateShipmentPriceQuery: string = this._persistence
                         .queryBuilder
                         .update()
-                        .table('shipments')
+                        .table(ShipmentApiStore.TABLE_NAME)
                         .where('id = ?', payload.shipmentId)
                         .setFields({
                             updatedAt: Date.now(),

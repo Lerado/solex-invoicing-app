@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { PersistenceService } from '../persistence/persistence.service';
+import { PersistenceService } from 'app/core/persistence/persistence.service';
 
 @Injectable({ providedIn: 'root' })
 export class Store {

@@ -1,6 +1,9 @@
 import { Shipment } from 'app/core/shipment/shipment.types';
 
-interface ShipmentPackage {
+/**
+ * @deprecated
+ */
+export interface ShipmentPackage {
 
     readonly id: number;
 
@@ -15,5 +18,3 @@ interface ShipmentPackage {
 
     readonly createdAt: number;
 }
-
-export { ShipmentPackage };

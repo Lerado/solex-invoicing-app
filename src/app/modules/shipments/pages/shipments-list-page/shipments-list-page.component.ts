@@ -79,14 +79,6 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
         // }
     ];
 
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
-    /**
-     * Constructor
-     */
-    constructor() { }
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------

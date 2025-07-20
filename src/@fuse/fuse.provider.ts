@@ -1,6 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { EnvironmentProviders, importProvidersFrom, inject, Provider, provideEnvironmentInitializer, provideAppInitializer } from '@angular/core';
-import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
+import { EnvironmentProviders, importProvidersFrom, inject, Provider, provideEnvironmentInitializer } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FUSE_MOCK_API_DEFAULT_DELAY, mockApiInterceptor } from '@fuse/lib/mock-api';

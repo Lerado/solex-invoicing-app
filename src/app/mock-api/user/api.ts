@@ -6,12 +6,9 @@ import { map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserMockApi {
+
     private readonly _fuseMockApiService = inject(FuseMockApiService);
     private readonly _userApiStore = inject(UserApiStore);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
 
     /**
      * Constructor
@@ -35,12 +32,11 @@ export class UserMockApi {
         this._fuseMockApiService
             .onGet('api/common/user')
             .reply(() => {
-                return this._userApiStore.get(1)
+                return this._userApiStore.get()
                     .pipe(
                         map((result) => {
                             // Sign in successful
                             if (result) {
-                                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                                 const { rootPassword, ...user } = cloneDeep(result) ?? {};
                                 return [
                                     200,

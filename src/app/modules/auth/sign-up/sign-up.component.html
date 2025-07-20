@@ -13,7 +13,7 @@
             @if (showAlert()) {
             @defer(when showAlert()) {
             <fuse-alert class="mt-8" [appearance]="'outline'" [showIcon]="false" [type]="alert().type"
-                [@shake]="alert().type === 'error'">
+                [@shake]="alert().type === 'error'" [dismissible]="true"]="true">
                 {{alert().message}}
             </fuse-alert>
             }
@@ -22,10 +22,35 @@
             <!-- Sign Up form -->
             <form class="flex flex-col mt-8 gap-y-4" [formGroup]="signUpForm">
 
+                <!-- Country -->
+                <mat-form-field subscriptSizing="dynamic">
+                    <mat-label>Pays</mat-label>
+                    <mat-select formControlName="countryCode">
+                        @for (country of countries(); track country.iso) {
+                        <mat-option [value]="country.iso" [disabled]="country.iso !== 'CM'">
+                            {{ country.name | titlecase }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- City -->
+                <mat-form-field subscriptSizing="dynamic">
+                    <mat-label>Ville</mat-label>
+                    <mat-select formControlName="cityCode">
+                        @for (city of cities(); track city.cityCode) {
+                        <mat-option [value]="city.cityCode">
+                            {{ city.name | titlecase }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
                 <!-- Reference field -->
                 <mat-form-field subscriptSizing="dynamic" class="w-full">
-                    <mat-label>ID caisse</mat-label>
-                    <input id="cashierReference" matInput [formControlName]="'cashierReference'">
+                    <mat-label>&numero; caisse</mat-label>
+                    <input id="cashierReference" matInput type="number" inputmode="numeric"
+                        [formControlName]="'cashierReference'" min="1">
                     @if (signUpForm.get('cashierReference').hasError('required')) {
                     <mat-error>
                         L'identifiant de la caisse est requis

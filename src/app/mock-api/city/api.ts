@@ -5,12 +5,9 @@ import { map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CityMockApi {
+
     private readonly _fuseMockApiService = inject(FuseMockApiService);
     private readonly _cityApiStore = inject(CityApiStore);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
 
     /**
      * Constructor

@@ -1,17 +1,14 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams, httpResource, HttpResourceRef } from '@angular/common/http';
+import { Injectable, Signal, inject, signal } from '@angular/core';
 import { Shipment } from './shipment.types';
 import { PaginationDto, SortingDto, Pagination, computeQueryParams } from 'app/shared/utils/pagination.types';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { CreateShipmentDto } from './shipment.dto';
 
 @Injectable({ providedIn: 'root' })
 export class ShipmentService {
+
     private readonly _httpClient = inject(HttpClient);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
 
     /**
      * Constructor
@@ -40,6 +37,26 @@ export class ShipmentService {
         });
         return this._httpClient.get<Pagination<Shipment>>('api/shipments', { params });
     }
+    /**
+     * Get shipments as http resource
+     *
+     * @param paginationParams
+     * @param sortingParams
+     * @param query
+     */
+    getAllResource(
+        paginationParams?: Signal<PaginationDto>,
+        sortingParams?: Signal<SortingDto>,
+        query: Signal<string> = signal('')): HttpResourceRef<Pagination<Shipment>> {
+        return httpResource<Pagination<Shipment>>(() => ({
+            url: 'api/shipments',
+            params: new HttpParams({
+                fromObject: {
+                    ...computeQueryParams(paginationParams(), sortingParams(), query())
+                }
+            })
+        }));
+    }
 
     /**
      * Get shipment by id
@@ -48,6 +65,12 @@ export class ShipmentService {
      */
     get(shipmentId: number): Observable<Shipment> {
         return this._httpClient.get<Shipment>('api/shipment', { params: { shipmentId } });
+    }
+    getResource(shipmentId: Signal<number>): HttpResourceRef<Shipment> {
+        return httpResource<Shipment>(() => ({
+            url: 'api/shipment',
+            params: { shipmentId: shipmentId() }
+        }));
     }
 
     /**
@@ -58,6 +81,19 @@ export class ShipmentService {
     getByNumber(shipmentNumber: string): Observable<Shipment> {
         return this._httpClient.get<Shipment>('api/shipment/by', { params: { field: 'number', value: shipmentNumber } });
     }
+    getByNumberResource(shipmentNumber: Signal<string>): HttpResourceRef<Shipment> {
+        return httpResource<Shipment>(() => ({
+            url: 'api/shipment/by',
+            params: { field: 'number', value: shipmentNumber() }
+        }));
+    }
+
+    /**
+     * Get next reference number
+     */
+    getNextReference(): Observable<string> {
+        return this._httpClient.get<string>('api/shipments/next-reference');
+    }
 
     /**
      * Create a new shipment
@@ -65,6 +101,8 @@ export class ShipmentService {
      * @param payload
      */
     create(payload: CreateShipmentDto): Observable<Shipment> {
-        return this._httpClient.post<Shipment>('api/shipment', payload);
+        return this.getNextReference().pipe(
+            switchMap((number) => this._httpClient.post<Shipment>('api/shipment', { ...payload, number }))
+        );
     }
 }

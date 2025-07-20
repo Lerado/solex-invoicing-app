@@ -7,11 +7,8 @@ import { TauriService } from '../tauri/tauri.service';
 
 @Injectable({ providedIn: 'root' })
 export class ExtendedSplashScreenService extends FuseSplashScreenService {
+
     private readonly _tauriService = inject(TauriService);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
 
     /**
      * Constructor

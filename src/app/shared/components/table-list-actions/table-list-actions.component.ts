@@ -4,7 +4,7 @@ import { TableListAction } from './table-list-actions.types';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
-    selector: 'table-list-actions',
+    selector: 'sia-table-list-actions',
     imports: [MatIconModule, MatTooltipModule],
     templateUrl: './table-list-actions.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush

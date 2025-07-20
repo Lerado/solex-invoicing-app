@@ -7,10 +7,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ShipmentsQueryService implements DataProvider<Pagination<Shipment>> {
-    private readonly _shipmentService = inject(ShipmentService);
 
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
+    private readonly _shipmentService = inject(ShipmentService);
 
 
     /**

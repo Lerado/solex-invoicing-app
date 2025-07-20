@@ -13,9 +13,6 @@ export class FuseLoadingService
     private _show$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private _urlMap: Map<string, boolean> = new Map<string, boolean>();
 
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
     /**
      * Constructor
      */

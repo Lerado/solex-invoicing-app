@@ -6,12 +6,9 @@ import { catchError, map, of, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthMockApi {
+
     private readonly _fuseMockApiService = inject(FuseMockApiService);
     private readonly _userApiStore = inject(UserApiStore);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
 
     /**
      * Constructor
@@ -39,7 +36,6 @@ export class AuthMockApi {
                     .pipe(
                         map((result) => {
                             // Sign in successful
-                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
                             const { rootPassword, ...user } = cloneDeep(result) ?? {};
                             return [
                                 200,
@@ -61,7 +57,7 @@ export class AuthMockApi {
         this._fuseMockApiService
             .onPost('api/auth/sign-up', 500)
             .reply(({ request }) => {
-                const { cashierReference, cashierName, rootPassword, rootPasswordConfirmation } = cloneDeep(request.body);
+                const { cashierReference, cashierName, countryCode, cityCode, rootPassword, rootPasswordConfirmation } = cloneDeep(request.body);
                 if (rootPassword !== rootPasswordConfirmation) {
                     return [400, false];
                 }
@@ -76,6 +72,8 @@ export class AuthMockApi {
                             const newUser = {
                                 cashierName,
                                 cashierReference,
+                                countryCode,
+                                cityCode,
                                 rootPassword
                             };
                             return this._userApiStore.create(newUser)
