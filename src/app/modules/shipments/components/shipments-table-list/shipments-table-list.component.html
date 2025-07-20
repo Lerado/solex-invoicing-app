@@ -27,26 +27,42 @@
     </ng-container>
 
     <!-- From -->
-    <ng-container matColumnDef="from.city.name">
-        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Prov.</th>
-        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Prov.'">
-            {{ shipment.from.city.name }}
+    <ng-container matColumnDef="from">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Exp.</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Exp.'">
+            {{ shipment.from.firstName }} {{ shipment.from.lastName }}
         </td>
     </ng-container>
 
     <!-- To -->
-    <ng-container matColumnDef="to.city.name">
+    <ng-container matColumnDef="to">
         <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Dest.</th>
         <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Dest.'">
-            {{ shipment.to.city.name }}
+            {{ shipment.to.firstName }} {{ shipment.to.lastName }}
         </td>
     </ng-container>
 
-    <!-- Packages count -->
-    <ng-container matColumnDef="packagesCount">
-        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header class="mat-sort-header-right">Colis</th>
-        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Colis'" class="text-right">
-            {{ shipment.packagesCount | number }}
+    <!-- Destination -->
+    <ng-container matColumnDef="destination">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header>Vers</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Vers'">
+            {{ shipment.deliveryCity.name }} - {{ shipment.deliveryCity.countryCode }}
+        </td>
+    </ng-container>
+
+    <!-- Items count -->
+    <ng-container matColumnDef="itemsCount">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header class="mat-sort-header-right">Désignation</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Désignation'" class="text-right">
+            {{ shipment.itemsCount | number }}
+        </td>
+    </ng-container>
+
+    <!-- Final weight -->
+    <ng-container matColumnDef="finalWeight">
+        <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header class="mat-sort-header-right">Poids final</th>
+        <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Poids final'" class="text-right">
+            {{ shipment.finalWeight | number }} kg
         </td>
     </ng-container>
 

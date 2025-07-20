@@ -24,11 +24,11 @@ import { Shipment } from 'app/core/shipment/shipment.types';
     styles: ':host { display: block;}',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
+export default class ShipmentsListPageComponent implements OnInit, AfterViewInit {
+
     private readonly _shipmentsQueryService = inject(ShipmentsQueryService);
     private readonly _router = inject(Router);
     private readonly _destroyRef = inject(DestroyRef);
-
 
     private readonly _paginator = viewChild(MatPaginator);
     private readonly _sort = viewChild(MatSort);
@@ -39,7 +39,8 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     shipmentsLoading = toSignal(this.shipmentsSource.loading$);
     shipmentsCount = toSignal(this.shipmentsSource.totalCount$);
 
-    shipmentsColumns: string[] = ['createdAt', 'number', 'from.city.name', 'to.city.name', 'packagesCount', 'totalPrice', 'actions'];
+    // shipmentsColumns: string[] = ['createdAt', 'number', 'destination', 'itemsCount', 'finalWeight', 'totalPrice', 'actions'];
+    shipmentsColumns: string[] = ['createdAt', 'number', 'from', 'to', 'destination', 'itemsCount', 'finalWeight', 'totalPrice', 'actions'];
     shipmentsActions: TableListAction[] = [
         {
             key: 'print',
@@ -130,7 +131,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     handleAction(actionType: string, subject: Shipment): void {
         switch (actionType) {
             case 'print':
-                this._router.navigate(['/shipments', subject.id, 'print']);
+                this._router.navigate(['/shipments', subject.number, 'print']);
                 break;
             default:
                 break;

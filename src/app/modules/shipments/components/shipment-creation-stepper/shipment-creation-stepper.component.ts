@@ -18,8 +18,8 @@ import { DateTime } from 'luxon';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentCreationStepperComponent {
-    private readonly _formBuilder = inject(NonNullableFormBuilder);
 
+    private readonly _formBuilder = inject(NonNullableFormBuilder);
 
     countries = input.required<Country[]>();
     cities = input.required<City[]>();
@@ -34,9 +34,6 @@ export class ShipmentCreationStepperComponent {
     });
 
     disabledChange$ = toObservable(this.disabled);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
 
     /**
      * Constructor
@@ -77,7 +74,7 @@ export class ShipmentCreationStepperComponent {
 
         this.submitChanges.emit({
             ...info,
-            pickupDate: info.pickupDate.toMillis(),
+            pickupDate: info.pickupDate.toMillis(), // cspell:disable-line
             to,
             from
         });

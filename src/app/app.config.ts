@@ -11,7 +11,7 @@ import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { mockApiServices } from 'app/mock-api';
 import { MAT_PAGINATOR_DEFAULT_OPTIONS } from '@angular/material/paginator';
-import { providePersistence } from './persistence/persistence.provider';
+import { VOLUMETRIC_WEIGHT_FACTOR } from './core/shipment/shipment.constants';
 
 registerLocaleData(localeFr);
 
@@ -55,6 +55,12 @@ export const appConfig: ApplicationConfig = {
                 ],
             }
         }),
+
+        // Shipment volumetric weight factor
+        {
+            provide: VOLUMETRIC_WEIGHT_FACTOR,
+            useValue: 500
+        },
 
         // Locale
         {

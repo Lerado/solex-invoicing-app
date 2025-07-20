@@ -49,14 +49,6 @@ export class ShipmentAddressFormComponent implements ControlValueAccessor, Valid
 
     onTouched: CallableFunction = (): void => { };
 
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
-    /**
-     * Constructor
-     */
-    constructor() { }
-
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
