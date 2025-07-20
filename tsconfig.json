@@ -2,25 +2,33 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "baseUrl": "./src",
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "downlevelIteration": true,
-        "experimentalDecorators": true,
-        "moduleResolution": "node",
-        "importHelpers": true,
-        "target": "ES2022",
-        "module": "ES2022",
-        "useDefineForClassFields": false,
-        "resolveJsonModule": true,
-        "lib": [
-            "ES2022",
-            "dom"
-        ]
+      "baseUrl": "./src",
+      "outDir": "./dist/out-tsc",
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "declaration": false,
+      "experimentalDecorators": true,
+      "moduleResolution": "bundler",
+      "importHelpers": true,
+      "target": "ES2022",
+      "module": "ES2022",
+      "useDefineForClassFields": false,
+      "resolveJsonModule": true,
+      "lib": [
+        "ES2022",
+        "dom"
+      ]
     },
     "angularCompilerOptions": {
-        "enableI18nLegacyMessageIdFormat": false
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true,
+        "strictStandalone": true,
+        "extendedDiagnostics": {
+            "checks": {
+                "unusedStandaloneImports": "suppress"
+            }
+        }
     }
 }

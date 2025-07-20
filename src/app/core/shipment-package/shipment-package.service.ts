@@ -1,19 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginationDto, SortingDto, Pagination, computeQueryParams } from 'app/shared/utils/pagination.types';
 import { Observable } from 'rxjs';
 import { ShipmentPackage } from './shipment-package.types';
 import { CreateShipmentPackageDto } from './shipment-package.dto';
 
+/**
+ * @deprecated
+ */
 @Injectable({ providedIn: 'root' })
 export class ShipmentPackageService {
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private readonly _httpClient: HttpClient
-    ) { }
+    private readonly _httpClient = inject(HttpClient);
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

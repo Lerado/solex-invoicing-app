@@ -1,21 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { cloneDeep } from 'lodash-es';
 import { objectToFlatString } from '@lerado/typescript-toolbox';
-import { Shipment } from 'app/core/shipment/shipment.types';
+import { Shipment, ShipmentClientRole } from 'app/core/shipment/shipment.types';
 import { ShipmentApiStore } from './store';
-import { map } from 'rxjs';
+import { concatMap, forkJoin, map, switchMap } from 'rxjs';
+import { CreateShipmentDto } from 'app/core/shipment/shipment.dto';
+import { ShipmentClientApiStore } from '../shipment-client/store';
+import { ShipmentItemApiStore } from '../shipment-item/store';
+import { UserApiStore } from '../user/store';
+import { CreateShipmentModelDto } from './types';
+import { VOLUMETRIC_WEIGHT_FACTOR } from 'app/core/shipment/shipment.constants';
 
 @Injectable({ providedIn: 'root' })
 export class ShipmentMockApi {
 
+    private readonly _fuseMockApiService = inject(FuseMockApiService);
+    private readonly _shipmentApiStore = inject(ShipmentApiStore);
+    private readonly _shipmentClientApiStore = inject(ShipmentClientApiStore);
+    private readonly _shipmentItemApiStore = inject(ShipmentItemApiStore);
+    private readonly _userApiStore = inject(UserApiStore);
+    private readonly VOLUMETRIC_WEIGHT_FACTOR = inject(VOLUMETRIC_WEIGHT_FACTOR);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _fuseMockApiService: FuseMockApiService,
-        private readonly _shipmentApiStore: ShipmentApiStore
-    ) {
+    constructor() {
         // Register Mock API handlers
         this.registerHandlers();
     }
@@ -50,6 +60,18 @@ export class ShipmentMockApi {
                         map(shipment => [200, shipment])
                     );
             });
+
+        this._fuseMockApiService
+            .onGet('api/shipments/count')
+            .reply(({ request }) => this._shipmentApiStore.count().pipe(
+                map(count => ([200, count]))
+            ));
+
+        this._fuseMockApiService
+            .onGet('api/shipments/next-reference')
+            .reply(({ }) => this.getNextReference().pipe(
+                map(reference => ([200, reference]))
+            ));
 
         this._fuseMockApiService
             .onGet('api/shipments')
@@ -150,12 +172,42 @@ export class ShipmentMockApi {
         this._fuseMockApiService
             .onPost('api/shipment', 500)
             .reply(({ request }) => {
-                const newShipment = cloneDeep(request.body);
-                return this._shipmentApiStore.create(newShipment)
-                    .pipe(
-                        map(() => [201, true])
-                    );
+                const { shipment, from, to, items } = cloneDeep(request.body) as Readonly<CreateShipmentDto>;
+                // Add missing dto properties and save to db
+                return this.getNextReference().pipe(
+                    switchMap((number) => {
+                        const volumetricWeight = this.VOLUMETRIC_WEIGHT_FACTOR * shipment.bundledHeight * shipment.bundledWidth * shipment.bundledLength;
+                        const shipmentDto: Readonly<CreateShipmentModelDto> = {
+                            ...shipment,
+                            number,
+                            volumetricWeight,
+                            finalWeight: Math.max(volumetricWeight, shipment.totalWeight)
+                        };
+                        return this._shipmentApiStore.create(shipmentDto);
+                    }),
+                    switchMap((shipmentId) => this._shipmentClientApiStore.create({ shipmentId, clientId: from, role: ShipmentClientRole.Sender }).pipe(
+                        // Receiver
+                        concatMap(() => this._shipmentClientApiStore.create({ shipmentId, clientId: to, role: ShipmentClientRole.Receiver })),
+                        // Items
+                        concatMap(() => this._shipmentItemApiStore.create(items.map(item => ({ ...item, shipmentId }))))
+                    )),
+                    map(() => [201, true])
+                );
             });
+    }
+
+    /**
+     * Computes the next shipment reference code
+     *
+     * @returns {string} The next shipment reference
+     */
+    getNextReference() {
+        return forkJoin([this._shipmentApiStore.lastId(), this._userApiStore.get()])
+            .pipe(
+                map(([lastId, user]) => {
+                    return `${user.cityCode}${user.cashierReference}${('000000' + (++lastId)).slice(-6)}`;
+                }),
+            );
     }
 }
 

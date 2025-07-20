@@ -7,7 +7,41 @@ import { hashSync } from 'bcryptjs';
 @Injectable({ providedIn: 'root' })
 export class UserApiStore extends Store {
 
-    readonly TABLE_NAME = 'users';
+    readonly TABLE_NAME = 'cashiers';
+
+    private readonly ROOT_MODEL_QUERY = `
+    SELECT
+        json_group_array(
+            json_object(
+                'id', c.id,
+                'cashierReference', c.cashierReference,
+                'cashierName', c.cashierName,
+                'countryCode', c.countryCode,
+                'cityCode', c.cityCode,
+                'createdAt', c.createdAt,
+                'updatedAt', c.updatedAt,
+                'deletedAt', c.deletedAt,
+                'city', (
+                    SELECT json_object(
+                        'id', ct.id,
+                        'name', ct.name,
+                        'countryCode', ct.countryCode,
+                        'cityCode', ct.cityCode,
+                        'createdAt', ct.createdAt,
+                        'updatedAt', ct.updatedAt,
+                        'deletedAt', ct.deletedAt
+                    )
+                    FROM cities ct
+                    WHERE ct.cityCode = c.cityCode
+                    AND ct.countryCode = c.countryCode
+                    AND ct.deletedAt IS NULL
+                    LIMIT 1
+                )
+            )
+        ) AS data
+    FROM cashiers c
+    WHERE c.deletedAt IS NULL
+    `;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -20,21 +54,17 @@ export class UserApiStore extends Store {
      */
     get(userId: number = null): Observable<UserModel> {
         // Build query
-        let query = this._persistence
-            .queryBuilder
-            .select()
-            .from(this.TABLE_NAME);
+        let query = this.ROOT_MODEL_QUERY;
         // If user id is null, take the first only
         if (userId) {
-            query = query.where('id = ?', userId);
+            query += `
+                AND c.id = ${userId}
+            `;
         }
-        else {
-            query = query.limit(1);
-        }
-
         // Execute query
-        return this._persistence.executeSelect<UserModel[]>(query.toString())
+        return this._persistence.executeSelect<Array<{ data: string }>>(query.toString())
             .pipe(
+                map(result => JSON.parse(result.at(0).data) as UserModel[]),
                 switchMap((result) => {
                     if (!result.length) {
                         return throwError(() => new Error(`User with id ${userId} not found`));
@@ -54,6 +84,7 @@ export class UserApiStore extends Store {
             .select()
             .field('COUNT(*)')
             .from(this.TABLE_NAME)
+            .where('deletedAt IS NULL')
             .toString();
         // Execute query
         return this._persistence.executeSelect<number[]>(query)
@@ -67,7 +98,7 @@ export class UserApiStore extends Store {
      *
      * @param payload
      */
-    create(payload: CreateUserModelDto): Observable<boolean> {
+    create(payload: CreateUserModelDto): Observable<number> {
         // Build query
         const query: string = this._persistence
             .queryBuilder
@@ -82,7 +113,7 @@ export class UserApiStore extends Store {
         // Execute query
         return this._persistence.executeQuery(query)
             .pipe(
-                map(result => result.rowsAffected === 1)
+                map(({ lastInsertId }) => lastInsertId)
             );
     }
 }

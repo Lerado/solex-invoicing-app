@@ -107,7 +107,6 @@ export class DataSource<T> extends BaseDataSource<T> {
      *
      * @param _collectionViewer
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     override connect(_collectionViewer?: CollectionViewer): Observable<T[]> {
         return this._dataSubject.asObservable();
     }
@@ -117,7 +116,6 @@ export class DataSource<T> extends BaseDataSource<T> {
      *
      * @param _collectionViewer
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     override disconnect(_collectionViewer?: CollectionViewer): void {
         this._dataSubject.complete();
         this._loadingSubject.complete();
@@ -196,7 +194,6 @@ export class PaginatedDataSource<T> extends BaseDataSource<T> {
      *
      * @param _collectionViewer
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     override connect(_collectionViewer?: CollectionViewer): Observable<T[]> {
         return this._dataSubject.asObservable();
     }
@@ -206,7 +203,6 @@ export class PaginatedDataSource<T> extends BaseDataSource<T> {
      *
      * @param _collectionViewer
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     override disconnect(_collectionViewer?: CollectionViewer): void {
         this._dataSubject.complete();
         this._loadingSubject.complete();

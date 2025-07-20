@@ -1,16 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { appWindow } from '@tauri-apps/api/window';
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 
 @Component({
     selector: 'sia-window-commands',
-    standalone: true,
     imports: [MatButtonModule],
     templateUrl: './window-commands.component.html',
     styles: ':host { display: block; }',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WindowCommandsComponent {
+
+    readonly APP_WINDOW = getCurrentWebviewWindow();
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -20,20 +21,20 @@ export class WindowCommandsComponent {
      * Toggle maximize window
      */
     toggleMaximizeWindow(): void {
-        appWindow.toggleMaximize();
+        this.APP_WINDOW.toggleMaximize();
     }
 
     /**
      * Hide window
      */
     minimizeWindow(): void {
-        appWindow.minimize();
+        this.APP_WINDOW.minimize();
     }
 
     /**
      * Close window
      */
     closeWindow(): void {
-        appWindow.close();
+        this.APP_WINDOW.close();
     }
 }

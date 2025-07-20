@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, OnInit, inject, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,25 +18,29 @@ import { Shipment } from 'app/core/shipment/shipment.types';
 
 @Component({
     selector: 'sia-shipments-list-page',
-    standalone: true,
     imports: [RouterLink, MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentsTableListComponent, TableListActionsComponent],
     providers: [ShipmentsQueryService],
     templateUrl: './shipments-list-page.component.html',
     styles: ':host { display: block;}',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
+export default class ShipmentsListPageComponent implements OnInit, AfterViewInit {
 
-    @ViewChild(MatPaginator) private readonly _paginator: MatPaginator;
-    @ViewChild(MatSort) private readonly _sort: MatSort;
-    @ViewChild('searchInput') private readonly _search: ElementRef;
+    private readonly _shipmentsQueryService = inject(ShipmentsQueryService);
+    private readonly _router = inject(Router);
+    private readonly _destroyRef = inject(DestroyRef);
+
+    private readonly _paginator = viewChild(MatPaginator);
+    private readonly _sort = viewChild(MatSort);
+    private readonly _search = viewChild<ElementRef>('searchInput');
 
     shipmentsSource = new PaginatedDataSource<Shipment>(this._shipmentsQueryService);
 
     shipmentsLoading = toSignal(this.shipmentsSource.loading$);
     shipmentsCount = toSignal(this.shipmentsSource.totalCount$);
 
-    shipmentsColumns: string[] = ['createdAt', 'number', 'from.city.name', 'to.city.name', 'packagesCount', 'totalPrice', 'actions'];
+    // shipmentsColumns: string[] = ['createdAt', 'number', 'destination', 'itemsCount', 'finalWeight', 'totalPrice', 'actions'];
+    shipmentsColumns: string[] = ['createdAt', 'number', 'from', 'to', 'destination', 'itemsCount', 'finalWeight', 'totalPrice', 'actions'];
     shipmentsActions: TableListAction[] = [
         {
             key: 'print',
@@ -76,15 +80,6 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
         // }
     ];
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private readonly _shipmentsQueryService: ShipmentsQueryService,
-        private readonly _router: Router,
-        private readonly _destroyRef: DestroyRef
-    ) { }
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -103,21 +98,21 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
 
         // Server side search
-        fromEvent(this._search.nativeElement, 'keyup').pipe(
+        fromEvent(this._search().nativeElement, 'keyup').pipe(
             takeUntilDestroyed(this._destroyRef),
             debounceTime(150),
             distinctUntilChanged(),
             tap(() => {
-                this._paginator.pageIndex = 0;
+                this._paginator().pageIndex = 0;
                 this._loadShipmentsPage();
             })
         ).subscribe();
 
         // Reset paginator after sorting
-        this._sort.sortChange.pipe(takeUntilDestroyed(this._destroyRef))
-            .subscribe(() => this._paginator.pageIndex = 0);
+        this._sort().sortChange.pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe(() => this._paginator().pageIndex = 0);
 
-        merge(this._sort.sortChange, this._paginator.page).pipe(
+        merge(this._sort().sortChange, this._paginator().page).pipe(
             takeUntilDestroyed(this._destroyRef),
             tap(() => this._loadShipmentsPage())
         ).subscribe();
@@ -136,7 +131,7 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
     handleAction(actionType: string, subject: Shipment): void {
         switch (actionType) {
             case 'print':
-                this._router.navigate(['/shipments', subject.id, 'print']);
+                this._router.navigate(['/shipments', subject.number, 'print']);
                 break;
             default:
                 break;
@@ -152,13 +147,13 @@ export class ShipmentsListPageComponent implements OnInit, AfterViewInit {
      */
     private _loadShipmentsPage(): void {
 
-        const { pageIndex, pageSize } = this._paginator;
-        const { active, direction } = this._sort;
+        const { pageIndex, pageSize } = this._paginator();
+        const { active, direction } = this._sort();
 
         this.shipmentsSource.load(
             { page: pageIndex + 1, limit: pageSize },
             { sortKey: active, sort: direction },
-            this._search.nativeElement.value
+            this._search().nativeElement.value
         );
     }
 }

@@ -1,72 +1,56 @@
 {
-    "$schema": "../node_modules/@tauri-apps/cli/schema.json",
     "build": {
         "beforeBuildCommand": "npm run build",
         "beforeDevCommand": "npm run start",
-        "devPath": "http://localhost:4200",
-        "distDir": "../dist/solex-invoicing-app/browser"
+        "frontendDist": "../dist/solex-invoicing-app/browser",
+        "devUrl": "http://localhost:4200"
     },
-    "package": {
-        "productName": "SOLEX Invoicing App",
-        "version": "0.1.0"
-    },
-    "tauri": {
-        "allowlist": {
-            "all": false,
-            "window": {
-                "all": false,
-                "close": true,
-                "hide": true,
-                "show": true,
-                "maximize": true,
-                "minimize": true,
-                "unmaximize": true,
-                "unminimize": true,
-                "startDragging": true
-            },
-            "os": {
-                "all": true
-            }
+    "bundle": {
+        "active": true,
+        "category": "Business",
+        "copyright": "Mohlah Software Solutions @2024, All rights reserved",
+        "targets": "all",
+        "externalBin": [],
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ],
+        "windows": {
+            "certificateThumbprint": null,
+            "digestAlgorithm": "sha256",
+            "timestampUrl": ""
         },
-        "bundle": {
-            "active": true,
-            "category": "Business",
-            "copyright": "Mohlah Software Solutions @2024, All rights reserved",
+        "longDescription": "A desktop client in charge of SOLEX invoicing service",
+        "macOS": {
+            "entitlements": null,
+            "exceptionDomain": "",
+            "frameworks": [],
+            "providerShortName": null,
+            "signingIdentity": null
+        },
+        "resources": [],
+        "shortDescription": "A desktop client in charge of SOLEX invoicing service",
+        "linux": {
             "deb": {
                 "depends": []
-            },
-            "externalBin": [],
-            "icon": [
-                "icons/32x32.png",
-                "icons/128x128.png",
-                "icons/128x128@2x.png",
-                "icons/icon.icns",
-                "icons/icon.ico"
-            ],
-            "identifier": "cm.solex.invoicing",
-            "longDescription": "A desktop client in charge of SOLEX invoicing service",
-            "macOS": {
-                "entitlements": null,
-                "exceptionDomain": "",
-                "frameworks": [],
-                "providerShortName": null,
-                "signingIdentity": null
-            },
-            "resources": [],
-            "shortDescription": "A desktop client in charge of SOLEX invoicing service",
-            "targets": "all",
-            "windows": {
-                "certificateThumbprint": null,
-                "digestAlgorithm": "sha256",
-                "timestampUrl": ""
             }
-        },
-        "security": {
-            "csp": null
-        },
-        "updater": {
-            "active": false
-        },
+        }
+    },
+    "productName": "SOLEX Invoicing App",
+    "mainBinaryName": "SOLEX Invoicing App",
+    "version": "0.1.0",
+    "identifier": "cm.solex.invoicing",
+    "plugins": {
+        "sql": {
+            "preload": [
+                "sqlite:solex-invoicing.db"
+            ]
+        }
+    },
+    "app": {
         "windows": [
             {
                 "fullscreen": false,
@@ -79,7 +63,8 @@
                 "focus": true,
                 "contentProtected": false,
                 "maximized": true,
-                "visible": false
+                "visible": true,
+                "useHttpsScheme": true
             },
             {
                 "title": "SOLEX Invoicing App",
@@ -91,8 +76,13 @@
                 "alwaysOnTop": true,
                 "transparent": false,
                 "url": "assets/html/splashscreen.html",
-                "label": "splashscreen"
+                "label": "splashscreen",
+                "useHttpsScheme": true,
+                "visible": false
             }
-        ]
+        ],
+        "security": {
+            "csp": null
+        }
     }
 }

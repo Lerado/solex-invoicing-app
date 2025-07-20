@@ -2,7 +2,8 @@ interface City {
     readonly id: number;
 
     name: string;
-    country: string;
+    countryCode: string;
+    cityCode: string;
 
     readonly createdAt: number;
     readonly updatedAt: number;

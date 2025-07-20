@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { cloneDeep } from 'lodash-es';
 import { UserApiStore } from '../user/store';
@@ -7,13 +7,13 @@ import { catchError, map, of, switchMap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthMockApi {
 
+    private readonly _fuseMockApiService = inject(FuseMockApiService);
+    private readonly _userApiStore = inject(UserApiStore);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _fuseMockApiService: FuseMockApiService,
-        private readonly _userApiStore: UserApiStore
-    ) {
+    constructor() {
         // Register Mock API handlers
         this.registerHandlers();
     }
@@ -36,7 +36,6 @@ export class AuthMockApi {
                     .pipe(
                         map((result) => {
                             // Sign in successful
-                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
                             const { rootPassword, ...user } = cloneDeep(result) ?? {};
                             return [
                                 200,
@@ -58,7 +57,7 @@ export class AuthMockApi {
         this._fuseMockApiService
             .onPost('api/auth/sign-up', 500)
             .reply(({ request }) => {
-                const { cashierReference, cashierName, rootPassword, rootPasswordConfirmation } = cloneDeep(request.body);
+                const { cashierReference, cashierName, countryCode, cityCode, rootPassword, rootPasswordConfirmation } = cloneDeep(request.body);
                 if (rootPassword !== rootPasswordConfirmation) {
                     return [400, false];
                 }
@@ -73,6 +72,8 @@ export class AuthMockApi {
                             const newUser = {
                                 cashierName,
                                 cashierReference,
+                                countryCode,
+                                cityCode,
                                 rootPassword
                             };
                             return this._userApiStore.create(newUser)

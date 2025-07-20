@@ -1,18 +1,21 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+
+import { Injectable, DOCUMENT, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, take } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class FuseSplashScreenService
 {
+    private _document = inject(DOCUMENT);
+    private _router = inject(Router);
+
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        @Inject(DOCUMENT) private _document: any,
-        private _router: Router,
-    )
+    constructor()
     {
         // Hide it on the first NavigationEnd event
         this._router.events

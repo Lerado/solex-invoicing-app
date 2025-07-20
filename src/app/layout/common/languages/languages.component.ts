@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,10 +10,11 @@ import { LangDefinition, TranslocoService } from '@ngneat/transloco';
     templateUrl: './languages.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'languages',
-    standalone: true,
-    imports: [MatMenuModule, MatButtonModule, MatIconModule],
+    imports: [MatMenuModule, MatButtonModule, MatIconModule]
 })
 export class LanguagesComponent {
+
+    private readonly _translocoService = inject(TranslocoService);
 
     availableLangs = this._translocoService.getAvailableLangs() as LangDefinition[];
     activeLangId = toSignal(this._translocoService.langChanges$);
@@ -22,9 +23,7 @@ export class LanguagesComponent {
     /**
      * Constructor
      */
-    constructor(
-        private readonly _translocoService: TranslocoService,
-    ) { }
+    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

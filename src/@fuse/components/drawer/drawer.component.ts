@@ -1,6 +1,6 @@
 import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/animations';
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { FuseDrawerService } from '@fuse/components/drawer/drawer.service';
 import { FuseDrawerMode, FuseDrawerPosition } from '@fuse/components/drawer/drawer.types';
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
@@ -15,6 +15,12 @@ import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 })
 export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy
 {
+    private _animationBuilder = inject(AnimationBuilder);
+    private _elementRef = inject(ElementRef);
+    private _renderer2 = inject(Renderer2);
+    private _fuseDrawerService = inject(FuseDrawerService);
+    private _fuseUtilsService = inject(FuseUtilsService);
+
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_fixed: BooleanInput;
     static ngAcceptInputType_opened: BooleanInput;
@@ -38,16 +44,13 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy
     private _overlay: HTMLElement;
     private _player: AnimationPlayer;
 
+    /** Inserted by Angular inject() migration for backwards compatibility */
+    constructor(...args: unknown[]);
+
     /**
      * Constructor
      */
-    constructor(
-        private _animationBuilder: AnimationBuilder,
-        private _elementRef: ElementRef,
-        private _renderer2: Renderer2,
-        private _fuseDrawerService: FuseDrawerService,
-        private _fuseUtilsService: FuseUtilsService,
-    )
+    constructor()
     {
         this._handleOverlayClick = (): void =>
         {

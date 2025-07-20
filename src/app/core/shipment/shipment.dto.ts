@@ -1,19 +1,24 @@
-interface CreateShipmentAddressDto {
-    firstName: string;
-    lastName: string;
-    country: string;
-    contact: string;
-    cityId: number;
-    address: string;
-}
-
-interface CreateShipmentInfoDto {
-    number: string;
-    pickupDate: number;
+export interface CreateShipmentInfoDto {
+    pickupDate: string;
     pickupTime: string;
+    countryCode: string;
+    cityCode: string;
+    deliveryAddress: string;
+    bundledLength: number;
+    bundledWidth: number;
+    bundledHeight: number;
+    totalWeight: number;
+    totalPrice: number;
 }
 
+export interface CreateShipmentItemDto {
+    designation: string;
+    quantity: number;
+}
 
-type CreateShipmentDto = CreateShipmentInfoDto & { from: CreateShipmentAddressDto; to: CreateShipmentAddressDto };
-
-export { CreateShipmentAddressDto, CreateShipmentInfoDto, CreateShipmentDto };
+export interface CreateShipmentDto {
+    shipment: CreateShipmentInfoDto;
+    from: number;
+    to: number;
+    items: CreateShipmentItemDto[]
+}

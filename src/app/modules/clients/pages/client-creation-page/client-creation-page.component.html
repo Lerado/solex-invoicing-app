@@ -1,0 +1,42 @@
+<section class="flex flex-col flex-auto max-w-screen-xl min-w-0 px-6 py-8 mx-auto md:px-8 dark:bg-transparent">
+
+    <h1 class="text-4xl font-extrabold tracking-tight">
+        <!-- cspell:disable-next-line -->
+        Ajouter un client
+    </h1>
+
+    <!-- Alert -->
+    @if (showAlert()) {
+    @defer(when showAlert()) {
+    <fuse-alert class="mt-5 -mB-3" [appearance]="'outline'" [showIcon]="false" [type]="alert().type"
+        [@shake]="alert().type === 'error'" [dismissible]="true" [dismissible]="true">
+        {{alert().message}}
+    </fuse-alert>
+    }
+    }
+
+    <section class="flex flex-col max-w-screen-md mt-8">
+
+        <!-- Creation form -->
+        <sia-client-info-form [formControl]="clientForm" />
+
+        <!-- Submit, Submit and continue, Cancel -->
+        <div class="flex flex-row justify-around mt-8 md:justify-start gap-x-4">
+            <!-- Cancel -->
+            <button [routerLink]="['..']" mat-button color="warn">
+                Annuler
+            </button>
+            <!-- Submit -->
+            <button (click)="createClient()" [disabled]="clientForm.disabled || clientForm.invalid" mat-stroked-button
+                color="primary">
+                Ajouter et quitter
+            </button>
+            <!-- Submit and continue -->
+            <button (click)="createClient(true)" [disabled]="clientForm.disabled || clientForm.invalid" mat-flat-button
+                color="primary">
+                Ajouter et continuer
+            </button>
+        </div>
+    </section>
+
+</section>

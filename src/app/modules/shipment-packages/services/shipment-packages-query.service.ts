@@ -1,19 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ShipmentPackageService } from 'app/core/shipment-package/shipment-package.service';
 import { ShipmentPackage } from 'app/core/shipment-package/shipment-package.types';
 import { DataProvider, PaginationDto, SortingDto, Pagination } from 'app/shared/utils/pagination.types';
 import { Observable } from 'rxjs';
 
-
+/**
+ * @deprecated
+ */
 @Injectable()
 export class ShipmentPackagesQueryService implements DataProvider<Pagination<ShipmentPackage>> {
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private readonly _shipmentPackageService: ShipmentPackageService
-    ) { }
+    private readonly _shipmentPackageService = inject(ShipmentPackageService);
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

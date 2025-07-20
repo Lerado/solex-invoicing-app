@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, booleanAttribute, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, booleanAttribute, input, inject, computed } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -12,19 +12,14 @@ import { UserService } from 'app/core/user/user.service';
     templateUrl: './user.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'user',
-    standalone: true,
-    imports: [MatButtonModule, MatMenuModule, MatIconModule, NgClass, MatDividerModule],
+    imports: [MatButtonModule, MatMenuModule, MatIconModule, NgClass, MatDividerModule]
 })
 export class UserComponent {
+
+    private readonly _userService = inject(UserService);
 
     showAvatar = input(true, { transform: booleanAttribute });
 
     user = toSignal(this._userService.user$, { requireSync: true });
-
-    /**
-     * Constructor
-     */
-    constructor(
-        private readonly _userService: UserService,
-    ) { }
+    displayedReference = computed(() => `${this.user().cityCode}${this.user().cashierReference} - ${this.user().cashierName}`);
 }

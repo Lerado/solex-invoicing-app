@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
+
 import { NoAuthGuard } from './core/auth/guards/noAuth.guard';
 import { AuthGuard } from './core/auth/guards/auth.guard';
 
@@ -20,7 +20,7 @@ export const appRoutes: Routes = [
         path: '',
         canActivate: [NoAuthGuard],
         canActivateChild: [NoAuthGuard],
-        component: LayoutComponent,
+        loadComponent: () => import('./layout/layout.component').then(m => m.LayoutComponent),
         data: {
             layout: 'empty'
         },
@@ -34,7 +34,7 @@ export const appRoutes: Routes = [
         path: '',
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
-        component: LayoutComponent,
+        loadComponent: () => import('./layout/layout.component').then(m => m.LayoutComponent),
         data: {
             layout: 'empty'
         },
@@ -47,10 +47,11 @@ export const appRoutes: Routes = [
         path: '',
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
-        component: LayoutComponent,
+        loadComponent: () => import('./layout/layout.component').then(m => m.LayoutComponent),
         children: [
             { path: 'shipments', loadChildren: () => import('app/modules/shipments/shipments.routes') },
-            { path: 'packages', loadChildren: () => import('app/modules/shipment-packages/shipment-packages.routes') },
+            // { path: 'packages', loadChildren: () => import('app/modules/shipment-packages/shipment-packages.routes') },
+            { path: 'clients', loadChildren: () => import('app/modules/clients/clients.routes') },
         ]
     }
 ];

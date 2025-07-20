@@ -1,50 +1,59 @@
-import { ShipmentPackage } from 'app/core/shipment-package/shipment-package.types';
+import { City } from '../city/city.types';
+import { Client } from '../client/client.types';
 
-interface Shipment {
-
+export interface Shipment {
     readonly id: number;
     readonly number: string;
 
     pickupDate: number;
     pickupTime: string;
 
-    packages?: ShipmentPackage[];
-    packagesCount?: number;
-
-    from: Recipient;
-    to: Recipient;
+    items?: ShipmentItem[];
+    itemsCount?: number;
+    from?: Client;
+    to?: Client;
+    deliveryCity?: City;
 
     totalPrice: number;
+    totalWeight: number;
+    bundledLength: number;
+    bundledWidth: number;
+    bundledHeight: number;
+    volumetricWeight: number;
+    finalWeight: number;
+
+    deliveryCountryCode: string;
+    deliveryCityCode: string;
+    deliveryAddress: string;
 
     readonly createdAt: number;
     readonly updatedAt: number;
     readonly deletedAt: number;
 }
 
-interface Shipper {
-
-    readonly id: number;
-
-    readonly shipmentId: number;
-
-    readonly cityId: number
-    city?: City,
-
-    firstName: string;
-    lastName: string;
-    country: string;
-    contact: string;
-    address: string;
-
-    readonly createdAt: number;
-    readonly updatedAt: number;
-    readonly deletedAt: number;
+export interface ShipmentItem {
+    id: number;
+    shipmentId: number;
+    designation: string;
+    quantity: number;
+    createdAt: number;
+    updatedAt: number;
+    deletedAt: number;
 }
 
-type Recipient = Shipper;
-
-interface City {
-    readonly name: string;
+export enum ShipmentClientRole {
+    Sender = 'sender',
+    Receiver = 'receiver'
 }
 
-export { Shipment };
+export interface ShipmentClient {
+    id: number;
+    shipmentId: number;
+    shipment?: Shipment;
+    clientId: number;
+    client?: Client;
+    role: ShipmentClientRole;
+    createdAt: number;
+    updatedAt: number;
+    deletedAt: number;
+}

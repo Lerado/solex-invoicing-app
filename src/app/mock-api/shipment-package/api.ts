@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { cloneDeep } from 'lodash-es';
 import { objectToFlatString } from '@lerado/typescript-toolbox';
@@ -9,13 +9,13 @@ import { map } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ShipmentPackageMockApi {
 
+    private readonly _fuseMockApiService = inject(FuseMockApiService);
+    private readonly _shipmentPackageApiStore = inject(ShipmentPackageApiStore);
+
     /**
      * Constructor
      */
-    constructor(
-        private readonly _fuseMockApiService: FuseMockApiService,
-        private readonly _shipmentPackageApiStore: ShipmentPackageApiStore
-    ) {
+    constructor() {
         // Register Mock API handlers
         this.registerHandlers();
     }

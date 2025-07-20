@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, OnInit, inject, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,19 +16,24 @@ import { TableListActionsComponent } from 'app/shared/components/table-list-acti
 import { RouterLink } from '@angular/router';
 import { ShipmentPackage } from 'app/core/shipment-package/shipment-package.types';
 
+/**
+ * @deprecated
+ */
 @Component({
     selector: 'sia-shipment-packages-list-page',
-    standalone: true,
     imports: [RouterLink, MatTableModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ShipmentPackagesTableListComponent, TableListActionsComponent],
     providers: [ShipmentPackagesQueryService],
     templateUrl: './shipment-packages-list-page.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit {
+export default class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit {
+    private readonly _shipmentPackagesQueryService = inject(ShipmentPackagesQueryService);
+    private readonly _destroyRef = inject(DestroyRef);
 
-    @ViewChild(MatPaginator) private readonly _paginator: MatPaginator;
-    @ViewChild(MatSort) private readonly _sort: MatSort;
-    @ViewChild('searchInput') private readonly _search: ElementRef;
+
+    private readonly _paginator = viewChild(MatPaginator);
+    private readonly _sort = viewChild(MatSort);
+    private readonly _search = viewChild<ElementRef>('searchInput');
 
     shipmentPackagesSource = new PaginatedDataSource<ShipmentPackage>(this._shipmentPackagesQueryService);
 
@@ -66,14 +71,6 @@ export class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit 
         // }
     ];
 
-    /**
-     * Constructor
-     */
-    constructor(
-        private readonly _shipmentPackagesQueryService: ShipmentPackagesQueryService,
-        private readonly _destroyRef: DestroyRef
-    ) { }
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -93,21 +90,21 @@ export class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit 
     ngAfterViewInit(): void {
 
         // Server side search
-        fromEvent(this._search.nativeElement, 'keyup').pipe(
+        fromEvent(this._search().nativeElement, 'keyup').pipe(
             takeUntilDestroyed(this._destroyRef),
             debounceTime(150),
             distinctUntilChanged(),
             tap(() => {
-                this._paginator.pageIndex = 0;
+                this._paginator().pageIndex = 0;
                 this._loadShipmentPackagesPage();
             })
         ).subscribe();
 
         // Reset paginator after sorting
-        this._sort.sortChange.pipe(takeUntilDestroyed(this._destroyRef))
-            .subscribe(() => this._paginator.pageIndex = 0);
+        this._sort().sortChange.pipe(takeUntilDestroyed(this._destroyRef))
+            .subscribe(() => this._paginator().pageIndex = 0);
 
-        merge(this._sort.sortChange, this._paginator.page).pipe(
+        merge(this._sort().sortChange, this._paginator().page).pipe(
             takeUntilDestroyed(this._destroyRef),
             tap(() => this._loadShipmentPackagesPage())
         ).subscribe();
@@ -122,13 +119,13 @@ export class ShipmentPackagesListPageComponent implements OnInit, AfterViewInit 
      */
     private _loadShipmentPackagesPage(): void {
 
-        const { pageIndex, pageSize } = this._paginator;
-        const { active, direction } = this._sort;
+        const { pageIndex, pageSize } = this._paginator();
+        const { active, direction } = this._sort();
 
         this.shipmentPackagesSource.load(
             { page: pageIndex + 1, limit: pageSize },
             { sortKey: active, sort: direction },
-            this._search.nativeElement.value
+            this._search().nativeElement.value
         );
     }
 }

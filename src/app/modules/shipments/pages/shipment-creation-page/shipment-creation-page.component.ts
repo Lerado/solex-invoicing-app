@@ -1,68 +1,153 @@
-import { ChangeDetectionStrategy, Component, WritableSignal, signal } from '@angular/core';
-import { ShipmentCreationStepperComponent } from '../../components/shipment-creation-stepper/shipment-creation-stepper.component';
-import { CountryService } from 'app/core/country/country.service';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { CityService } from 'app/core/city/city.service';
-import { CreateShipmentDto } from 'app/core/shipment/shipment.dto';
-import { ShipmentService } from 'app/core/shipment/shipment.service';
-import { Router } from '@angular/router';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { Observable, switchMap, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
+import { ShipmentService } from 'app/core/shipment/shipment.service';
+import { ShipmentInfoFormComponent } from '../../components/shipment-info-form/shipment-info-form.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { Client } from 'app/core/client/client.types';
+import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { startWith, distinctUntilChanged, debounceTime, filter, switchMap, map } from 'rxjs';
+import { ClientService } from 'app/core/client/client.service';
+import { MatInputModule } from '@angular/material/input';
+import { CreateShipmentDto, CreateShipmentInfoDto } from 'app/core/shipment/shipment.dto';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
     selector: 'sia-shipment-creation-page',
-    standalone: true,
-    imports: [ShipmentCreationStepperComponent, FuseAlertComponent],
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatIconModule, MatInputModule, FuseAlertComponent, ShipmentInfoFormComponent, RouterLink, MatButtonModule],
     templateUrl: './shipment-creation-page.component.html',
     styles: ':host { display: block;}',
+    animations: fuseAnimations,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShipmentCreationPageComponent {
+export default class ShipmentCreationPageComponent {
 
-    countries = toSignal(this._countryService.countries$, { initialValue: [] });
-    cities = toSignal(this._cityService.cities$, { initialValue: [] });
+    private readonly _shipmentService = inject(ShipmentService);
+    private readonly _clientService = inject(ClientService);
+    private readonly _formBuilder = inject(NonNullableFormBuilder);
+    private readonly _router = inject(Router);
 
-    formDisabled = signal<boolean>(false);
+    readonly senderSearchControl = new FormControl<string>('', Validators.required);
+    readonly senderControl = new FormControl<Client>(null, Validators.required);
+    readonly filteredSenders: Signal<Client[]> = toSignal(this.senderSearchControl.valueChanges.pipe(
+        startWith(''),
+        distinctUntilChanged(),
+        debounceTime(300),
+        filter(value => value.length >= 2),
+        switchMap((search: string) => this._clientService.getAll({ paginate: false }, {}, search)),
+        map(({ items }) => items)
+    ), { initialValue: [] });
 
-    alert: WritableSignal<{ type: FuseAlertType; message: string }> = signal({
+    readonly recipientSearchControl = new FormControl<string>('', Validators.required);
+    readonly recipientControl = new FormControl<Client>(null, Validators.required);
+    readonly filteredRecipients: Signal<Client[]> = toSignal(this.recipientSearchControl.valueChanges.pipe(
+        startWith(''),
+        distinctUntilChanged(),
+        debounceTime(300),
+        filter(value => value.length >= 2),
+        switchMap((search: string) => this._clientService.getAll({ paginate: false }, {}, search)),
+        map(({ items }) => items)
+    ), { initialValue: [] });
+
+    readonly shipmentInfoControl = new FormControl<CreateShipmentInfoDto>(null, Validators.required);
+
+    readonly shippingItemsControl = this._formBuilder.array([
+        this._formBuilder.group({
+            designation: ['', Validators.required],
+            quantity: [1, [Validators.required, Validators.min(1)]]
+        })
+    ], Validators.minLength(1));
+
+    readonly alert: WritableSignal<{ type: FuseAlertType; message: string }> = signal({
         type: 'success',
         message: '',
     });
 
-    showAlert = signal(false);
-
-    /**
-     * Constructor
-     */
-    constructor(
-        private readonly _shipmentService: ShipmentService,
-        private readonly _countryService: CountryService,
-        private readonly _cityService: CityService,
-        private readonly _fuseConfirmationService: FuseConfirmationService,
-        private readonly _router: Router
-    ) { }
+    readonly showAlert = signal(false);
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
     /**
+     * Add a shipping item to the items FormArray
+     */
+    addShippingItem(): void {
+        this.shippingItemsControl.push(
+            this._formBuilder.group({
+                designation: ['', Validators.required],
+                quantity: [1, [Validators.required, Validators.min(1)]]
+            })
+        );
+    }
+
+    /**
+     * Remove a shipping item at a given index from the items FormArray
+     *
+     * @param index
+     */
+    removeShippingItem(index: number): void {
+        if (this.shippingItemsControl.length > 1) {
+            this.shippingItemsControl.removeAt(index);
+        }
+    }
+
+    /**
      * Create shipment and store it on the backend
      *
-     * @param payload
+     * @param stayOnPage
      */
-    createShipment(payload: CreateShipmentDto): void {
+    createShipment(stayOnPage: boolean = false): void {
 
-        this.formDisabled.set(true);
+        if (this.shipmentInfoControl.invalid || this.shippingItemsControl.invalid || this.recipientControl.invalid || this.senderControl.invalid) { return; }
+
+        this.shipmentInfoControl.disable();
+        this.senderControl.disable();
+        this.recipientControl.disable();
+        this.shippingItemsControl.disable();
+
+        const payload: Readonly<CreateShipmentDto> = Object.freeze<CreateShipmentDto>({
+            shipment: this.shipmentInfoControl.getRawValue(),
+            from: this.senderControl.getRawValue().id,
+            to: this.recipientControl.getRawValue().id,
+            items: this.shippingItemsControl.getRawValue()
+        });
 
         this._shipmentService.create(payload)
-            .pipe(
-                switchMap(() => this._resolveNavigateAfterSuccess(payload))
-            )
             .subscribe({
+                next: () => {
+                    if (!stayOnPage) {
+                        return this._router.navigate(['/shipments']);
+                    }
+                    // Reset every form
+                    this.shipmentInfoControl.reset();
+                    this.senderControl.reset();
+                    this.recipientControl.reset();
+                    this.shippingItemsControl.reset();
+
+                    this.shipmentInfoControl.enable();
+                    this.senderControl.enable();
+                    this.recipientControl.enable();
+                    this.shippingItemsControl.enable();
+
+                    this.alert.set({
+                        type: 'success',
+                        message: 'Expédition créée avec succès'
+                    });
+                    // Show the alert
+                    this.showAlert.set(true);
+                },
                 error: (message) => {
-                    this.formDisabled.set(false);
+
+                    this.shipmentInfoControl.enable();
+                    this.senderControl.enable();
+                    this.recipientControl.enable();
+                    this.shippingItemsControl.enable();
 
                     // Set the alert
                     this.alert.set({
@@ -72,45 +157,19 @@ export class ShipmentCreationPageComponent {
 
                     // Show the alert
                     this.showAlert.set(true);
-                },
-                complete: () => this.formDisabled.set(false)
+                }
             });
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
     /**
-     * Where to navigate after a shipment was successfully created
+     * Display client name in autocomplete
+     *
+     * @param value
      */
-    private _resolveNavigateAfterSuccess(payload: CreateShipmentDto): Observable<string> {
-        const confirmationDialog = this._fuseConfirmationService.open({
-            message: 'Souhaitez-vous ajouter des colis à cette expédition ?',
-            icon: {
-                show: true,
-                name: 'heroicons_outline:exclamation-circle',
-                color: 'primary',
-            },
-            actions: {
-                confirm: {
-                    label: 'Oui',
-                    color: 'primary',
-                },
-                cancel: {
-                    label: 'Non',
-                },
-            }
-        });
-        return confirmationDialog.afterClosed()
-            .pipe(
-                tap((result) => {
-                    if (result === 'confirmed') {
-                        this._router.navigate(['/packages', 'create'], { queryParams: { shipmentNumber: payload.number } });
-                        return;
-                    }
-                    this._router.navigate(['/shipments']);
-                })
-            );
+    displayClient(value: Client): string {
+        if (!value) {
+            return '';
+        }
+        return `${value.firstName} ${value.lastName} - ${value.contact}`;
     }
 }

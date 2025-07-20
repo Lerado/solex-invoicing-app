@@ -34,8 +34,8 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef cdkDrag class="text-right">Actions</th>
             <td mat-cell *matCellDef="let shipment" [attr.data-label]="'Actions'">
-                <table-list-actions [subject]="shipment" [actions]="shipmentPackagesActions"
-                    class="flex justify-end"></table-list-actions>
+                <sia-table-list-actions [subject]="shipment" [actions]="shipmentPackagesActions"
+                    class="flex justify-end"></sia-table-list-actions>
             </td>
         </ng-container>
 

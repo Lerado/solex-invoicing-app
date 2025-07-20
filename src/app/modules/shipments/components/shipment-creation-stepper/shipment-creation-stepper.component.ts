@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, booleanAttribute, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, booleanAttribute, input, inject, output } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ShipmentAddressFormComponent } from '../shipment-address-form/shipment-address-form.component';
@@ -12,19 +12,20 @@ import { DateTime } from 'luxon';
 
 @Component({
     selector: 'sia-shipment-creation-stepper',
-    standalone: true,
     imports: [ReactiveFormsModule, MatButtonModule, MatStepperModule, ShipmentAddressFormComponent, ShipmentInfoFormComponent],
     templateUrl: './shipment-creation-stepper.component.html',
     styles: ':host { display: block;}',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentCreationStepperComponent {
+
+    private readonly _formBuilder = inject(NonNullableFormBuilder);
 
     countries = input.required<Country[]>();
     cities = input.required<City[]>();
     disabled = input(false, { transform: booleanAttribute });
 
-    @Output() submitChanges = new EventEmitter<CreateShipmentDto>();
+    readonly submitChanges = output<CreateShipmentDto>();
 
     shipmentCreationForm = this._formBuilder.group({
         from: new FormControl<CreateShipmentAddressDto>(null, Validators.required),
@@ -37,9 +38,7 @@ export class ShipmentCreationStepperComponent {
     /**
      * Constructor
      */
-    constructor(
-        private readonly _formBuilder: NonNullableFormBuilder,
-    ) {
+    constructor() {
         // Update form disabled status
         this.disabledChange$.pipe(takeUntilDestroyed())
             .subscribe({
@@ -75,7 +74,7 @@ export class ShipmentCreationStepperComponent {
 
         this.submitChanges.emit({
             ...info,
-            pickupDate: info.pickupDate.toMillis(),
+            pickupDate: info.pickupDate.toMillis(), // cspell:disable-line
             to,
             from
         });

@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.1.0...v0.2.0) (2025-07-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** Shipments have a completely new object models and requires a lot of additional
+informations. Clients are also introduced and many typescript interfaces related to data objects
+were updated, removed, added or deprecated.
+
+### Features
+
+* **client:** add and display clients ([bf4319d](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/bf4319db8c4ad887709be2b15c942ccc6b5ea906))
+* **shipment:** match printable slip with db changes from d727a8c and add shipping receipt view ([a85cabb](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/a85cabbfce649c9d37f302a140b2bce23a304048))
+* **shipment:** update shipment creation to match database updates made at d727a8c ([31d97b6](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/31d97b6d84ee2d6611e6be84d2994955667a9550))
+* **sign-up:** add city and country code fields to cashier sign-up form ([723a4c2](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/723a4c229ec9f1ca0bd470c2878c4012e0663686))
+* **user:** add city code to displayed cashier name ([9395b48](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/9395b4805cb787f6de6034944b901e22c7291c4b))
+
+
+### Bug Fixes
+
+* **lint:** correct linter issues ([65db100](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/65db100047e906cc85c7aaf00a5db1cfa857dfc4))
+* **splashscreen:** add missing </body> enclosing tag ([5619cf7](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/5619cf7399c77de3d7b2fc8a7e5acd3ca43d118c))
+
+
+* **api:** apply new database schema and update data models" ([d727a8c](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/d727a8c27f0499639e86da4a9a446559286648d2))
+
 ## [0.1.0](https://github.com/Lerado/solex-invoicing-app/compare/v0.0.6...v0.1.0) (2024-03-29)
 
 
