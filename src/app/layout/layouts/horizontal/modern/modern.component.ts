@@ -14,12 +14,13 @@ import { UserComponent } from 'app/layout/common/user/user.component';
 import { WindowCommandsComponent } from 'app/layout/common/window-commands/window-commands.component';
 
 @Component({
-    selector: 'modern-layout',
+    selector: 'sia-modern-layout',
     templateUrl: './modern.component.html',
     encapsulation: ViewEncapsulation.None,
     imports: [NgClass, FuseLoadingBarComponent, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, UserComponent, LanguagesComponent, WindowCommandsComponent, RouterOutlet, NgOptimizedImage]
 })
 export class ModernLayoutComponent {
+
     private readonly _navigationService = inject(NavigationService);
     private readonly _fuseMediaWatcherService = inject(FuseMediaWatcherService);
     private readonly _fuseNavigationService = inject(FuseNavigationService);
@@ -32,9 +33,6 @@ export class ModernLayoutComponent {
     isScreenSmall = computed(() => !this.mediaChanges().matchingAliases.includes('md'));
 
     platform = signal(platform() || 'browser').asReadonly();
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
 
     /**
      * Constructor

@@ -11,13 +11,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ModernLayoutComponent } from './layouts/horizontal/modern/modern.component';
 
 @Component({
-    selector: 'layout',
+    selector: 'sia-layout',
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
     imports: [EmptyLayoutComponent, ModernLayoutComponent]
 })
 export class LayoutComponent implements OnInit {
+
     private readonly _activatedRoute = inject(ActivatedRoute);
     private readonly _document = inject<Document>(DOCUMENT);
     private readonly _renderer2 = inject(Renderer2);
@@ -27,14 +28,10 @@ export class LayoutComponent implements OnInit {
     private readonly _fusePlatformService = inject(FusePlatformService);
     private readonly _destroyRef = inject(DestroyRef);
 
-
     config: FuseConfig;
     layout: string;
     scheme: 'dark' | 'light';
     theme: string;
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
 
     /**
      * Constructor

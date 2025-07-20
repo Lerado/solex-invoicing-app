@@ -34,7 +34,7 @@
         <div
           class="fuse-horizontal-navigation-menu-item"
           [disabled]="item.disabled"
-          [matMenuTriggerFor]="branch.matMenu"
+          [matMenuTriggerFor]="branch.matMenu()"
           mat-menu-item>
           <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: item}"></ng-container>
           <fuse-horizontal-navigation-branch-item

@@ -7,14 +7,11 @@ import { SignInResponse } from './auth.types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+
     private readonly _httpClient = inject(HttpClient);
     private readonly _userService = inject(UserService);
 
-
     private _authenticated: boolean = false;
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
 
     /**
      * Constructor

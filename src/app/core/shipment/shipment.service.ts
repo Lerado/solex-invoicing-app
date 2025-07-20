@@ -7,11 +7,8 @@ import { CreateShipmentDto } from './shipment.dto';
 
 @Injectable({ providedIn: 'root' })
 export class ShipmentService {
+
     private readonly _httpClient = inject(HttpClient);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
 
     /**
      * Constructor

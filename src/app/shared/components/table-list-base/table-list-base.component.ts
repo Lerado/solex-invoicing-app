@@ -6,7 +6,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatColumnDef, MatHeaderRowDef, MatNoDataRow, MatRowDef, MatTable, MatTableModule } from '@angular/material/table';
 
 @Component({
-    selector: 'table-list-base',
+    selector: 'sia-table-list-base',
     template: '',
     imports: [MatTableModule, MatSortModule, DragDropModule, MatProgressSpinnerModule],
     changeDetection: ChangeDetectionStrategy.OnPush

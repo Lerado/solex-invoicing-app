@@ -13,15 +13,12 @@ import { LangDefinition, TranslocoService } from '@ngneat/transloco';
     imports: [MatMenuModule, MatButtonModule, MatIconModule]
 })
 export class LanguagesComponent {
-    private readonly _translocoService = inject(TranslocoService);
 
+    private readonly _translocoService = inject(TranslocoService);
 
     availableLangs = this._translocoService.getAvailableLangs() as LangDefinition[];
     activeLangId = toSignal(this._translocoService.langChanges$);
     activeLangLabel = computed(() => this.availableLangs.find(lang => lang.id === this.activeLangId()).label);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
 
     /**
      * Constructor

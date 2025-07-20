@@ -9,10 +9,6 @@ export class AuthMockApi {
     private readonly _fuseMockApiService = inject(FuseMockApiService);
     private readonly _userApiStore = inject(UserApiStore);
 
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
-
     /**
      * Constructor
      */
@@ -39,7 +35,6 @@ export class AuthMockApi {
                     .pipe(
                         map((result) => {
                             // Sign in successful
-                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
                             const { rootPassword, ...user } = cloneDeep(result) ?? {};
                             return [
                                 200,

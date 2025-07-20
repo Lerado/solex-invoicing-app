@@ -5,18 +5,10 @@ import { Observable, ReplaySubject, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+
     private readonly _httpClient = inject(HttpClient);
 
-
     private readonly _user: ReplaySubject<User> = new ReplaySubject<User>(1);
-
-    /** Inserted by Angular inject() migration for backwards compatibility */
-    constructor(...args: unknown[]);
-
-    /**
-     * Constructor
-     */
-    constructor() { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors

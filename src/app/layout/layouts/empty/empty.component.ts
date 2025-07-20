@@ -6,7 +6,7 @@ import { platform } from '@tauri-apps/plugin-os';
 import { WindowCommandsComponent } from 'app/layout/common/window-commands/window-commands.component';
 
 @Component({
-    selector: 'empty-layout',
+    selector: 'sia-empty-layout',
     templateUrl: './empty.component.html',
     encapsulation: ViewEncapsulation.None,
     imports: [FuseLoadingBarComponent, WindowCommandsComponent, RouterOutlet]

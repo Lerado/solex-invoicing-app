@@ -23,7 +23,6 @@ export class CityApiStore extends Store implements HasMigrations {
                     .insert()
                     .into(this.TABLE_NAME)
                     .setFieldsRows(
-                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         cities.map(city => ({ ...city, createdAt: Date.now() }))
                     )
                     .toString(),
@@ -50,6 +49,7 @@ export class CityApiStore extends Store implements HasMigrations {
             .queryBuilder
             .select()
             .from(this.TABLE_NAME)
+            .where('deletedAt IS NULL')
             .toString();
         // Execute query
         return this._persistence.executeSelect<CityModel[]>(query);
