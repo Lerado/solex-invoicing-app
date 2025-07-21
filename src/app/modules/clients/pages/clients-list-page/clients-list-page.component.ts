@@ -51,7 +51,7 @@ export default class ClientsListPageComponent implements OnInit, AfterViewInit {
     clientsLoading = toSignal(this.clientsSource.loading$);
     clientsCount = toSignal(this.clientsSource.totalCount$);
 
-    clientsColumns: string[] = ['createdAt', 'firstName', 'lastName', 'contact', 'address', 'id', 'actions'];
+    clientsColumns: string[] = ['createdAt', 'firstName', 'lastName', 'contact', 'address', 'actions'];
     clientsActions: TableListAction<ClientListPageAction>[] = [
         // {
         //     key: 'print',
@@ -114,6 +114,12 @@ export default class ClientsListPageComponent implements OnInit, AfterViewInit {
      * After view init
      */
     ngAfterViewInit(): void {
+
+        this._sort().sort({
+            id: 'id',
+            start: 'desc',
+            disableClear: false
+        });
 
         // Server side search
         fromEvent(this._search().nativeElement, 'keyup').pipe(

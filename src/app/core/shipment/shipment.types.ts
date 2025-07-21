@@ -5,7 +5,7 @@ export interface Shipment {
     readonly id: number;
     readonly number: string;
 
-    pickupDate: number;
+    pickupDate: string;
     pickupTime: string;
 
     items?: ShipmentItem[];

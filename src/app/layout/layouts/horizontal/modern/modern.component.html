@@ -23,7 +23,7 @@
 
     <!-- Header -->
     <header [class]="{ 'px-4 md:px-6': platform() === 'browser' }"
-        class="relative flex items-center w-full pl-4 shadow h-14 flex-0 md:pl-6 z-49 dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
+        class="fixed top-0 right-0 flex items-center w-full pl-4 shadow h-14 flex-0 md:pl-6 z-49 dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
         @if (!isScreenSmall()) {
         <!-- Logo -->
         <div class="flex items-center mx-2 lg:mr-8">
@@ -62,7 +62,7 @@
     <div class="relative flex flex-col flex-auto w-full">
         <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
              Otherwise, layout changes won't be registered and the view won't be updated! -->
-        <main class="absolute inset-0 flex flex-col flex-auto w-full overflow-x-hidden overflow-y-auto">
+        <main class="absolute inset-0 flex flex-col flex-auto w-full overflow-x-hidden overflow-y-auto pt-14 print:pt-0">
             <router-outlet></router-outlet>
         </main>
     </div>

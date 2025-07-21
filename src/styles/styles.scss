@@ -18,12 +18,21 @@ ngx-mat-intl-tel-input {
     }
 }
 
-.mat-sort-header.mat-sort-header-right
-    > .mat-sort-header-container {
+.mat-sort-header.mat-sort-header-right > .mat-sort-header-container {
     justify-content: end;
 }
 
-.mat-sort-header.mat-sort-header-center
-    > .mat-sort-header-container {
+.mat-sort-header.mat-sort-header-center > .mat-sort-header-container {
     justify-content: center;
+}
+
+/* UNDO from @fuse - Fix the alignment of icons when used within buttons */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-unelevated-button {
+    & > .mat-icon {
+        margin-right: var(--mat-button-text-icon-spacing, 8px) !important;
+        margin-left: var(--mat-button-text-icon-offset, -4px) !important;
+    }
 }

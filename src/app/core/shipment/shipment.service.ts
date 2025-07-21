@@ -105,4 +105,16 @@ export class ShipmentService {
             switchMap((number) => this._httpClient.post<Shipment>('api/shipment', { ...payload, number }))
         );
     }
+
+    /**
+     * Deletes a shipment from the database
+     *
+     * @param shipmentId
+     */
+    delete(shipmentId: number): Observable<any> {
+        const params = new HttpParams({
+            fromObject: { shipmentId }
+        });
+        return this._httpClient.delete<any>('api/shipment', { params });
+    }
 }

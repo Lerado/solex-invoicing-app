@@ -63,7 +63,7 @@
                 "focus": true,
                 "contentProtected": false,
                 "maximized": true,
-                "visible": true,
+                "visible": false,
                 "useHttpsScheme": true
             },
             {
@@ -78,7 +78,7 @@
                 "url": "assets/html/splashscreen.html",
                 "label": "splashscreen",
                 "useHttpsScheme": true,
-                "visible": false
+                "visible": true
             }
         ],
         "security": {
