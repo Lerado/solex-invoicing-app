@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { Client } from 'app/core/client/client.types';
-import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { startWith, distinctUntilChanged, debounceTime, filter, switchMap, map } from 'rxjs';
 import { ClientService } from 'app/core/client/client.service';
@@ -32,8 +32,10 @@ export default class ShipmentCreationPageComponent {
     private readonly _formBuilder = inject(NonNullableFormBuilder);
     private readonly _router = inject(Router);
 
-    readonly senderSearchControl = new FormControl<string>('', Validators.required);
-    readonly senderControl = new FormControl<Client>(null, Validators.required);
+    readonly nextShipmentReference = toSignal(this._shipmentService.getNextReference());
+
+    readonly senderSearchControl = this._formBuilder.control<string>('', Validators.required);
+    readonly senderControl = this._formBuilder.control<Client>(null, Validators.required);
     readonly filteredSenders: Signal<Client[]> = toSignal(this.senderSearchControl.valueChanges.pipe(
         startWith(''),
         distinctUntilChanged(),
@@ -43,8 +45,8 @@ export default class ShipmentCreationPageComponent {
         map(({ items }) => items)
     ), { initialValue: [] });
 
-    readonly recipientSearchControl = new FormControl<string>('', Validators.required);
-    readonly recipientControl = new FormControl<Client>(null, Validators.required);
+    readonly recipientSearchControl = this._formBuilder.control<string>('', Validators.required);
+    readonly recipientControl = this._formBuilder.control<Client>(null, Validators.required);
     readonly filteredRecipients: Signal<Client[]> = toSignal(this.recipientSearchControl.valueChanges.pipe(
         startWith(''),
         distinctUntilChanged(),
@@ -54,7 +56,7 @@ export default class ShipmentCreationPageComponent {
         map(({ items }) => items)
     ), { initialValue: [] });
 
-    readonly shipmentInfoControl = new FormControl<CreateShipmentInfoDto>(null, Validators.required);
+    readonly shipmentInfoControl = this._formBuilder.control<CreateShipmentInfoDto>(null, Validators.required);
 
     readonly shippingItemsControl = this._formBuilder.array([
         this._formBuilder.group({

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, LOCALE_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, LOCALE_ID } from '@angular/core';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +9,6 @@ import { CreateShipmentInfoDto } from 'app/core/shipment/shipment.dto';
 import { DateTime } from 'luxon';
 import { DecimalPipe, formatDate, TitleCasePipe } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ShipmentService } from 'app/core/shipment/shipment.service';
 import { MatSelectModule } from '@angular/material/select';
 import { CityService } from 'app/core/city/city.service';
 import { CountryService } from 'app/core/country/country.service';
@@ -39,13 +38,13 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
     private readonly _formBuilder = inject(NonNullableFormBuilder);
     private readonly _countryService = inject(CountryService);
     private readonly _cityService = inject(CityService);
-    private readonly _shipmentService = inject(ShipmentService);
     private readonly _userService = inject(UserService);
 
     readonly countries = this._countryService.getCountries();
     readonly cities = this._cityService.getCities();
 
-    readonly nextShipmentReference = toSignal(this._shipmentService.getNextReference());
+    readonly shipmentUUID = input<string>('');
+
     readonly user = toSignal(this._userService.user$);
 
     readonly shipmentInfoForm = this._formBuilder.group({
