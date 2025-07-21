@@ -62,7 +62,7 @@
     <div class="relative flex flex-col flex-auto w-full">
         <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
              Otherwise, layout changes won't be registered and the view won't be updated! -->
-        <main class="absolute inset-0 flex flex-col flex-auto w-full overflow-x-hidden overflow-y-auto pt-14">
+        <main class="absolute inset-0 flex flex-col flex-auto w-full overflow-x-hidden overflow-y-auto pt-14 print:pt-0">
             <router-outlet></router-outlet>
         </main>
     </div>
