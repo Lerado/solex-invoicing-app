@@ -194,6 +194,22 @@ export class ShipmentMockApi {
                     map(() => [201, true])
                 );
             });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ DELETE
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onDelete('api/shipment')
+            .reply(({ request }) => {
+                if (!request.params.get('shipmentId')) {
+                    return [400, 'Shipment ID is required.'];
+                }
+                const shipmentId = +request.params.get('shipmentId');
+                return this._shipmentApiStore.delete(shipmentId)
+                    .pipe(
+                        map(() => [204, true])
+                    );
+            });
     }
 
     /**

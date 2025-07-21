@@ -1,8 +1,8 @@
 export interface CreateShipmentInfoDto {
     pickupDate: string;
     pickupTime: string;
-    countryCode: string;
-    cityCode: string;
+    deliveryCountryCode: string;
+    deliveryCityCode: string;
     deliveryAddress: string;
     bundledLength: number;
     bundledWidth: number;
