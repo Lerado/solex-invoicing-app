@@ -26,6 +26,15 @@
         </div>
 
     </div>
+    <!-- Alert -->
+    @if (showAlert()) {
+    @defer(when showAlert()) {
+    <fuse-alert class="-mb-3" [appearance]="'outline'" [showIcon]="false" [type]="alert().type"
+        [@shake]="alert().type === 'error'" [dismissible]="true">
+        {{alert().message}}
+    </fuse-alert>
+    }
+    }
     <sia-clients-table-list [dataSource]="clientsSource" [columns]="clientsColumns" [loading]="clientsLoading()" matSort
         #sort="matSort" class="my-6 responsive-table-md">
 

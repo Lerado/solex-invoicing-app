@@ -3,6 +3,7 @@ import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { cloneDeep } from 'lodash-es';
 import { UserApiStore } from '../user/store';
 import { catchError, map, of, switchMap } from 'rxjs';
+import { SignUpDto } from 'app/core/auth/auth.dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthMockApi {
@@ -57,7 +58,7 @@ export class AuthMockApi {
         this._fuseMockApiService
             .onPost('api/auth/sign-up', 500)
             .reply(({ request }) => {
-                const { cashierReference, cashierName, countryCode, cityCode, rootPassword, rootPasswordConfirmation } = cloneDeep(request.body);
+                const { cashierReference, cashierName, countryCode, cityCode, rootPassword, rootPasswordConfirmation } = cloneDeep(request.body) as SignUpDto;
                 if (rootPassword !== rootPasswordConfirmation) {
                     return [400, false];
                 }

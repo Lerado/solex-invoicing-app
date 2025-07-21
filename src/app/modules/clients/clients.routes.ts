@@ -12,4 +12,9 @@ export default [
         title: 'Ajouter un client',
         loadComponent: () => import('./pages/client-creation-page/client-creation-page.component')
     },
+    {
+        path: 'edit/:clientId',
+        title: 'Modifier les informations du client',
+        loadComponent: () => import('./pages/client-edition-page/client-edition-page.component')
+    }
 ] as Routes;
