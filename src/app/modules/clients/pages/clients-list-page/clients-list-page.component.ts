@@ -115,6 +115,12 @@ export default class ClientsListPageComponent implements OnInit, AfterViewInit {
      */
     ngAfterViewInit(): void {
 
+        this._sort().sort({
+            id: 'id',
+            start: 'desc',
+            disableClear: false
+        });
+
         // Server side search
         fromEvent(this._search().nativeElement, 'keyup').pipe(
             takeUntilDestroyed(this._destroyRef),
