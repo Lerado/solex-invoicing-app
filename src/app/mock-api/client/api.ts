@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import { ClientApiStore } from './store';
-import { map } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { ClientModel } from './types';
 import { objectToFlatString } from '@lerado/typescript-toolbox';
 import { cloneDeep } from 'lodash-es';
@@ -31,6 +31,19 @@ export class ClientMockApi {
         // -----------------------------------------------------------------------------------------------------
         // @ GET
         // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/client')
+            .reply(({ request }) => {
+                if (!request.params.get('clientId')) {
+                    return [400, 'Client ID is required.'];
+                }
+                const clientId = +request.params.get('clientId');
+                return this._clientApiStore.get(clientId)
+                    .pipe(
+                        map(client => [200, client])
+                    );
+            });
+
         this._fuseMockApiService
             .onGet('api/clients')
             .reply(({ request }) => {
@@ -128,12 +141,46 @@ export class ClientMockApi {
         // @ POST
         // -----------------------------------------------------------------------------------------------------
         this._fuseMockApiService
-            .onPost('api/client', 500)
+            .onPost('api/client')
             .reply(({ request }) => {
                 const newClient = cloneDeep(request.body);
                 return this._clientApiStore.create(newClient)
                     .pipe(
                         map(() => [201, true])
+                    );
+            });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ PATCH
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPatch('api/client')
+            .reply(({ request }) => {
+                if (!request.params.get('clientId')) {
+                    return [400, 'Client ID is required.'];
+                }
+                const clientId = +request.params.get('clientId');
+                const changes = cloneDeep(request.body);
+                return this._clientApiStore.update(clientId, changes)
+                    .pipe(
+                        switchMap(() => this._clientApiStore.get(clientId)),
+                        map((updatedClient) => [200, updatedClient])
+                    );
+            });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ DELETE
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onDelete('api/client')
+            .reply(({ request }) => {
+                if (!request.params.get('clientId')) {
+                    return [400, 'Client ID is required.'];
+                }
+                const clientId = +request.params.get('clientId');
+                return this._clientApiStore.delete(clientId)
+                    .pipe(
+                        map(() => [204, true])
                     );
             });
     }

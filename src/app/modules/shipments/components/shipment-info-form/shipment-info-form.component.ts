@@ -59,7 +59,7 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
         bundledWidth: [1, [Validators.required, Validators.min(0.01)]],
         bundledHeight: [1, [Validators.required, Validators.min(0.01)]],
         totalWeight: [1, [Validators.required, Validators.min(0.01)]],
-        totalPrice: [0, [Validators.required, Validators.min(0.01)]]
+        totalPrice: this._formBuilder.control<number | null>(null, [Validators.required, Validators.min(0.01)])
     });
 
     private readonly _shipmentHeightChanges = toSignal(this.shipmentInfoForm.controls.bundledHeight.valueChanges, { initialValue: this.shipmentInfoForm.getRawValue().bundledHeight });

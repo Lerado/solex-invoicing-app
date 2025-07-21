@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CreateClientDto } from 'app/core/client/client.dto';
 
 @Component({
     selector: 'sia-client-info-form',
@@ -19,6 +18,9 @@ import { CreateClientDto } from 'app/core/client/client.dto';
             useExisting: ClientInfoFormComponent
         }
     ],
+    host: {
+        '(blur)': 'onTouched()'
+    },
     templateUrl: './client-info-form.component.html',
     styles: ':host { display: block;}',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,15 +42,15 @@ export class ClientInfoFormComponent implements ControlValueAccessor, Validator 
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    writeValue(value: CreateClientDto): void {
+    writeValue(value: unknown): void {
+        if (value === null || value === undefined) { return; }
         this.clientForm.patchValue(value);
     }
 
     registerOnChange(fn: CallableFunction): void {
         this.clientForm
             .valueChanges
-            .subscribe({ next: value => fn(value) })
-            ;
+            .subscribe({ next: value => fn(value) });
     }
 
     registerOnTouched(fn: CallableFunction): void {

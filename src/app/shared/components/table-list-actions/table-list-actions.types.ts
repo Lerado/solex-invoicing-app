@@ -1,5 +1,5 @@
-interface TableListAction {
-    key: string,
+interface TableListAction<KeyType = string> {
+    key: KeyType,
     label: string;
     icon: string;
     styles?: {

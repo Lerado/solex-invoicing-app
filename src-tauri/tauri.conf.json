@@ -59,7 +59,7 @@
                 "title": "SOLEX Invoicing App",
                 "width": 900,
                 "center": false,
-                "decorations": false,
+                "decorations": true,
                 "focus": true,
                 "contentProtected": false,
                 "maximized": true,
