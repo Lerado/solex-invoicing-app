@@ -96,7 +96,8 @@
         </div>
         <div class="flex justify-between my-1">
             <span>Dimensions:</span>
-            <span>{{ dimensions() }}</span>
+            <span>{{ shipment().bundledLength | number }}x{{ shipment().bundledWidth | number }}x{{
+                shipment().bundledHeight | number}}m</span>
         </div>
         <div class="flex justify-between my-1 font-bold">
             <span>Poids Final:</span>
