@@ -8,7 +8,7 @@ import { ClientInfoFormComponent } from '../../components/client-info-form/clien
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { isEqual, isMatch, omitBy } from 'lodash-es';
+import { isEqual, isMatch, transform } from 'lodash-es';
 
 @Component({
     selector: 'sia-client-edition-page',
@@ -67,41 +67,45 @@ export default class ClientEditionPageComponent {
         this.clientForm.disable();
 
         const payload: Readonly<UpdateClientDto> = Object.freeze<UpdateClientDto>(
-            omitBy(this.clientForm.getRawValue(), (value, key) => isMatch(this.client(), { [key]: value }))
+            transform(this.client(), (result, value, key) => {
+                if (!isEqual(value, this._clientFormChanges()[key])) {
+                    result[key] = value;
+                }
+            }, {})
         );
 
         this._clientService.update(this._clientId(), payload)
-                    .subscribe({
-                        next: (updatedClient) => {
-                            if (!stayOnPage) {
-                                return this._router.navigate(['/clients']);
-                            }
+            .subscribe({
+                next: (updatedClient) => {
+                    if (!stayOnPage) {
+                        return this._router.navigate(['/clients']);
+                    }
 
-                            const { firstName, lastName, contact, address } = updatedClient;
-                            // Reset client form to new values
-                            this.clientForm.reset({ firstName, lastName, contact, address });
+                    const { firstName, lastName, contact, address } = updatedClient;
+                    // Reset client form to new values
+                    this.clientForm.reset({ firstName, lastName, contact, address });
 
-                            this.clientForm.enable();
+                    this.clientForm.enable();
 
-                            this.alert.set({
-                                type: 'success',
-                                message: 'Mise à jour réussie'
-                            });
-                            // Show the alert
-                            this.showAlert.set(true);
-                        },
-                        error: (message) => {
-                            this.clientForm.enable();
-
-                            // Set the alert
-                            this.alert.set({
-                                type: 'error',
-                                message
-                            });
-
-                            // Show the alert
-                            this.showAlert.set(true);
-                        }
+                    this.alert.set({
+                        type: 'success',
+                        message: 'Mise à jour réussie'
                     });
+                    // Show the alert
+                    this.showAlert.set(true);
+                },
+                error: (message) => {
+                    this.clientForm.enable();
+
+                    // Set the alert
+                    this.alert.set({
+                        type: 'error',
+                        message
+                    });
+
+                    // Show the alert
+                    this.showAlert.set(true);
+                }
+            });
     }
 }
