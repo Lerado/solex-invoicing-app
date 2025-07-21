@@ -51,7 +51,7 @@ export default class ClientsListPageComponent implements OnInit, AfterViewInit {
     clientsLoading = toSignal(this.clientsSource.loading$);
     clientsCount = toSignal(this.clientsSource.totalCount$);
 
-    clientsColumns: string[] = ['createdAt', 'firstName', 'lastName', 'contact', 'address', 'id', 'actions'];
+    clientsColumns: string[] = ['createdAt', 'firstName', 'lastName', 'contact', 'address', 'actions'];
     clientsActions: TableListAction<ClientListPageAction>[] = [
         // {
         //     key: 'print',

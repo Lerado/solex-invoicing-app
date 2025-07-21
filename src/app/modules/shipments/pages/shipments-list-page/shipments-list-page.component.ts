@@ -39,7 +39,6 @@ export default class ShipmentsListPageComponent implements OnInit, AfterViewInit
     shipmentsLoading = toSignal(this.shipmentsSource.loading$);
     shipmentsCount = toSignal(this.shipmentsSource.totalCount$);
 
-    // shipmentsColumns: string[] = ['createdAt', 'number', 'destination', 'itemsCount', 'finalWeight', 'totalPrice', 'actions'];
     shipmentsColumns: string[] = ['createdAt', 'number', 'from', 'to', 'destination', 'itemsCount', 'finalWeight', 'totalPrice', 'actions'];
     shipmentsActions: TableListAction[] = [
         {
