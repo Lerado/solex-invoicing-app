@@ -8,7 +8,7 @@ import { ClientInfoFormComponent } from '../../components/client-info-form/clien
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { isEqual, isMatch, transform } from 'lodash-es';
+import { deepDiff } from 'app/shared/utils/deep-diff';
 
 @Component({
     selector: 'sia-client-edition-page',
@@ -29,7 +29,8 @@ export default class ClientEditionPageComponent {
 
     readonly clientForm = new FormControl<UpdateClientDto>({}, Validators.required);
     private readonly _clientFormChanges = toSignal(this.clientForm.valueChanges);
-    readonly formUnchanged = computed(() => isMatch(this.client(), this._clientFormChanges()));
+    private readonly _formChanges = computed(() => deepDiff(this.client(), this._clientFormChanges()));
+    readonly formUnchanged = computed(() => Object.keys(this._formChanges()).length === 0);
 
     readonly alert: WritableSignal<{ type: FuseAlertType; message: string }> = signal({
         type: 'success',
@@ -66,13 +67,7 @@ export default class ClientEditionPageComponent {
 
         this.clientForm.disable();
 
-        const payload: Readonly<UpdateClientDto> = Object.freeze<UpdateClientDto>(
-            transform(this.client(), (result, value, key) => {
-                if (!isEqual(value, this._clientFormChanges()[key])) {
-                    result[key] = value;
-                }
-            }, {})
-        );
+        const payload: Readonly<UpdateClientDto> = Object.freeze<UpdateClientDto>(this._formChanges());
 
         this._clientService.update(this._clientId(), payload)
             .subscribe({

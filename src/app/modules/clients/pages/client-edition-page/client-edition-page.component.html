@@ -30,13 +30,13 @@
             <!-- Submit -->
             <button (click)="updateClient()" [disabled]="clientForm.disabled || clientForm.invalid || formUnchanged()"
                 mat-stroked-button color="primary">
-                Modifier et quitter
+                Enregistrer et quitter
             </button>
             <!-- Submit and continue -->
             <button (click)="updateClient(true)"
                 [disabled]="clientForm.disabled || clientForm.invalid || formUnchanged()" mat-flat-button
                 color="primary">
-                Modifier et continuer
+                Enregistrer et continuer
             </button>
         </div>
     </section>
