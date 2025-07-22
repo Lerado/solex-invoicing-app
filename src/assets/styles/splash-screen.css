@@ -88,6 +88,24 @@ body fuse-splash-screen .loader {
         opacity: 0;
     }
 }
+
+body fuse-splash-screen .loader::after,
+body fuse-splash-screen .loader::before,
+body fuse-splash-screen .loader span {
+    font-family: sans-serif;
+    font-weight: 800;
+    color: var(--fuse-primary);
+}
+
+body fuse-splash-screen .loader span {
+    position: absolute;
+    top: 26px; /* aligns vertically within the 70px height */
+    left: 20px;
+    font-size: 1rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
 body:not(.fuse-splash-screen-hidden) {
     overflow: hidden;
 }

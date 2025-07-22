@@ -18,7 +18,7 @@
     <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-12">
 
         <!-- Shipment info -->
-        <sia-shipment-info-form [formControl]="shipmentInfoControl"
+        <sia-shipment-info-form [formControl]="shipmentInfoControl" [shipmentUUID]="nextShipmentReference()"
             class="self-start p-4 rounded col-span-full md:col-span-5 bg-card"></sia-shipment-info-form>
 
         <section class="self-start col-span-full md:col-span-7">
@@ -74,10 +74,12 @@
                                 <mat-label>Quantité</mat-label>
                                 <input type="number" formControlName="quantity" matInput min="1" placeholder="Quantité">
                             </mat-form-field>
+                            @if (shippingItemsControl.controls.length > 1) {
                             <button (click)="removeShippingItem($index)" mat-icon-button color="warn"
                                 aria-label="Supprimer la ligne">
                                 <mat-icon svgIcon="heroicons_solid:minus-circle"></mat-icon>
                             </button>
+                            }
                         </li>
                         }
                         <li class="flex justify-end mt-4">

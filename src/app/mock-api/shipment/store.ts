@@ -215,4 +215,25 @@ export class ShipmentApiStore extends Store {
                 map(result => result.at(0)?.id ?? 0)
             );
     }
+
+    /**
+     * Soft-deletes a client entity from the database
+     *
+     * @param shipmentId
+     */
+    delete(shipmentId: number): Observable<boolean> {
+        // Deletion query
+        const deleteClientRequest = this._persistence
+            .queryBuilder
+            .update()
+            .table(ShipmentApiStore.TABLE_NAME)
+            .where(`id = ${shipmentId}`)
+            .set('deletedAt', Date.now())
+            .toString();
+
+        return this._persistence.executeQuery(deleteClientRequest)
+            .pipe(
+                map(({ rowsAffected }) => rowsAffected === 1)
+            );
+    }
 }

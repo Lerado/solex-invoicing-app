@@ -39,8 +39,8 @@
             }
         }
     },
-    "productName": "SOLEX Invoicing App",
-    "mainBinaryName": "SOLEX Invoicing App",
+    "productName": "SOLEX Facturation",
+    "mainBinaryName": "SOLEX Facturation",
     "version": "0.1.0",
     "identifier": "cm.solex.invoicing",
     "plugins": {
@@ -56,18 +56,18 @@
                 "fullscreen": false,
                 "height": 600,
                 "resizable": true,
-                "title": "SOLEX Invoicing App",
+                "title": "SOLEX Facturation",
                 "width": 900,
                 "center": false,
-                "decorations": false,
+                "decorations": true,
                 "focus": true,
                 "contentProtected": false,
                 "maximized": true,
-                "visible": true,
+                "visible": false,
                 "useHttpsScheme": true
             },
             {
-                "title": "SOLEX Invoicing App",
+                "title": "SOLEX Facturation",
                 "width": 800,
                 "height": 600,
                 "decorations": false,
@@ -78,7 +78,7 @@
                 "url": "assets/html/splashscreen.html",
                 "label": "splashscreen",
                 "useHttpsScheme": true,
-                "visible": false
+                "visible": true
             }
         ],
         "security": {

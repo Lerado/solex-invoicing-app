@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.0...v0.2.1) (2025-07-22)
+
+
+### Features
+
+* **client:** edit and delete client information ([200bf68](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/200bf68c5272873938a0f56859d066e611b10ea2))
+* set product name and window title to a french label ([3091878](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/309187846aced2fd9d1a3552a19505084d05d9aa))
+* **shipment:** delete shipment from list ([cd14d7c](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/cd14d7c17dad2422f3bf982fbfb4f946fdb506a4))
+* **splashscreen:** add company label on loading truck ([be43624](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/be4362449606630bb41cef684d2efb9cfd804224))
+
+
+### Bug Fixes
+
+* **clients:** mismatch between firstname and lastname columns headers ([192385f](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/192385fb39e95f9cb1d02ce0652f540586b84fe3))
+* hide id column in table lists ([0211103](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/02111035de2e11d6266f331822176a79578ae7c6))
+* **layout:** position navbar as fixed ([f3dbd98](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/f3dbd9854c2be2fe8822a2b879300b4dcd4495cc))
+* **layout:** use default window decorations for mac/linux compatibility ([619e4da](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/619e4dad35ec417899906d811fac84e8a545520e))
+* **print:** allow webview print ([ca1e750](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/ca1e75004facf4563841abda83b8628f6cec009b))
+* **printing:** remove unnecessary margins on print ([e7eed5d](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/e7eed5d2d652f4448ac0146d1c7cdd33bbaffa05))
+* **shipment-info:** total price input should be initially empty instead of 0 ([f894546](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/f8945465e1077c22f37d528c95c694bd325568b8))
+* **shipping-receipt:** format dimensions on receipt ([d31d1fa](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/d31d1faad2bae12f63c394b2287efbf88067f796))
+* spacing of icons when used within buttons ([00ef806](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/00ef8064bd3e85422a8efc48be91aa0e6b303cac))
+* **splashscreen:** loading window does not show up before main window ([47218d4](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/47218d47d7cd883ea3e2f2c643e035fd489afc97))
+* table sorting state must be initialized ([3871a5a](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/3871a5a05c67b54715f18e05b4720c18b16e5641))
+
 ## [0.2.0](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.1.0...v0.2.0) (2025-07-20)
 
 

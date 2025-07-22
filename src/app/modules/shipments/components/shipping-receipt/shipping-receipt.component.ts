@@ -22,11 +22,6 @@ export class ShippingReceiptComponent {
     readonly user = toSignal(this._userService.user$, { requireSync: true });
     readonly cashierName = computed(() => this.user().cashierName);
 
-    readonly dimensions = computed(() => {
-        const s = this.shipment();
-        return `${s.bundledLength}x${s.bundledWidth}x${s.bundledHeight}m`;
-    });
-
     readonly currentDateTime = computed(() => {
         return new Date().toLocaleString('fr-FR');
     });

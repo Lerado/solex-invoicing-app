@@ -14,5 +14,5 @@ export class TableListActionsComponent {
     readonly subject = input.required<unknown>();
     readonly actions = input.required<TableListAction[]>();
 
-    readonly trigger = output<string>();
+    readonly trigger = output<any>();
 }

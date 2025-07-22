@@ -1,4 +1,4 @@
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { Component, ViewEncapsulation, computed, signal, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,13 +11,12 @@ import { platform } from '@tauri-apps/plugin-os';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { LanguagesComponent } from 'app/layout/common/languages/languages.component';
 import { UserComponent } from 'app/layout/common/user/user.component';
-import { WindowCommandsComponent } from 'app/layout/common/window-commands/window-commands.component';
 
 @Component({
     selector: 'sia-modern-layout',
     templateUrl: './modern.component.html',
     encapsulation: ViewEncapsulation.None,
-    imports: [NgClass, FuseLoadingBarComponent, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, UserComponent, LanguagesComponent, WindowCommandsComponent, RouterOutlet, NgOptimizedImage]
+    imports: [FuseLoadingBarComponent, FuseVerticalNavigationComponent, FuseHorizontalNavigationComponent, MatButtonModule, MatIconModule, UserComponent, LanguagesComponent, RouterOutlet, NgOptimizedImage]
 })
 export class ModernLayoutComponent {
 
