@@ -101,7 +101,6 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
                 this._initiallyDisabledControls.push(key);
             }
         }
-
     }
 
     // -----------------------------------------------------------------------------------------------------
