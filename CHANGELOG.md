@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.1...v0.2.2) (2025-07-23)
+
+
+### Features
+
+* **shipment:** edit shipment information, sender, recipient and items ([6b93ae6](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/6b93ae670c1f6b751aa16f3e666d7b0ba658f38d))
+
+
+### Bug Fixes
+
+* **shipping-receipt:** make receipt more printer-friendly after testing with pos printer ([c1bb720](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/c1bb7205f0a91cc96c640e07e093936cd4d74d34))
+
 ### [0.2.1](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.0...v0.2.1) (2025-07-22)
 
 
