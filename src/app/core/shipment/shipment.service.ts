@@ -3,7 +3,7 @@ import { Injectable, Signal, inject, signal } from '@angular/core';
 import { Shipment } from './shipment.types';
 import { PaginationDto, SortingDto, Pagination, computeQueryParams } from 'app/shared/utils/pagination.types';
 import { Observable, switchMap } from 'rxjs';
-import { CreateShipmentDto } from './shipment.dto';
+import { CreateShipmentDto, UpdateShipmentDto } from './shipment.dto';
 
 @Injectable({ providedIn: 'root' })
 export class ShipmentService {
@@ -104,6 +104,15 @@ export class ShipmentService {
         return this.getNextReference().pipe(
             switchMap((number) => this._httpClient.post<Shipment>('api/shipment', { ...payload, number }))
         );
+    }
+
+    /**
+     * Updates a shipment
+     *
+     * @param payload
+     */
+    update(payload: UpdateShipmentDto): Observable<Shipment> {
+        return this._httpClient.patch<Shipment>('api/shipment', payload);
     }
 
     /**

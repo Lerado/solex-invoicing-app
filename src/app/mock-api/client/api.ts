@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs';
 import { ClientModel } from './types';
 import { objectToFlatString } from '@lerado/typescript-toolbox';
 import { cloneDeep } from 'lodash-es';
+import { UpdateClientDto } from 'app/core/client/client.dto';
 
 @Injectable({ providedIn: 'root' })
 export class ClientMockApi {
@@ -35,7 +36,7 @@ export class ClientMockApi {
             .onGet('api/client')
             .reply(({ request }) => {
                 if (!request.params.get('clientId')) {
-                    return [400, 'Client ID is required.'];
+                    return [400, { error: 'Client ID is required.' }];
                 }
                 const clientId = +request.params.get('clientId');
                 return this._clientApiStore.get(clientId)
@@ -156,11 +157,11 @@ export class ClientMockApi {
         this._fuseMockApiService
             .onPatch('api/client')
             .reply(({ request }) => {
-                if (!request.params.get('clientId')) {
-                    return [400, 'Client ID is required.'];
+                const changes = cloneDeep(request.body) as UpdateClientDto;
+                const clientId = changes.id;
+                if (!clientId) {
+                    return [400, { error: 'Client ID is required.' }];
                 }
-                const clientId = +request.params.get('clientId');
-                const changes = cloneDeep(request.body);
                 return this._clientApiStore.update(clientId, changes)
                     .pipe(
                         switchMap(() => this._clientApiStore.get(clientId)),
@@ -175,7 +176,7 @@ export class ClientMockApi {
             .onDelete('api/client')
             .reply(({ request }) => {
                 if (!request.params.get('clientId')) {
-                    return [400, 'Client ID is required.'];
+                    return [400, { error: 'Client ID is required.' }];
                 }
                 const clientId = +request.params.get('clientId');
                 return this._clientApiStore.delete(clientId)

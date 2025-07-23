@@ -1,3 +1,9 @@
-import { CreateShipmentItemDto } from 'app/core/shipment/shipment.dto';
-
-export type CreateShipmentItemModelDto = Readonly<CreateShipmentItemDto> & { shipmentId: number };
+export interface ShipmentItemModel {
+    readonly id: number;
+    shipmentId: number;
+    designation: string;
+    quantity: number;
+    createdAt: number | null;
+    updatedAt: number | null;
+    deletedAt: number | null;
+}

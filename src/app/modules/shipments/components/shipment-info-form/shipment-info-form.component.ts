@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, LOCALE_ID } from '@angular/core';
-import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validator, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, NG_VALIDATORS, NG_VALUE_ACCESSOR, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { CreateShipmentInfoDto } from 'app/core/shipment/shipment.dto';
+import { CreateShipmentInfoDto, UpdateShipmentInfoDto } from 'app/core/shipment/shipment.dto';
 import { DateTime } from 'luxon';
 import { DecimalPipe, formatDate, TitleCasePipe } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -29,13 +29,16 @@ import { UserService } from 'app/core/user/user.service';
             multi: true
         }
     ],
+    host: {
+        '(blur)': 'onTouched()'
+    },
     templateUrl: './shipment-info-form.component.html',
     styles: ':host { display: block;}',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShipmentInfoFormComponent implements ControlValueAccessor, Validator {
 
-    private readonly _formBuilder = inject(NonNullableFormBuilder);
+    private readonly _formBuilder = inject(FormBuilder);
     private readonly _countryService = inject(CountryService);
     private readonly _cityService = inject(CityService);
     private readonly _userService = inject(UserService);
@@ -47,8 +50,9 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
 
     readonly user = toSignal(this._userService.user$);
 
-    readonly shipmentInfoForm = this._formBuilder.group({
+    readonly shipmentInfoForm = this._formBuilder.nonNullable.group({
         // number: ['', [Validators.required, Validators.pattern('^[A-Z]{3}[0-9]{7}')]],
+        id: this._formBuilder.control<number | null>({ value: null, disabled: true }, Validators.required),
         pickupDate: [DateTime.now().toISODate(), Validators.required],
         pickupTime: [formatDate(new Date(), 'HH:mm', inject(LOCALE_ID)), Validators.required],
         deliveryCountryCode: ['CM', Validators.required],
@@ -60,6 +64,8 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
         totalWeight: [1, [Validators.required, Validators.min(0.01)]],
         totalPrice: this._formBuilder.control<number | null>(null, [Validators.required, Validators.min(0.01)])
     });
+
+    private readonly _initiallyDisabledControls: string[] = [];
 
     private readonly _shipmentHeightChanges = toSignal(this.shipmentInfoForm.controls.bundledHeight.valueChanges, { initialValue: this.shipmentInfoForm.getRawValue().bundledHeight });
     private readonly _shipmentWidthChanges = toSignal(this.shipmentInfoForm.controls.bundledWidth.valueChanges, { initialValue: this.shipmentInfoForm.getRawValue().bundledWidth });
@@ -76,29 +82,42 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
      */
     readonly shipmentFinalWeight = computed(() => Math.max(this.shipmentVolumetricWeight(), this.shipmentWeightChanges()));
 
+    onChange: CallableFunction = (value: any): void => { };
+    onTouched: CallableFunction = (): void => { };
+
     /**
      * Constructor
      */
     constructor() {
         // Initialize destination city with the city of the current cashier account
         effect(() => this.shipmentInfoForm.patchValue({ deliveryCityCode: this.user().cityCode }));
+        // Emit changes to parent
+        this.shipmentInfoForm.valueChanges.subscribe(() => this.onChange(this.shipmentInfoForm.value));
+
+        // Disabled field keys
+        for (const [key] of Object.entries(this.shipmentInfoForm.controls)) {
+            const isInitiallyDisabled = this.shipmentInfoForm.get(key)?.disabled;
+            if (isInitiallyDisabled) {
+                this._initiallyDisabledControls.push(key);
+            }
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    onTouched: CallableFunction = (): void => { };
-
-    writeValue(value: CreateShipmentInfoDto): void {
+    writeValue(value: CreateShipmentInfoDto | UpdateShipmentInfoDto): void {
         if (!value) { return; }
-        this.shipmentInfoForm.patchValue({ ...value });
+        // Enable id field if it is filled
+        if ((value as UpdateShipmentInfoDto).id) {
+            this.shipmentInfoForm.controls.id.enable({ emitEvent: false });
+        }
+        this.shipmentInfoForm.reset(value);
     }
 
     registerOnChange(fn: CallableFunction): void {
-        this.shipmentInfoForm
-            .valueChanges
-            .subscribe({ next: value => fn(value) });
+        this.onChange = fn;
     }
 
     registerOnTouched(fn: CallableFunction): void {
@@ -106,14 +125,16 @@ export class ShipmentInfoFormComponent implements ControlValueAccessor, Validato
     }
 
     setDisabledState?(isDisabled: boolean): void {
-        if (isDisabled) {
-            this.shipmentInfoForm.disable();
+        for (const [key, control] of Object.entries(this.shipmentInfoForm.controls)) {
+            const isInitiallyDisabled = this._initiallyDisabledControls.includes(key);
+            if (isDisabled) {
+                control.disable();
+            } else if (!isInitiallyDisabled) {
+                control.enable();
+            }
         }
-        else {
-            this.shipmentInfoForm.enable();
-        }
-
     }
+
 
     validate(): ValidationErrors {
 

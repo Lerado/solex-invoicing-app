@@ -5,4 +5,4 @@ export interface CreateClientDto {
     address: string;
 }
 
-export type UpdateClientDto = Partial<CreateClientDto>;
+export type UpdateClientDto = Partial<CreateClientDto> & { id: number };

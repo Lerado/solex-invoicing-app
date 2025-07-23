@@ -8,7 +8,7 @@ import { ClientInfoFormComponent } from '../../components/client-info-form/clien
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { deepDiff } from 'app/shared/utils/deep-diff';
+import { diffDeep } from 'app/shared/utils/diff-deep';
 
 @Component({
     selector: 'sia-client-edition-page',
@@ -27,10 +27,10 @@ export default class ClientEditionPageComponent {
     private readonly _clientResource = this._clientService.getResource(this._clientId);
     readonly client = computed(() => this._clientResource.value());
 
-    readonly clientForm = new FormControl<UpdateClientDto>({}, Validators.required);
+    readonly clientForm = new FormControl<UpdateClientDto | null>(null, Validators.required);
     private readonly _clientFormChanges = toSignal(this.clientForm.valueChanges);
-    private readonly _formChanges = computed(() => deepDiff(this.client(), this._clientFormChanges()));
-    readonly formUnchanged = computed(() => Object.keys(this._formChanges()).length === 0);
+    private readonly _formChanges = computed(() => diffDeep(this.client(), this._clientFormChanges(), ['id']));
+    readonly formUnchanged = computed(() => Object.keys(this._formChanges()).length === 1);
 
     readonly alert: WritableSignal<{ type: FuseAlertType; message: string }> = signal({
         type: 'success',
@@ -46,8 +46,8 @@ export default class ClientEditionPageComponent {
         // Initializes form value with client info
         effect(() => {
             if (!this.client()) { return; }
-            const { firstName, lastName, contact, address } = this.client();
-            this.clientForm.patchValue({ firstName, lastName, contact, address });
+            const { id, firstName, lastName, contact, address } = this.client();
+            this.clientForm.patchValue({ id, firstName, lastName, contact, address });
         });
     }
 
@@ -67,18 +67,18 @@ export default class ClientEditionPageComponent {
 
         this.clientForm.disable();
 
-        const payload: Readonly<UpdateClientDto> = Object.freeze<UpdateClientDto>(this._formChanges());
+        const payload: Readonly<UpdateClientDto> = Object.freeze<UpdateClientDto>(this._formChanges() as UpdateClientDto);
 
-        this._clientService.update(this._clientId(), payload)
+        this._clientService.update(payload)
             .subscribe({
                 next: (updatedClient) => {
                     if (!stayOnPage) {
                         return this._router.navigate(['/clients']);
                     }
 
-                    const { firstName, lastName, contact, address } = updatedClient;
+                    const { id, firstName, lastName, contact, address } = updatedClient;
                     // Reset client form to new values
-                    this.clientForm.reset({ firstName, lastName, contact, address });
+                    this.clientForm.reset({ id, firstName, lastName, contact, address });
 
                     this.clientForm.enable();
 

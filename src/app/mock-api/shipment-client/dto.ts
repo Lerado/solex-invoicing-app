@@ -5,3 +5,5 @@ export interface CreateShipmentClientModelDto {
     clientId: number;
     role: ShipmentClientRole
 }
+
+export type UpdateShipmentClientModelDto = Partial<CreateShipmentClientModelDto> & { id: number };

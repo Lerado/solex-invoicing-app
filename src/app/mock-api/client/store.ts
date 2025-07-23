@@ -91,7 +91,7 @@ export class ClientApiStore extends Store {
      * @param clientId
      * @param changes
      */
-    update(clientId: number, changes: Partial<ClientModel>): Observable<boolean> {
+    update(clientId: number, changes: Omit<Partial<ClientModel>, 'id'>): Observable<boolean> {
         // Update query
         const updateClientRequest = this._persistence
             .queryBuilder
