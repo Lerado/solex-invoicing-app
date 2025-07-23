@@ -181,6 +181,29 @@ export class ShipmentApiStore extends Store {
     }
 
     /**
+     * Updates shipment entity in persistence
+     *
+     * @param shipmentId
+     * @param changes
+     */
+    update(shipmentId: number, changes: Omit<Partial<ShipmentModel>, 'id'>): Observable<boolean> {
+        // Update query
+        const updateShipmentRequest = this._persistence
+            .queryBuilder
+            .update()
+            .table(ShipmentApiStore.TABLE_NAME)
+            .where(`id = ${shipmentId}`)
+            .setFields(changes)
+            .set('updatedAt', Date.now())
+            .toString();
+
+        return this._persistence.executeQuery(updateShipmentRequest)
+            .pipe(
+                map(({ rowsAffected }) => rowsAffected === 1)
+            );
+    }
+
+    /**
      * Counts the shipments
      */
     count(): Observable<number> {

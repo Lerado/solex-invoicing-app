@@ -72,11 +72,10 @@ export class ClientService {
     /**
      * Updates a client
      *
-     * @param clientId
-     * @param changes
+     * @param payload
      */
-    update(clientId: number, changes: UpdateClientDto): Observable<Client> {
-        return this._httpClient.patch<Client>('api/client', changes, { params: { clientId } });
+    update(payload: UpdateClientDto): Observable<Client> {
+        return this._httpClient.patch<Client>('api/client', payload);
     }
 
     /**

@@ -13,6 +13,11 @@ export default [
         loadComponent: () => import('./pages/shipment-creation-page/shipment-creation-page.component')
     },
     {
+        path: 'edit/:shipmentId',
+        title: 'Modifier les informations de l\'expédition',
+        loadComponent: () => import('./pages/shipment-edition-page/shipment-edition-page.component')
+    },
+    {
         path: ':shipmentNumber/print',
         title: 'Imprimer le bordereau',
         loadComponent: () => import('./pages/shipment-printing-page/shipment-printing-page.component')

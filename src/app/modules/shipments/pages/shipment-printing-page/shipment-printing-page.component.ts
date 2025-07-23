@@ -29,7 +29,7 @@ export default class ShipmentPrintingPageComponent {
     readonly shipment = computed(() => this._shipmentResource.value());
 
     readonly printableTypes = ShipmentPrintableType;
-    readonly printableType: ShipmentPrintableType = ShipmentPrintableType.Slip;
+    readonly printableType: ShipmentPrintableType = ShipmentPrintableType.Receipt;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

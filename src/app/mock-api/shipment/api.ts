@@ -1,16 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep, differenceBy, isEmpty } from 'lodash-es';
 import { objectToFlatString } from '@lerado/typescript-toolbox';
 import { Shipment, ShipmentClientRole } from 'app/core/shipment/shipment.types';
 import { ShipmentApiStore } from './store';
-import { concatMap, forkJoin, map, switchMap } from 'rxjs';
-import { CreateShipmentDto } from 'app/core/shipment/shipment.dto';
+import { concatMap, forkJoin, iif, map, Observable, of, switchMap } from 'rxjs';
+import { CreateShipmentDto, UpdateShipmentDto, UpdateShipmentItemDto } from 'app/core/shipment/shipment.dto';
 import { ShipmentClientApiStore } from '../shipment-client/store';
 import { ShipmentItemApiStore } from '../shipment-item/store';
 import { UserApiStore } from '../user/store';
 import { CreateShipmentModelDto } from './types';
 import { VOLUMETRIC_WEIGHT_FACTOR } from 'app/core/shipment/shipment.constants';
+import { CreateShipmentItemModelDto } from '../shipment-item/dto';
 
 @Injectable({ providedIn: 'root' })
 export class ShipmentMockApi {
@@ -193,6 +194,79 @@ export class ShipmentMockApi {
                     )),
                     map(() => [201, true])
                 );
+            });
+
+        // -----------------------------------------------------------------------------------------------------
+        // @ PATCH
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPatch('api/shipment')
+            .reply(({ request }) => {
+                const { shipment, from, to, items } = cloneDeep(request.body) as UpdateShipmentDto;
+                if (!shipment.id) {
+                    return [400, { error: 'Shipment ID is required.' }];
+                }
+                // Start by patching shipment info
+                const { id, ...shipmentChanges } = shipment;
+                return iif(
+                    () => isEmpty(shipmentChanges),
+                    of(true),
+                    this._shipmentApiStore.update(shipment.id, shipmentChanges)
+                )
+                    .pipe(
+                        // Update sender and recipient if changes were made
+                        concatMap(() => {
+                            if (!from && !to) {
+                                return of([true, true]);
+                            }
+                            const requests: Observable<boolean>[] = [];
+                            if (from) requests.push(this._shipmentClientApiStore.update({ shipmentId: shipment.id, role: ShipmentClientRole.Sender }, { clientId: from }));
+                            if (to) requests.push(this._shipmentClientApiStore.update({ shipmentId: shipment.id, role: ShipmentClientRole.Receiver }, { clientId: to }));
+                            return forkJoin([...requests]);
+                        }),
+                        //  Delete items that were deleted
+                        concatMap(() => {
+                            if (!items?.length) {
+                                return of(true);
+                            }
+                            return this._shipmentItemApiStore.getAllByShipment(shipment.id)
+                                .pipe(
+                                    switchMap((existingShipmentItems) => {
+                                        // Does nothing if every existing item is still in the payload
+                                        const itemsToDelete = differenceBy(
+                                            existingShipmentItems.map(existingShipmentItem => existingShipmentItem.id),
+                                            // This isolates items that were not added
+                                            items.filter(item => (item as UpdateShipmentItemDto).id).map(item => (item as UpdateShipmentItemDto).id),
+                                        );
+                                        if (!itemsToDelete.length) {
+                                            return of(true);
+                                        }
+                                        return forkJoin([
+                                            ...itemsToDelete.map(shipmentItemId => this._shipmentItemApiStore.delete(shipmentItemId))
+                                        ]);
+                                    })
+                                );
+                        }),
+                        // Update items if changes were made and create items that were added
+                        concatMap(() => {
+                            return forkJoin([
+                                // Additions and updates
+                                ...items.map((item) => {
+                                    if ((item as UpdateShipmentItemDto).id) {
+                                        // This shipping item was updated
+                                        const { id: shipmentItemId, ...shipmentItemChanges } = item as UpdateShipmentItemDto;
+                                        return isEmpty(shipmentItemChanges) ? of(true) : this._shipmentItemApiStore.update(shipmentItemId, shipmentItemChanges);
+                                    }
+                                    return this._shipmentItemApiStore.create({
+                                        ...item as Omit<CreateShipmentItemModelDto, 'shipmentId'>,
+                                        shipmentId: shipment.id
+                                    });
+                                }),
+                            ]);
+                        }),
+                        switchMap(() => this._shipmentApiStore.get(shipment.id)),
+                        map((updatedShipment) => ([200, updatedShipment]))
+                    );
             });
 
         // -----------------------------------------------------------------------------------------------------
