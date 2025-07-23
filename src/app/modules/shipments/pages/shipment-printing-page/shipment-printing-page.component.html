@@ -1,11 +1,11 @@
 <section cdkScrollable
-    class="relative flex flex-col flex-auto max-w-screen-xl min-w-0 px-6 mx-auto print:p-0 print:overflow-visible md:px-8 dark:bg-transparent">
+    class="relative flex flex-col flex-auto max-w-screen-xl min-w-0 px-6 mx-auto print:m-0 print:p-0 print:dark:bg-none print:overflow-visible md:px-8 dark:bg-transparent">
 
     <div class="flex w-full mt-8 gap-x-4 print:hidden">
         <!-- Switch -->
         <mat-button-toggle-group [(value)]="printableType" name="fontStyle" aria-label="Font Style">
-            <mat-button-toggle [value]="printableTypes.Slip">Bordereau d'expédition</mat-button-toggle>
             <mat-button-toggle [value]="printableTypes.Receipt">Ticket de caisse</mat-button-toggle>
+            <mat-button-toggle [value]="printableTypes.Slip">Bordereau d'expédition</mat-button-toggle>
         </mat-button-toggle-group>
         <!-- Print button -->
         <button (click)="print()" mat-flat-button color="primary" class="ml-auto">
