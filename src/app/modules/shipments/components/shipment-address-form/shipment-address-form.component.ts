@@ -10,6 +10,9 @@ import { Country } from 'app/core/country/country.types';
 import { CreateShipmentAddressDto } from 'app/core/shipment/shipment.dto';
 import { map } from 'rxjs';
 
+/**
+ * @deprecated
+ */
 @Component({
     selector: 'sia-shipment-address-form',
     imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, TitleCasePipe],

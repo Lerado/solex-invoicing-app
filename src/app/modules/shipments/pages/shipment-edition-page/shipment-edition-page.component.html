@@ -1,0 +1,123 @@
+<section class="flex flex-col flex-auto max-w-screen-xl min-w-0 px-6 mx-auto my-8 md:px-8 dark:bg-transparent">
+
+    <h1 class="mb-8 text-4xl font-extrabold tracking-tight">
+        <!-- cspell:disable-next-line -->
+        Modifier l'expédition &numero;
+        <span class="text-primary">
+            {{ shipment()?.number }}
+        </span>
+    </h1>
+
+    <!-- Alert -->
+    @if (showAlert()) {
+    @defer(when showAlert()) {
+    <fuse-alert class="mb-3" [appearance]="'outline'" [showIcon]="false" [type]="alert().type"
+        [@shake]="alert().type === 'error'" [dismissible]="true">
+        {{alert().message}}
+    </fuse-alert>
+    }
+    }
+
+    <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-12">
+
+        <!-- Shipment info -->
+        <sia-shipment-info-form [formControl]="shipmentInfoControl" [shipmentUUID]="shipment()?.number"
+            class="self-start p-4 rounded col-span-full md:col-span-5 bg-card"></sia-shipment-info-form>
+
+        <section class="self-start col-span-full md:col-span-7">
+            <section class="p-4 rounded bg-card">
+                <!-- Sender and recipient -->
+                <section class="flex gap-x-4">
+                    <mat-form-field subscriptSizing="dynamic" class="w-full">
+                        <mat-label>Expéditeur</mat-label>
+                        <input #senderSearch matInput [formControl]="senderControl"
+                            (input)="senderSearchControl.setValue(senderSearch.value.toLowerCase())"
+                            (focus)="senderSearchControl.setValue(senderSearch.value.toLowerCase())"
+                            [matAutocomplete]="senderAutocomplete" placeholder="Rechercher un client">
+                        <mat-autocomplete (optionSelected)="senderControl.setValue($event.option.value)"
+                            #senderAutocomplete="matAutocomplete" [displayWith]="displayClient" requireSelection>
+                            @for (client of filteredSenders(); track client.id) {
+                            <mat-option [value]="client">
+                                {{ client.firstName }} {{ client.lastName }} - {{ client.contact }}
+                            </mat-option>
+                            }
+                        </mat-autocomplete>
+                        <mat-icon matIconPrefix svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field subscriptSizing="dynamic" class="w-full">
+                        <mat-label>Destinataire</mat-label>
+                        <input #recipientSearch matInput [formControl]="recipientControl"
+                            (input)="recipientSearchControl.setValue(recipientSearch.value.toLowerCase())"
+                            (focus)="recipientSearchControl.setValue(recipientSearch.value.toLowerCase())"
+                            [matAutocomplete]="recipientAutocomplete" placeholder="Rechercher un client">
+                        <mat-autocomplete (optionSelected)="recipientControl.setValue($event.option.value)"
+                            #recipientAutocomplete="matAutocomplete" [displayWith]="displayClient" requireSelection>
+                            @for (client of filteredRecipients(); track client.id) {
+                            <mat-option [value]="client">
+                                {{ client.firstName }} {{ client.lastName }} - {{ client.contact }}
+                            </mat-option>
+                            }
+                        </mat-autocomplete>
+                        <mat-icon matIconPrefix svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
+                    </mat-form-field>
+                </section>
+                <hr>
+                <!-- Shipping items -->
+                <section>
+                    <h2 class="mb-2 font-semibold">Description du colis</h2>
+                    <ul class="grid grid-flow-row">
+                        @for (shippingItemControl of shippingItemsControl.controls; track $index) {
+                        <li [formGroup]="shippingItemControl" class="flex items-center gap-x-2">
+                            <mat-form-field class="flex-1" appearance="outline">
+                                <mat-label>Description de l'élément</mat-label>
+                                <input type="text" formControlName="designation" matInput
+                                    placeholder="Description de l'élément">
+                            </mat-form-field>
+                            <mat-form-field class="w-32" appearance="outline">
+                                <mat-label>Quantité</mat-label>
+                                <input type="number" formControlName="quantity" matInput min="1" placeholder="Quantité">
+                            </mat-form-field>
+                            @if (shippingItemsControl.controls.length > 1) {
+                            <button (click)="removeShippingItem($index)" mat-icon-button color="warn"
+                                aria-label="Supprimer la ligne">
+                                <mat-icon svgIcon="heroicons_solid:minus-circle"></mat-icon>
+                            </button>
+                            }
+                        </li>
+                        }
+                        <li class="flex justify-end mt-4">
+                            <button (click)="addShippingItem()" mat-button color="primary"
+                                aria-label="Ajouter un élément">
+                                <mat-icon svgIcon="heroicons_solid:plus-circle"></mat-icon>
+                                Ajouter un élément
+                            </button>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <!-- Submit, Submit and continue, Cancel -->
+            <div class="flex flex-row justify-end my-8 gap-x-4">
+                <!-- Cancel -->
+                <button [routerLink]="['../..']" [disabled]="shipmentInfoControl.disabled" mat-button color="warn">
+                    Annuler
+                </button>
+                @let submitDisabled = shippingItemsControl.invalid ||
+                senderControl.invalid ||
+                recipientControl.invalid ||
+                shipmentInfoControl.invalid ||
+                shipmentInfoControl.disabled ||
+                formUnchanged();
+                <!-- Submit -->
+                <button (click)="updateShipment(true)" [disabled]="submitDisabled" mat-stroked-button color="primary">
+                    Enregistrer
+                </button>
+                <!-- Submit and continue -->
+                <button (click)="updateShipment()" [disabled]="submitDisabled" mat-flat-button color="primary">
+                    Enregistrer et quitter
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+</section>
