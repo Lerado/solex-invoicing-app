@@ -37,7 +37,8 @@
             "deb": {
                 "depends": []
             }
-        }
+        },
+        "createUpdaterArtifacts": true
     },
     "productName": "SOLEX Facturation",
     "mainBinaryName": "SOLEX Facturation",
@@ -48,6 +49,15 @@
             "preload": [
                 "sqlite:solex-invoicing.db"
             ]
+        },
+        "updater": {
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDU2MDM3RDQ5NTVDNzE2RjMKUldUekZzZFZTWDBEVnFPWUkyWGJmS3d3d3NneXNJV0ZHUmE0WmFqMjJkMzVneEsxT2ZReitWb2QK",
+            "endpoints": [
+                "https://github.com/lerado/solex-invoicing-app/releases/latest/download/latest.json"
+            ],
+            "windows": {
+                "installMode": "passive"
+            }
         }
     },
     "app": {
