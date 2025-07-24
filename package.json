@@ -1,6 +1,6 @@
 {
     "name": "solex-invoicing-app",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "A desktop client in charge of Solex invoicing service",
     "author": {
         "name": "Mohlah Solutions",
@@ -21,7 +21,8 @@
         "test:ci": "npm run test:lint && npm run test:spelling && ng test --no-watch --no-progress --browsers ChromiumHeadlessCI",
         "test:app": "ng test",
         "test": "npm run test:lint && npm run test:spelling && ng test --no-watch --no-progress",
-        "release": "standard-version && npm run test && git flow release finish -n",
+        "release": "standard-version && git flow release finish -n",
+        "hotfix": "standard-version && git flow hotfix finish -n",
         "reset-hard": "git clean -dfx && git reset --hard && npm run",
         "prepare-release": "npm run reset-hard && npm run test"
     },
