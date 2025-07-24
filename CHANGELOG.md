@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.2...v0.2.3) (2025-07-24)
+
+
+### Features
+
+* **updater:** check, download and install app updates at startup ([d253c35](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/d253c35e607561a9d289f8466d713cd5f5a20e97))
+
+
+### Bug Fixes
+
+* **tauri.conf.json:** typo in updater plugin endpoint ([e703cb5](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/e703cb5e5bfb46b7bf4fad8e41245dd56de13ca1))
+
 ### [0.2.2](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.1...v0.2.2) (2025-07-23)
 
 
