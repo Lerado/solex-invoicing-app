@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.7](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.7) (2025-07-24)
+
+
+### Bug Fixes
+
+* **modern-layout:** reduce footer height ([330e170](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/330e17042f146a68fd9a5afaaf0ded3b543f9e27))
+
 ### [0.2.6](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.6) (2025-07-24)
 
 
