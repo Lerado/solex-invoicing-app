@@ -10,6 +10,7 @@ on:
 
 jobs:
     publish-tauri:
+        environment: Production
         permissions:
             contents: write
         strategy:
