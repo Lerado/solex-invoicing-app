@@ -1,6 +1,6 @@
 {
     "name": "solex-invoicing-app",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "A desktop client in charge of Solex invoicing service",
     "author": {
         "name": "Mohlah Solutions",
