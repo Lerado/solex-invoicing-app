@@ -7,6 +7,7 @@ import { provideAuth } from './auth/auth.provider';
 import { providePersistence } from './persistence/persistence.provider';
 import { mockApiStores } from 'app/mock-api';
 import { VOLUMETRIC_WEIGHT_FACTOR } from './shipment/shipment.constants';
+import { provideAppUpdater } from './updater/updater.provider';
 
 export const provideCore = (): Array<EnvironmentProviders | Provider> => [
 
@@ -31,5 +32,8 @@ export const provideCore = (): Array<EnvironmentProviders | Provider> => [
     {
         provide: VOLUMETRIC_WEIGHT_FACTOR,
         useValue: 500
-    }
+    },
+
+    // App updater
+    provideAppUpdater()
 ];
