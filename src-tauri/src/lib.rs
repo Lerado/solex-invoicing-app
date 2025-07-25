@@ -273,6 +273,14 @@ pub fn run() {
             ALTER TABLE shipments RENAME COLUMN deliveryCity TO deliveryCityCode;
             ",
             kind: MigrationKind::Up,
+        },
+        Migration {
+            version: 19,
+            description: "add_agency_contact_to_cashiers",
+            sql: "
+            ALTER TABLE cashiers ADD COLUMN agencyPhone TEXT;
+            ",
+            kind: MigrationKind::Up,
         }
     ];
 

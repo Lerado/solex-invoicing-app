@@ -58,7 +58,7 @@ export class AuthMockApi {
         this._fuseMockApiService
             .onPost('api/auth/sign-up', 500)
             .reply(({ request }) => {
-                const { cashierReference, cashierName, countryCode, cityCode, rootPassword, rootPasswordConfirmation } = cloneDeep(request.body) as SignUpDto;
+                const { cashierReference, cashierName, countryCode, cityCode, agencyPhone, rootPassword, rootPasswordConfirmation } = cloneDeep(request.body) as SignUpDto;
                 if (rootPassword !== rootPasswordConfirmation) {
                     return [400, false];
                 }
@@ -75,6 +75,7 @@ export class AuthMockApi {
                                 cashierReference,
                                 countryCode,
                                 cityCode,
+                                agencyPhone,
                                 rootPassword
                             };
                             return this._userApiStore.create(newUser)
