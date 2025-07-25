@@ -2,8 +2,9 @@
     <!-- En-tête -->
     <div class="mb-4 text-center">
         <h2 class="mb-1 text-[16px] font-bold">SOLEX</h2>
-        <p class="text-[11px]">B.P 11988 Yaoundé, Cameroun</p>
-        <p class="text-[11px]">Tél: (237) 670432073/677087903</p>
+        <p class="text-[11px] tracking-tight">N° Contr.: M110600021527L</p>
+        <p class="text-[11px] tracking-tight">Agence de {{ cashier().city?.name }}</p>
+        <p class="text-[11px] tracking-tight">{{ cashier().agencyPhone }}</p>
         <div class="my-2 tracking-tighter">================================</div>
     </div>
 
@@ -23,7 +24,7 @@
         </div>
         <div class="flex justify-between my-1">
             <span>Caissier:</span>
-            <span>{{ cashierName() || 'Personnel' }}</span>
+            <span>{{ cashier().cashierName || 'Personnel' }}</span>
         </div>
         <div class="my-2 tracking-tighter">--------------------------------</div>
     </div>
