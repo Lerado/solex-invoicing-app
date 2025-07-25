@@ -10,6 +10,7 @@ import { PhoneNumberPipe } from 'app/shared/pipes/phone-number.pipe';
     selector: 'sia-shipping-slip',
     imports: [NgOptimizedImage, PhoneNumberPipe, DecimalPipe, TitleCasePipe, FrenchNumberPipe, CurrencyPipe, DatePipe],
     templateUrl: './shipping-slip.component.html',
+    styleUrl: './shipping-slip.component.scss',
     host: {
         class: 'contents'
     },

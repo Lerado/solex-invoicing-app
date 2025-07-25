@@ -34,8 +34,7 @@ export class ShippingReceiptComponent {
     });
 
     private readonly _userService = inject(UserService);
-    readonly user = toSignal(this._userService.user$, { requireSync: true });
-    readonly cashierName = computed(() => this.user().cashierName);
+    readonly cashier = toSignal(this._userService.user$, { requireSync: true });
 
     readonly currentDateTime = computed(() => {
         return new Date().toLocaleString('fr-FR');
