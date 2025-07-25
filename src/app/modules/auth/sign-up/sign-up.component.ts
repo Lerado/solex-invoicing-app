@@ -1,5 +1,6 @@
 import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import { Component, WritableSignal, signal, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -31,26 +32,28 @@ export default class AuthSignUpComponent {
     private readonly _formBuilder = inject(NonNullableFormBuilder);
     private readonly _router = inject(Router);
 
-    countries = this._countryService.getCountries();
-    cities = this._cityService.getCities();
+    readonly countries = this._countryService.getCountries();
+    readonly cities = this._cityService.getCities();
 
-    alert: WritableSignal<{ type: FuseAlertType; message: string }> = signal({
+    readonly alert: WritableSignal<{ type: FuseAlertType; message: string }> = signal({
         type: 'success',
         message: '',
     });
+    readonly showAlert = signal(false);
 
-    signUpForm = this._formBuilder.group({
+    readonly signUpForm = this._formBuilder.group({
         cashierReference: ['', [Validators.required, Validators.min(1)]],
         cashierName: ['', Validators.required],
         cityCode: ['', Validators.required],
         countryCode: ['CM', Validators.required],
+        agencyPhone: ['', Validators.required],
         rootPassword: ['', [Validators.required, Validators.pattern(STRONG_PASSWORD_REGEXP)]],
         rootPasswordConfirmation: ['', [Validators.required, Validators.pattern(STRONG_PASSWORD_REGEXP)]]
     }, {
         validators: FuseValidators.mustMatch('rootPassword', 'rootPasswordConfirmation')
     });
+    readonly signUpFormChanges = toSignal(this.signUpForm.valueChanges, { initialValue: this.signUpForm.value });
 
-    showAlert = signal(false);
 
     /**
      * Constructor

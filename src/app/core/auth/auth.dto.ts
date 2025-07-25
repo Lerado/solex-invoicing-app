@@ -3,6 +3,7 @@ interface SignUpDto {
     cashierName: string;
     countryCode: string;
     cityCode: string;
+    agencyPhone: string;
     rootPassword: string;
     rootPasswordConfirmation: string;
 }

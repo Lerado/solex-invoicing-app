@@ -13,7 +13,7 @@
             @if (showAlert()) {
             @defer(when showAlert()) {
             <fuse-alert class="mt-8" [appearance]="'outline'" [showIcon]="false" [type]="alert().type"
-                [@shake]="alert().type === 'error'" [dismissible]="true"]="true">
+                [@shake]="alert().type === 'error'" [dismissible]="true" ]="true">
                 {{alert().message}}
             </fuse-alert>
             }
@@ -32,6 +32,11 @@
                         </mat-option>
                         }
                     </mat-select>
+                    @if (signUpForm.get('countryCode').hasError('required')) {
+                    <mat-error>
+                        Le pays est requis
+                    </mat-error>
+                    }
                 </mat-form-field>
 
                 <!-- City -->
@@ -44,6 +49,11 @@
                         </mat-option>
                         }
                     </mat-select>
+                    @if (signUpForm.get('cityCode').hasError('required')) {
+                    <mat-error>
+                        La localité est requise
+                    </mat-error>
+                    }
                 </mat-form-field>
 
                 <!-- Reference field -->
@@ -51,12 +61,23 @@
                     <mat-label>&numero; caisse</mat-label>
                     <input id="cashierReference" matInput type="number" inputmode="numeric"
                         [formControlName]="'cashierReference'" min="1">
+                    <span matTextPrefix class="mr-0.5">{{ signUpFormChanges().cityCode }}</span>
                     @if (signUpForm.get('cashierReference').hasError('required')) {
                     <mat-error>
                         L'identifiant de la caisse est requis
                     </mat-error>
                     }
                     <mat-hint>L'identifiant de la caisse</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field subscriptSizing="dynamic">
+                    <mat-label>Contacts de l'agence</mat-label>
+                    <input matInput formControlName="agencyPhone" type="tel" placeholder="Contacts de l'agence">
+                    @if (signUpForm.get('agencyPhone').hasError('required')) {
+                    <mat-error>
+                        Les contacts de l'agence sont requis
+                    </mat-error>
+                    }
                 </mat-form-field>
 
                 <!-- Name field -->
@@ -68,7 +89,7 @@
                         Le(a) responsable de la caisse est requis(e)
                     </mat-error>
                     }
-                    <mat-hint>Cette personne est en charge de ce poste caisse.</mat-hint>
+                    <mat-hint>Cette personne est en charge de ce poste de caisse.</mat-hint>
                 </mat-form-field>
 
                 <!-- Root password field -->

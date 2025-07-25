@@ -7,6 +7,7 @@ export interface User {
     countryCode: string;
     cityCode: string;
     city?: City;
+    agencyPhone: string;
     status?: string;
     avatar?: string;
     readonly createdAt: number;
