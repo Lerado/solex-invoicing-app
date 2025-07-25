@@ -53,6 +53,7 @@ export default class ClientCreationPageComponent {
                     }
                     // Reset client form
                     this.clientFormEl().reset();
+                    this.clientForm.reset();
 
                     this.clientForm.enable();
 

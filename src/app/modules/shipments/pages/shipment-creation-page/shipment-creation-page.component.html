@@ -38,6 +38,13 @@
                                 {{ client.firstName }} {{ client.lastName }} - {{ client.contact }}
                             </mat-option>
                             }
+                            <mat-option>
+                                <button (click)="openCreateClientDialog()" matButton color="primary"
+                                    class="absolute top-0 left-0 w-full h-full rounded-none">
+                                    <mat-icon svgIcon="heroicons_solid:plus"></mat-icon>
+                                    Ajouter un client
+                                </button>
+                            </mat-option>
                         </mat-autocomplete>
                         <mat-icon matIconPrefix svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
                     </mat-form-field>
@@ -54,6 +61,13 @@
                                 {{ client.firstName }} {{ client.lastName }} - {{ client.contact }}
                             </mat-option>
                             }
+                            <mat-option>
+                                <button (click)="openCreateClientDialog()" matButton color="primary"
+                                    class="absolute top-0 left-0 w-full h-full rounded-none">
+                                    <mat-icon svgIcon="heroicons_solid:plus"></mat-icon>
+                                    Ajouter un client
+                                </button>
+                            </mat-option>
                         </mat-autocomplete>
                         <mat-icon matIconPrefix svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
                     </mat-form-field>
@@ -116,3 +130,15 @@
     </div>
 
 </section>
+
+<ng-template #createClientDialog>
+    <h2 class="text-lg font-bold" mat-dialog-title>Ajouter un client</h2>
+    <mat-dialog-content>
+        <sia-client-info-form [formControl]="clientForm" />
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button matButton="text" mat-dialog-close>Annuler</button>
+        <button matButton="filled" color="primary" [disabled]="clientForm.invalid || clientForm.disabled" matButton
+            [mat-dialog-close]="clientFormChanges()" cdkFocusInitial>Ajouter</button>
+    </mat-dialog-actions>
+</ng-template>
