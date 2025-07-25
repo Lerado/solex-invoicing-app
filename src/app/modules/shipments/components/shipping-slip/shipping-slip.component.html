@@ -1,5 +1,5 @@
 <div
-    class="shadow text-black bg-[#d5e4f1] w-240 min-w-240 max-h-240 border-primary border-double border-8 print:w-auto print:max-h-none print:p-0 print:rounded-none print:shadow-none print:bg-[#d5e4f1]">
+    class="shadow flex flex-col text-black text-[12px] bg-[#d5e4f1] w-240 min-w-240 max-h-240 border-primary border-double border-8 print:max-h-none print:p-0 print:w-[210mm] print:h-[148mm] print:rounded-none print:shadow-none print:bg-[#d5e4f1]">
     <!-- Two  columns layout -->
     <div class="flex h-full gap-x-2">
 
@@ -13,7 +13,7 @@
                 </picture>
 
                 <div class="flex flex-col justify-between w-full gap-y-2">
-                    <p class="p-1 mt-1 text-xl font-bold bg-white border-2 border-black rounded-lg">
+                    <p class="p-1 mt-1 text-xl font-bold tracking-tight bg-white border-2 border-black rounded-lg">
                         BORDEREAU D'EXPEDITION
                         <span class="text-warn">
                             &numero;
@@ -43,7 +43,7 @@
             <div class="mt-1 ml-1 bg-white border-2 border-black rounded-xl">
 
                 <div class="flex items-center">
-                    <div class="py-1  px-1.5 text-lg font-semibold rounded-xl bg-[#fff200] text-primary">
+                    <div class="py-1  px-1.5 text-[18px] font-semibold rounded-xl bg-[#fff200] text-primary tracking-tight">
                         DESCRIPTION DE L'ENVOI
                     </div>
                     <div class="flex gap-x-2 ml-auto justify-between mr-1.5">
@@ -95,7 +95,7 @@
                     </div>
                     }
                     <div
-                        class="flex items-center col-span-11 *:p-1 text-xs last:*:text-md text-center border-t border-r *:border-r last:*:border-r-0 *:border-black">
+                        class="flex items-center col-span-11 *:p-1 text-[11px] last:*:text-[12px] *:tracking-tighter text-center border-t border-r *:border-r last:*:border-r-0 *:border-black">
                         <div>
                             <span class="font-semibold">Dim.:</span>
                             {{ shipment().bundledLength | number }}m x
@@ -119,14 +119,13 @@
                     <div class="flex items-center justify-center col-span-1 p-1 text-center border-t">
                         {{ shipmentPackagesCount() | number }}
                     </div>
-
                 </div>
             </div>
             <!-- Payment, signatures -->
             <div class="flex mt-1 ml-1 gap-x-2">
                 <div class="w-1/3 border-2 border-black rounded-xl">
                     <div
-                        class="px-2 h-12 bg-[#fff200] rounded-t-xl flex flex-col text-center justify-between items-center font-semibold text-primary">
+                        class="px-2 h-12 bg-[#fff200] rounded-t-xl flex flex-col text-center justify-between items-center tracking-tight font-semibold text-primary">
                         <span class="m-auto">Paiement</span>
                     </div>
                     <dl class="grid grid-cols-12 p-2 bg-white gap-y-1">
@@ -147,28 +146,28 @@
                 </div>
                 <div class="w-1/3 border-2 border-black rounded-xl">
                     <div
-                        class="px-2 h-12 bg-[#fff200] rounded-t-xl text-center flex flex-col font-semibold text-primary">
+                        class="px-2 h-12 bg-[#fff200] rounded-t-xl text-center flex flex-col font-semibold text-primary tracking-tight">
                         Signature expéditeur
-                        <span class="text-[0.5rem] italic leading-3">Cette signature vaut acceptation des
+                        <span class="text-[0.5rem] italic leading-3 tracking-tight">Cette signature vaut acceptation des
                             clauses contractuelles au verso</span>
                     </div>
                     <div></div>
                 </div>
                 <div class="w-1/3 border-2 border-black rounded-xl">
                     <div
-                        class="px-2 h-12 bg-[#fff200] flex flex-col rounded-t-xl text-center justify-center font-semibold text-primary">
+                        class="px-2 h-12 bg-[#fff200] flex flex-col rounded-t-xl text-center justify-center font-semibold text-primary tracking-tight">
                         Nom et signature
-                        <span class="text-[0.5rem] italic leading-3">Opérateur SOLEX</span>
+                        <span class="text-[0.5rem] italic leading-3 tracking-tight">Opérateur SOLEX</span>
                     </div>
                 </div>
             </div>
             <!-- Amount in letters -->
-            <div class="flex mt-1 ml-1 gap-x-2">
-                <div class="w-9/12 p-2 bg-white border-2 border-black h-18 rounded-xl">
-                    <span class="text-xs italic font-semibold">
+            <div class="flex flex-1 mt-1 ml-1 gap-x-2">
+                <div class="w-9/12 p-2 bg-white border-2 border-black min-h-18 rounded-xl">
+                    <span class="italic font-semibold tracking-tight">
                         Montant en toutes lettres à confirmer par l'expéditeur:
                     </span>
-                    <p class="font-semibold">
+                    <p class="tracking-tight">
                         {{ shipment().totalPrice | frenchNumber | titlecase }} Francs CFA
                     </p>
                 </div>
@@ -184,43 +183,43 @@
         <div class="flex flex-col flex-auto w-1/3 mb-1 gap-y-2">
             <!-- Shipper and recipient -->
             <div class="flex flex-col w-full px-2 py-1 mt-1 bg-white border-2 border-black rounded-lg h-3/5">
-                <p class="mx-auto text-lg font-bold">
-                    <span class="underline text-primary">EXPÉDITEUR</span>
+                <p class="mx-auto text-[14px] font-bold">
+                    <span class="tracking-tight underline text-primary">EXPÉDITEUR</span>
                 </p>
                 <dl class="grid grid-cols-12 mt-2 gap-x-1">
                     <dt class="col-span-3 font-semibold">Nom:</dt>
-                    <dd class="col-span-9 text-md">
+                    <dd class="col-span-9 tracking-tight">
                         {{ shipment().from.firstName }} {{ shipment().from.lastName }}
                     </dd>
                     <dt class="col-span-3 font-semibold">Tél:</dt>
-                    <dd class="col-span-9 text-md">
+                    <dd class="col-span-9 tracking-tight">
                         {{ shipment().from.contact | phone }}
                     </dd>
                     <dt class="col-span-3 font-semibold">Adresse:</dt>
-                    <dd class="col-span-9 text-md">
+                    <dd class="col-span-9 tracking-tight">
                         {{ shipment().from.address }}
                     </dd>
                 </dl>
-                <p class="mx-auto mt-3 text-lg font-bold underline text-primary">
+                <p class="mx-auto mt-3 text-[14px] font-bold underline text-primary tracking-tight">
                     DESTINATAIRE
                 </p>
                 <dl class="grid grid-cols-12 mt-2 gap-x-1">
                     <dt class="col-span-3 font-semibold">Nom:</dt>
-                    <dd class="col-span-9 text-md">
+                    <dd class="col-span-9 tracking-tight">
                         {{ shipment().to.firstName }} {{ shipment().to.lastName }}
                     </dd>
                     <dt class="col-span-3 font-semibold">Tél:</dt>
-                    <dd class="col-span-9 text-md">
+                    <dd class="col-span-9 tracking-tight">
                         {{ shipment().to.contact | phone }}
                     </dd>
                     <dt class="col-span-3 font-semibold">Adresse:</dt>
-                    <dd class="col-span-9 text-md">
+                    <dd class="col-span-9 tracking-tight">
                         {{ shipment().to.address }}
                     </dd>
 
                     @if (shipment().deliveryAddress) {
                     <dt class="col-span-3 font-semibold">Livraison:</dt>
-                    <dd class="col-span-9 text-md">
+                    <dd class="col-span-9 tracking-tight">
                         {{ shipment().deliveryAddress }}, {{ shipment().deliveryCity?.name }}, {{
                         shipment().deliveryCity?.countryCode }}
                     </dd>
@@ -230,24 +229,24 @@
             <!-- Deliver -->
             <div class="flex flex-col border-2 border-black rounded-xl h-2/5">
                 <div
-                    class="flex items-center justify-center h-6 p-1 mt-2 text-lg font-semibold text-center text-primary">
+                    class="flex items-center justify-center h-6 p-1 mt-2 text-[14px] font-semibold text-center text-primary tracking-tight">
                     LIVRAISON
                 </div>
                 <div class="flex flex-auto border-black border-y-2">
                     <div class="flex flex-col w-1/2 border-r-2 border-black">
                         <div class="border-b-2 border-black h-1/2">
-                            <p class="p-0.5 font-semibold leading-3 text-md">
-                                Réceptionniste (Nom et signature)
+                            <p class="p-0.5 font-semibold leading-3 tracking-tight">
+                                Réceptionniste <span class="text-[10px]">(Nom et signature)</span>
                             </p>
                         </div>
                         <div class="h-1/2">
-                            <p class="p-0.5 font-semibold leading-3 text-md">
-                                Opérateur SOLEX (Nom et signature)
+                            <p class="p-0.5 font-semibold leading-3 tracking-tight">
+                                Opérateur SOLEX <span class="text-[10px]">(Nom et signature)</span>
                             </p>
                         </div>
                     </div>
                     <div class="flex flex-col w-1/2">
-                        <p class="p-0.5 w-full font-semibold text-center leading-3 text-md">
+                        <p class="p-0.5 w-full font-semibold text-center leading-3 tracking-tight">
                             Observations
                         </p>
                     </div>
