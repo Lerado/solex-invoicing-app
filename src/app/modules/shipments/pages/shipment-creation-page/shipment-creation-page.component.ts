@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal, signal, TemplateRef, viewChild, WritableSignal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { ShipmentService } from 'app/core/shipment/shipment.service';
@@ -16,10 +16,13 @@ import { CreateShipmentDto, CreateShipmentInfoDto } from 'app/core/shipment/ship
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { fuseAnimations } from '@fuse/animations';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ClientInfoFormComponent } from "app/modules/clients/components/client-info-form/client-info-form.component";
+import { CreateClientDto } from 'app/core/client/client.dto';
 
 @Component({
     selector: 'sia-shipment-creation-page',
-    imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatIconModule, MatInputModule, FuseAlertComponent, ShipmentInfoFormComponent, RouterLink, MatButtonModule],
+    imports: [ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, MatIconModule, MatInputModule, FuseAlertComponent, ShipmentInfoFormComponent, RouterLink, MatButtonModule, ClientInfoFormComponent],
     templateUrl: './shipment-creation-page.component.html',
     styles: ':host { display: block;}',
     animations: fuseAnimations,
@@ -30,7 +33,12 @@ export default class ShipmentCreationPageComponent {
     private readonly _shipmentService = inject(ShipmentService);
     private readonly _clientService = inject(ClientService);
     private readonly _formBuilder = inject(NonNullableFormBuilder);
+    private readonly _dialog = inject(MatDialog);
     private readonly _router = inject(Router);
+
+    private readonly _addClientDialog = viewChild<TemplateRef<any>>('createClientDialog');
+    readonly clientForm = this._formBuilder.control<CreateClientDto | null>(null, Validators.required);
+    readonly clientFormChanges = toSignal(this.clientForm.valueChanges);
 
     readonly nextShipmentReference = toSignal(this._shipmentService.getNextReference());
 
@@ -108,10 +116,7 @@ export default class ShipmentCreationPageComponent {
 
         if (this.shipmentInfoControl.invalid || this.shippingItemsControl.invalid || this.recipientControl.invalid || this.senderControl.invalid) { return; }
 
-        this.shipmentInfoControl.disable();
-        this.senderControl.disable();
-        this.recipientControl.disable();
-        this.shippingItemsControl.disable();
+        this._disableControls();
 
         const payload: Readonly<CreateShipmentDto> = Object.freeze<CreateShipmentDto>({
             shipment: this.shipmentInfoControl.getRawValue(),
@@ -127,15 +132,9 @@ export default class ShipmentCreationPageComponent {
                         return this._router.navigate(['/shipments']);
                     }
                     // Reset every form
-                    this.shipmentInfoControl.reset();
-                    this.senderControl.reset();
-                    this.recipientControl.reset();
-                    this.shippingItemsControl.reset();
+                    this._resetControls();
 
-                    this.shipmentInfoControl.enable();
-                    this.senderControl.enable();
-                    this.recipientControl.enable();
-                    this.shippingItemsControl.enable();
+                    this._enableControls();
 
                     this.alert.set({
                         type: 'success',
@@ -146,10 +145,7 @@ export default class ShipmentCreationPageComponent {
                 },
                 error: (message) => {
 
-                    this.shipmentInfoControl.enable();
-                    this.senderControl.enable();
-                    this.recipientControl.enable();
-                    this.shippingItemsControl.enable();
+                    this._enableControls();
 
                     // Set the alert
                     this.alert.set({
@@ -173,5 +169,85 @@ export default class ShipmentCreationPageComponent {
             return '';
         }
         return `${value.firstName} ${value.lastName} - ${value.contact}`;
+    }
+
+    /**
+     * Open dialog to add a new client
+     */
+    openCreateClientDialog(): void {
+        const dialogRef = this._dialog.open(this._addClientDialog(), { minWidth: '40vw' });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                const payload: Readonly<CreateClientDto> = Object.freeze(result as CreateClientDto);
+                this._clientService.create(payload)
+                    .subscribe({
+                        next: () => {
+                            this.clientForm.reset();
+                            this.alert.set({
+                                type: 'success',
+                                message: 'Client ajouté avec succès'
+                            });
+                            // Show the alert
+                            this.showAlert.set(true);
+                        },
+                        error: (message) => {
+                            // Set the alert
+                            this.alert.set({
+                                type: 'error',
+                                message
+                            });
+                            // Show the alert
+                            this.showAlert.set(true);
+                        }
+                    });
+            }
+        });
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Private methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Disable all controls
+     */
+    private _disableControls(): void {
+        this._setDisabledState(true);
+    }
+
+    /**
+     * Enable all controls
+     */
+    private _enableControls(): void {
+        this._setDisabledState(false);
+    }
+
+    /**
+     * Reset all controls
+     */
+    private _resetControls(): void {
+        this.shipmentInfoControl.reset();
+        this.senderControl.reset();
+        this.recipientControl.reset();
+        this.shippingItemsControl.reset();
+    }
+
+    /**
+     * Enable/disable all controls
+     */
+    private _setDisabledState(isDisabled: boolean): void {
+        if (isDisabled) {
+            this.shipmentInfoControl.disable();
+            this.senderControl.disable();
+            this.recipientControl.disable();
+            this.shippingItemsControl.disable();
+        }
+        else {
+            this.shipmentInfoControl.enable();
+            this.senderControl.enable();
+            this.recipientControl.enable();
+            this.shippingItemsControl.enable();
+        }
     }
 }

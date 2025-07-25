@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../store';
 import { Observable, map, of, switchMap, throwError } from 'rxjs';
-import { CreateUserModelDto, UserModel } from './types';
+import { UserModel } from './types';
 import { hashSync } from 'bcryptjs';
+import { CreateUserModelDto } from './dto';
 
 @Injectable({ providedIn: 'root' })
 export class UserApiStore extends Store {
@@ -18,6 +19,7 @@ export class UserApiStore extends Store {
                 'cashierName', c.cashierName,
                 'countryCode', c.countryCode,
                 'cityCode', c.cityCode,
+                'agencyPhone', c.agencyPhone,
                 'createdAt', c.createdAt,
                 'updatedAt', c.updatedAt,
                 'deletedAt', c.deletedAt,

@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.10](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.10) (2025-07-25)
+
+
+### Features
+
+* add agency contact numbers information to cashier ([ea9b83f](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/ea9b83f8a09adf419e13faa99721c568d9f76872))
+* add agency contact numbers information to cashier ([b73ce94](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/b73ce940b0daacf5eb3e653547444604e0ae8bde))
+
+
+### Bug Fixes
+
+* **languages:** disable english translations as they are currently unavailable ([b04090a](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/b04090af3050a34e4e33ce362b6027da7cb810dc))
+* **modern-layout:** reduce footer height ([330e170](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/330e17042f146a68fd9a5afaaf0ded3b543f9e27))
+* **shipping-receipt:** replace fixed contact numbers with agency phone numbers ([c836c9e](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/c836c9e138dce909c25395c20499e84eb734fcb4))
+* **shipping-slip:** match a5 paper format ([b5bc735](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/b5bc735910a755cd7ff0348429599c9d56d9fbc3))
+
 ### [0.2.9](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.9) (2025-07-24)
 
 
