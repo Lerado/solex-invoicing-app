@@ -10,7 +10,8 @@
 <mat-menu [xPosition]="'before'" #languages="matMenu">
 
     @for (lang of availableLangs; track lang.id) {
-    <button mat-menu-item (click)="setActiveLang(lang.id)">
+    <!-- @TODO: add EN translations -->
+    <button [disabled]="lang.id === 'en'" mat-menu-item (click)="setActiveLang(lang.id)">
         <span class="flex items-center">
             {{lang.label}}
         </span>
