@@ -2,20 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.2.13](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.10...v0.2.13) (2025-07-27)
+### [0.2.14](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.13...v0.2.14) (2025-07-27)
+
+
+### Bug Fixes
+
+* **docs:** correct changelog version crash ([dc4bcd4](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/dc4bcd4ebb67eaf5d4c04966a15e90264ef3bb3b))
+
+### [0.2.13](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.12...v0.2.13) (2025-07-27)
 
 
 ### Features
 
 * append app version to window title ([f764e8a](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/f764e8a206ed5234391d8d59c5e18612ddcfafb4))
-* **updater:** custom app updater ui ([453da62](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/453da6289413d1d98b85097b85bda8016cf223c5))
 
 
 ### Bug Fixes
 
 * **empty-layout:** remove deprecated window commands buttons ([1ebcaf8](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/1ebcaf8f93b9f7e6eae538f99c675c09a341ce42))
 
-### [0.2.12](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.10...v0.2.12) (2025-07-27)
+### [0.2.12](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.11...v0.2.12) (2025-07-27)
 
 
 ### Features
@@ -24,7 +30,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.2.11](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.10...v0.2.11) (2025-07-25)
 
-### [0.2.10](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.10) (2025-07-25)
+### [0.2.10](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.9...v0.2.10) (2025-07-25)
 
 
 ### Features
@@ -40,40 +46,15 @@ All notable changes to this project will be documented in this file. See [standa
 * **shipping-receipt:** replace fixed contact numbers with agency phone numbers ([c836c9e](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/c836c9e138dce909c25395c20499e84eb734fcb4))
 * **shipping-slip:** match a5 paper format ([b5bc735](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/b5bc735910a755cd7ff0348429599c9d56d9fbc3))
 
-### [0.2.9](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.9) (2025-07-24)
+### [0.2.9](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.8...v0.2.9) (2025-07-24)
 
+### [0.2.8](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.7...v0.2.8) (2025-07-24)
 
-### Bug Fixes
+### [0.2.7](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.6...v0.2.7) (2025-07-24)
 
-* **modern-layout:** reduce footer height ([330e170](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/330e17042f146a68fd9a5afaaf0ded3b543f9e27))
+### [0.2.6](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.5...v0.2.6) (2025-07-24)
 
-### [0.2.8](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.8) (2025-07-24)
-
-
-### Bug Fixes
-
-* **modern-layout:** reduce footer height ([330e170](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/330e17042f146a68fd9a5afaaf0ded3b543f9e27))
-
-### [0.2.7](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.7) (2025-07-24)
-
-
-### Bug Fixes
-
-* **modern-layout:** reduce footer height ([330e170](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/330e17042f146a68fd9a5afaaf0ded3b543f9e27))
-
-### [0.2.6](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.6) (2025-07-24)
-
-
-### Bug Fixes
-
-* **modern-layout:** reduce footer height ([330e170](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/330e17042f146a68fd9a5afaaf0ded3b543f9e27))
-
-### [0.2.5](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.5) (2025-07-24)
-
-
-### Bug Fixes
-
-* **modern-layout:** reduce footer height ([330e170](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/330e17042f146a68fd9a5afaaf0ded3b543f9e27))
+### [0.2.5](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.4...v0.2.5) (2025-07-24)
 
 ### [0.2.4](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.4) (2025-07-24)
 
