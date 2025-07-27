@@ -42,7 +42,7 @@
     },
     "productName": "SOLEX Facturation",
     "mainBinaryName": "SOLEX Facturation",
-    "version": "0.2.13",
+    "version": "0.2.14",
     "identifier": "cm.solex.invoicing",
     "plugins": {
         "sql": {
