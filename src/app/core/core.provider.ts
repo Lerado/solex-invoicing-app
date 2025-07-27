@@ -8,6 +8,7 @@ import { providePersistence } from './persistence/persistence.provider';
 import { mockApiStores } from 'app/mock-api';
 import { VOLUMETRIC_WEIGHT_FACTOR } from './shipment/shipment.constants';
 import { provideAppUpdater } from './updater/updater.provider';
+import { provideWindowTitle } from './window-title/window-title.provider';
 
 export const provideCore = (): Array<EnvironmentProviders | Provider> => [
 
@@ -35,5 +36,8 @@ export const provideCore = (): Array<EnvironmentProviders | Provider> => [
     },
 
     // App updater
-    provideAppUpdater()
+    provideAppUpdater(),
+
+    // Window title
+    provideWindowTitle()
 ];
