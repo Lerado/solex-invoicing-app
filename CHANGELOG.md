@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.13](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.10...v0.2.13) (2025-07-27)
+
+
+### Features
+
+* append app version to window title ([f764e8a](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/f764e8a206ed5234391d8d59c5e18612ddcfafb4))
+* **updater:** custom app updater ui ([453da62](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/453da6289413d1d98b85097b85bda8016cf223c5))
+
+
+### Bug Fixes
+
+* **empty-layout:** remove deprecated window commands buttons ([1ebcaf8](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/1ebcaf8f93b9f7e6eae538f99c675c09a341ce42))
+
 ### [0.2.12](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.10...v0.2.12) (2025-07-27)
 
 
