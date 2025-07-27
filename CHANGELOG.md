@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.12](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.10...v0.2.12) (2025-07-27)
+
+
+### Features
+
+* **updater:** custom app updater ui ([453da62](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/453da6289413d1d98b85097b85bda8016cf223c5))
+
 ### [0.2.11](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.10...v0.2.11) (2025-07-25)
 
 ### [0.2.10](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.3...v0.2.10) (2025-07-25)

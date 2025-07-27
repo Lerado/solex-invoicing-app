@@ -1,38 +1,16 @@
-import { Provider, EnvironmentProviders, provideEnvironmentInitializer } from '@angular/core';
+import { Provider, EnvironmentProviders, provideEnvironmentInitializer, importProvidersFrom, inject } from '@angular/core';
 import { check } from '@tauri-apps/plugin-updater';
-import { relaunch } from '@tauri-apps/plugin-process';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { UpdaterComponent } from './updater.component';
 
 export const provideAppUpdater = (): Array<Provider | EnvironmentProviders> => [
+    importProvidersFrom(MatDialogModule),
     provideEnvironmentInitializer(async () => {
-        try {
-            const update = await check();
-            if (update) {
-                console.log(
-                    `Found update ${update.version} from ${update.date} with notes ${update.body}`
-                );
-                let downloaded = 0;
-                let contentLength = 0;
-                // alternatively we could also call update.download() and update.install() separately
-                await update.downloadAndInstall((message) => {
-                    switch (message.event) {
-                        case 'Started':
-                            contentLength = message.data.contentLength;
-                            console.log(`Started downloading ${message.data.contentLength} bytes`);
-                            break;
-                        case 'Progress':
-                            downloaded += message.data.chunkLength;
-                            console.log(`Downloaded ${downloaded} from ${contentLength}`);
-                            break;
-                        case 'Finished':
-                            console.log('Download finished');
-                            break;
-                    }
-                });
-                console.log('update installed');
-                await relaunch();
-            }
-        } catch (error) {
-            console.error(error);
+        const dialog = inject(MatDialog);
+        const update = await check();
+        if (update) {
+            const dialogRef = dialog.open(UpdaterComponent, { data: update, disableClose: true, minWidth: '30vw', maxWidth: '50vw' });
+            dialogRef.afterClosed().subscribe();
         }
     })
 ];

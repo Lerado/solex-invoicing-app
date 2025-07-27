@@ -1,0 +1,25 @@
+<h2 mat-dialog-title class="text-lg font-bold">Mise à jour disponible</h2>
+<mat-dialog-content>
+    <p>
+        Une nouvelle version de l'application <span class="font-semibold">v{{ update.version }}</span> est disponible
+        depuis le {{ update.date
+        | date }}.
+    </p>
+    @if (loading()) {
+    <mat-progress-bar mode="determinate" [value]="loadingPercentage()" class="mt-4"></mat-progress-bar>
+    <p class="text-xs font-light">
+        {{ downloaded() | number }}MB sur {{ contentLength() | number }}MB
+    </p>
+    }
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matButton="text" [disabled]="loading()" (click)="onNoClick()">Non, plus tard</button>
+    <button mat-flat-button [disabled]="loading()" color="primary" (click)="downloadAndInstall()" cdkFocusInitial>
+        @if (loading()) {
+        <mat-spinner diameter="24"></mat-spinner>
+        }
+        @else {
+        Télécharger et installer
+        }
+    </button>
+</mat-dialog-actions>
