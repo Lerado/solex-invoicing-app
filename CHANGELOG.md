@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.14](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.13...v0.2.14) (2025-07-27)
+
+
+### Bug Fixes
+
+* **docs:** correct changelog version crash ([dc4bcd4](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/commit/dc4bcd4ebb67eaf5d4c04966a15e90264ef3bb3b))
+
 ### [0.2.13](https://dev.azure.com/mohlahsolutions/Solex/_git/solex-invoicing/compare/v0.2.12...v0.2.13) (2025-07-27)
 
 
